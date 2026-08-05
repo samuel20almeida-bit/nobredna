@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Editora Nobre DNA — tokens de marca
+   navy #0F1B33 · dourado #C9A24B · creme #F7F3EA · dourado claro #E8D9A8
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-navy: #0f1b33;
+  --color-navy-deep: #091121;
+  --color-navy-soft: #1a2745;
+  --color-gold: #c9a24b;
+  --color-gold-light: #e8d9a8;
+  --color-gold-deep: #a5813a;
+  --color-cream: #f7f3ea;
+  --color-cream-dim: #e6dfd0;
+
+  --font-serif: var(--font-playfair), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-inter), "Manrope", system-ui, sans-serif;
+
+  /* Sombras por hierarquia — cada nível tem peso e cor própria.
+     Nada de box-shadow genérico repetido em tudo. */
+  --shadow-rule: 0 1px 0 0 rgb(201 162 75 / 0.18);
+  --shadow-card: 0 1px 2px rgb(9 17 33 / 0.28), 0 10px 24px -12px rgb(9 17 33 / 0.4);
+  --shadow-card-hover: 0 2px 4px rgb(9 17 33 / 0.3),
+    0 26px 50px -20px rgb(9 17 33 / 0.55);
+  --shadow-book: 18px 26px 60px -20px rgb(9 17 33 / 0.72),
+    2px 4px 10px -4px rgb(9 17 33 / 0.5);
+  --shadow-seal: 0 0 0 1px rgb(201 162 75 / 0.35),
+    0 12px 30px -14px rgb(201 162 75 / 0.55);
+  --shadow-panel: 0 30px 90px -50px rgb(9 17 33 / 0.9);
+
+  --ease-vellum: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-page: cubic-bezier(0.33, 0.02, 0.15, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-navy);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern", "liga", "calt";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Serifada exclusivamente em headline. */
+  h1,
+  h2,
+  h3,
+  .headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: rgb(201 162 75 / 0.28);
+    color: var(--color-cream);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* Grão dourado: textura abstrata, substitui qualquer foto de banco. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.79 0 0 0 0 0.63 0 0 0 0 0.29 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  .rule-gold {
+    border-top: 1px solid rgb(201 162 75 / 0.22);
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glow-gold {
+    background: radial-gradient(
+      55% 55% at 50% 45%,
+      rgb(201 162 75 / 0.22) 0%,
+      rgb(201 162 75 / 0.06) 45%,
+      transparent 72%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

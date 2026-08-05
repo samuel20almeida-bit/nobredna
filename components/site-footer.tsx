@@ -1,0 +1,100 @@
+import Link from "next/link";
+import { HelixMark } from "@/components/icons";
+import { collections } from "@/lib/books";
+
+const catalogo = [
+  { href: "/#acervo", label: "Acervo completo" },
+  { href: "/#colecoes", label: "Coleções" },
+  { href: "/#testemunhos", label: "Leitores" },
+];
+
+const casa = [
+  { href: "/publique", label: "Publique seu livro" },
+  { href: "/#assine", label: "Carta mensal" },
+  { href: "mailto:contato@nobredna.com.br", label: "contato@nobredna.com.br" },
+];
+
+export function SiteFooter() {
+  return (
+    <footer className="relative border-t border-gold/15 bg-navy-deep">
+      <div className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
+        <div className="grid gap-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <Link href="/" className="flex items-center gap-3 text-gold">
+              <HelixMark size={24} />
+              <span
+                className="text-[0.7rem] text-cream"
+                style={{ letterSpacing: "0.3em", textTransform: "uppercase" }}
+              >
+                Editora Nobre DNA
+              </span>
+            </Link>
+            <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-cream/50">
+              Casa editorial dedicada a obras sobre origem, continuidade e
+              legado. Rua Bela Cintra, 1200 — Consolação, São Paulo.
+            </p>
+          </div>
+
+          <nav aria-label="Catálogo">
+            <h4 className="text-[0.62rem] tracking-[0.3em] uppercase text-gold">
+              Catálogo
+            </h4>
+            <ul className="mt-5 space-y-3">
+              {catalogo.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-cream/55 transition-colors duration-500 hover:text-gold-light"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="Coleções">
+            <h4 className="text-[0.62rem] tracking-[0.3em] uppercase text-gold">
+              Coleções
+            </h4>
+            <ul className="mt-5 space-y-3">
+              {collections.map((c) => (
+                <li key={c.name}>
+                  <Link
+                    href="/#colecoes"
+                    className="text-sm text-cream/55 transition-colors duration-500 hover:text-gold-light"
+                  >
+                    {c.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="A casa">
+            <h4 className="text-[0.62rem] tracking-[0.3em] uppercase text-gold">
+              A casa
+            </h4>
+            <ul className="mt-5 space-y-3">
+              {casa.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-cream/55 transition-colors duration-500 hover:text-gold-light"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        <div className="mt-16 flex flex-col gap-4 border-t border-gold/12 pt-8 text-[0.7rem] text-cream/35 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Editora Nobre DNA · CNPJ 00.000.000/0001-00</p>
+          <p>Pagamentos por Mercado Pago · Envio por Melhor Envio</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
