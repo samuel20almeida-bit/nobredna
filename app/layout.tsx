@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import { CartProvider } from "@/lib/cart";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { SacolaDrawer } from "@/components/sacola-drawer";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -50,6 +51,7 @@ export default function RootLayout({
           <SiteNav />
           <main>{children}</main>
           <SiteFooter />
+          <SacolaDrawer />
         </CartProvider>
       </body>
     </html>

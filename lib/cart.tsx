@@ -26,6 +26,9 @@ type CartContext = {
   /** true depois de reidratar do localStorage — evita divergência de SSR */
   ready: boolean;
   lastAdded: string | null;
+  /** painel lateral da sacola — aberto pela nav e pela página de produto */
+  drawerOpen: boolean;
+  setDrawerOpen: (open: boolean) => void;
 };
 
 const Ctx = createContext<CartContext | null>(null);
@@ -47,6 +50,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [ready, setReady] = useState(false);
   const [lastAdded, setLastAdded] = useState<string | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -115,8 +119,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       clear,
       ready,
       lastAdded,
+      drawerOpen,
+      setDrawerOpen,
     };
-  }, [lines, add, setQty, remove, clear, ready, lastAdded]);
+  }, [lines, add, setQty, remove, clear, ready, lastAdded, drawerOpen]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

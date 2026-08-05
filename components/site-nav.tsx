@@ -17,7 +17,7 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { count, ready } = useCart();
+  const { count, ready, setDrawerOpen } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -63,9 +63,10 @@ export function SiteNav() {
         </div>
 
         <div className="flex items-center gap-5">
-          <Link
-            href="/checkout"
-            aria-label={`Sacola${ready && count ? ` — ${count} item(ns)` : ""}`}
+          <button
+            type="button"
+            onClick={() => setDrawerOpen(true)}
+            aria-label={`Abrir a sacola${ready && count ? ` — ${count} item(ns)` : ""}`}
             className="relative flex items-center gap-2 text-gold transition-opacity duration-500 hover:opacity-80"
           >
             <Bag size={20} />
@@ -74,7 +75,7 @@ export function SiteNav() {
                 {count}
               </span>
             )}
-          </Link>
+          </button>
 
           <button
             type="button"

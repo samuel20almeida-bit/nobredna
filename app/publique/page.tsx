@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ConviteSelado } from "@/components/convite-selado";
 import { PropostaForm } from "@/components/proposta-form";
+import { Perguntas } from "@/components/perguntas";
 import { HelixRail } from "@/components/helix-rail";
 import { Quill, Route, Seal, Spines } from "@/components/icons";
 
@@ -137,6 +138,18 @@ export default function PubliquePage() {
                 </ul>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section id="perguntas" className="bg-navy pb-24 lg:pb-32">
+          <div className="mx-auto max-w-[900px] px-6 lg:px-10">
+            <p className="eyebrow">Antes de enviar</p>
+            <h2 className="mt-5 max-w-[20ch] text-[clamp(1.8rem,3.8vw,2.8rem)] leading-[1.14] text-cream">
+              O que todo autor pergunta primeiro.
+            </h2>
+            <div className="mt-12">
+              <Perguntas />
+            </div>
           </div>
         </section>
 
