@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "@/components/icons";
+import { Anotacao } from "@/components/anotacao";
 import { servicos } from "@/lib/servicos";
 
 /**
@@ -102,8 +103,10 @@ export function Servicos() {
               <ArrowRight size={17} />
             </span>
           </Link>
-          <p className="mt-4 font-serif text-[1.05rem] text-ink/45 italic">
-            o diagnóstico é gratuito, e a resposta sai em até 30 dias
+          <p className="mt-6">
+            <Anotacao>
+              o diagnóstico é gratuito, e a resposta sai em até 30 dias
+            </Anotacao>
           </p>
         </motion.div>
       </div>

@@ -60,6 +60,17 @@ export function Quill(props: IconProps) {
   );
 }
 
+/** Lápis — a mão que anota. A ponta fica no canto inferior esquerdo, que é
+    onde o traço nasce quando ele atravessa a página. */
+export function Lapis(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 20l1.2-4.2L16.4 4.6a2 2 0 0 1 2.8 2.8L8.2 18.8 4 20z" />
+      <path d="M14.6 6.4l3 3" />
+    </Icon>
+  );
+}
+
 /** Lombadas na estante — acervo */
 export function Spines(props: IconProps) {
   return (

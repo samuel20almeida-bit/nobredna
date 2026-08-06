@@ -2,17 +2,15 @@ import type { Metadata } from "next";
 import { ConviteSelado } from "@/components/convite-selado";
 import { PropostaForm } from "@/components/proposta-form";
 import { Perguntas } from "@/components/perguntas";
+import { PercursoLinha } from "@/components/percurso-linha";
 import { HelixRail } from "@/components/helix-rail";
-import { Quill, Route, Seal, Spines } from "@/components/icons";
-import { percurso } from "@/lib/servicos";
+import { Anotacao } from "@/components/anotacao";
 
 export const metadata: Metadata = {
   title: "Envie seu original",
   description:
     "Assessoria editorial: leitura crítica, preparação, revisão, projeto gráfico e circulação. O diagnóstico do seu original é gratuito.",
 };
-
-const icones = [Quill, Seal, Spines, Route];
 
 const criterios = [
   {
@@ -59,8 +57,8 @@ export default function PubliquePage() {
                 que falta, e quanto custaria cada etapa do trabalho — para você
                 decidir com número na mão.
               </p>
-              <p className="mt-6 max-w-[32rem] font-serif text-[1.15rem] text-ink/45 italic">
-                O convite ao lado é literal. Rompa o lacre.
+              <p className="mt-8">
+                <Anotacao>O convite ao lado é literal. Rompa o lacre.</Anotacao>
               </p>
             </div>
 
@@ -77,29 +75,7 @@ export default function PubliquePage() {
               Do envio à estante, em quatro tempos.
             </h2>
 
-            <ol className="mt-16 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
-              {percurso.map((etapa, i) => {
-                const Icon = icones[i];
-                return (
-                  <li key={etapa.n} className="hairline border-t pt-7">
-                    <div className="flex items-center justify-between">
-                      <span className="text-khaki-ink">
-                        <Icon size={24} />
-                      </span>
-                      <span className="font-serif text-[1.05rem] text-ink/30 italic">
-                        {etapa.n}
-                      </span>
-                    </div>
-                    <h3 className="mt-6 text-[1.5rem] leading-tight font-light text-ink">
-                      {etapa.titulo}
-                    </h3>
-                    <p className="mt-3 text-[0.93rem] leading-[1.85] text-ink/55">
-                      {etapa.texto}
-                    </p>
-                  </li>
-                );
-              })}
-            </ol>
+            <PercursoLinha />
           </div>
         </section>
 

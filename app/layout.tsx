@@ -4,6 +4,7 @@ import { CartProvider } from "@/lib/cart";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { SacolaDrawer } from "@/components/sacola-drawer";
+import { Abertura } from "@/components/abertura";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -48,6 +49,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased">
+        <Abertura />
         <CartProvider>
           <SiteNav />
           <main>{children}</main>

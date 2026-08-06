@@ -149,8 +149,114 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Abertura: o site começa fechado como um livro.
+
+   É CSS puro de propósito. Uma cortina que depende de JS para sair
+   do caminho é uma cortina que pode ficar presa — aqui a animação
+   roda sem hidratação, sem framework, e termina em `visibility:
+   hidden` mesmo que o JS nunca chegue. Como vive no layout, ela
+   toca na primeira entrada e não se repete na navegação interna.
+   ───────────────────────────────────────────────────────────── */
+.abertura {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  perspective: 2200px;
+  animation: abertura-fim 1.68s linear forwards;
+}
+
+.abertura-face {
+  position: absolute;
+  inset-block: 0;
+  width: 50.2%; /* meio ponto de sobreposição: sem fresta na dobra */
+  background: linear-gradient(155deg, #0a2440 0%, #011638 52%, #010e26 100%);
+  backface-visibility: hidden;
+}
+
+.abertura-esq {
+  left: 0;
+  transform-origin: left center;
+  animation: abertura-esq 1.15s cubic-bezier(0.5, 0, 0.25, 1) 0.5s forwards;
+}
+
+.abertura-dir {
+  right: 0;
+  transform-origin: right center;
+  animation: abertura-dir 1.15s cubic-bezier(0.5, 0, 0.25, 1) 0.58s forwards;
+}
+
+/* A marca vive fora das faces de propósito: presa a elas, ela seria partida
+   ao meio na abertura — que é exatamente o defeito do livro que saiu do hero.
+   Aqui ela apaga antes de a capa começar a girar. */
+.abertura-marca {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.15rem;
+  color: var(--color-lavender);
+  animation: abertura-marca 0.34s ease-out 0.34s forwards;
+}
+
+@keyframes abertura-esq {
+  to {
+    transform: rotateY(-108deg);
+    opacity: 0.15;
+  }
+}
+
+@keyframes abertura-dir {
+  to {
+    transform: rotateY(108deg);
+    opacity: 0.15;
+  }
+}
+
+@keyframes abertura-marca {
+  to {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+@keyframes abertura-fim {
+  0%,
+  99% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+
+.abertura-nome {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  text-align: center;
+  color: var(--color-almond);
+}
+
+.abertura-linha {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--color-khaki);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* quem pede menos movimento entra direto no site */
+  .abertura {
+    display: none;
   }
 }
