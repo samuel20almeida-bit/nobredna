@@ -21,35 +21,37 @@ export default function LivrosPage() {
       <HelixRail side="right" width={40} fadeIn={0.05} from={0.75} />
 
       <div className="relative z-10">
-        <section className="grain relative overflow-hidden bg-almond pt-36 pb-16 lg:pt-44">
-          <div className="glow-lavender pointer-events-none absolute inset-x-0 top-0 h-[60%]" />
+        {/* sépia: o chão da leitora. Quebra o creme logo na primeira dobra e
+            diz, antes de qualquer texto, em que lado do site se está. */}
+        <section className="grain relative overflow-hidden bg-sepia pt-36 pb-16 lg:pt-44">
+          <div className="glow-khaki pointer-events-none absolute inset-x-0 top-0 h-[60%]" />
 
           <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-            <p className="label">{autora.linha.toLowerCase()}</p>
-            <h1 className="mt-6 max-w-[16ch] text-[clamp(2.6rem,5.6vw,4.2rem)] leading-[1.02] font-light text-balance text-ink">
+            <p className="label label-on-sepia">{autora.linha.toLowerCase()}</p>
+            <h1 className="mt-6 max-w-[16ch] text-[clamp(2.6rem,5.6vw,4.2rem)] leading-[1.02] font-light text-balance text-almond">
               Livros para dias
-              <span className="text-lavender-ink italic"> comuns.</span>
+              <span className="text-khaki italic"> comuns.</span>
             </h1>
-            <p className="mt-8 max-w-[34rem] text-[1.02rem] leading-[1.85] text-ink/60">
+            <p className="mt-8 max-w-[34rem] text-[1.02rem] leading-[1.85] text-almond/60">
               Devocionais curtos, escritos para caber numa manhã de verdade.
               Cada título tem um dia inteiro disponível para ler antes de
               decidir.
             </p>
             <p className="mt-7">
-              <Anotacao>
+              <Anotacao tom="escuro">
                 devocional não se escolhe pela sinopse, se escolhe pela voz
               </Anotacao>
             </p>
 
             <DivisorPerola
-              tone="light"
+              tone="dark"
               className="mt-14"
               width="min(16rem,45%)"
             />
           </div>
         </section>
 
-        <section className="bg-almond pb-24 lg:pb-32">
+        <section className="bg-almond pt-20 pb-24 lg:pt-24 lg:pb-32">
           <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
             <EstanteAutora />
           </div>

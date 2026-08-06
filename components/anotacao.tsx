@@ -36,14 +36,19 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 export function Anotacao({
   children,
   marca = "sublinhado",
+  tom = "claro",
   className = "",
 }: {
   children: ReactNode;
   marca?: "sublinhado" | "margem";
+  /** `escuro` para fundos sépia ou tinta: o lápis vira khaki claro */
+  tom?: "claro" | "escuro";
   className?: string;
 }) {
   const raiz = useRef<HTMLSpanElement>(null);
   const naMargem = marca === "margem";
+  const noEscuro = tom === "escuro";
+  const tinta = noEscuro ? "#c6ac8f" : "#7a5f42";
 
   useGSAP(
     () => {
@@ -121,7 +126,7 @@ export function Anotacao({
       <path
         d="M5,3 C2.6,38 7,72 3.6,106 C1,140 6.8,168 4.2,197"
         fill="none"
-        stroke="#7a5f42"
+        stroke={tinta}
         strokeWidth={1.7}
         strokeLinecap="round"
         strokeOpacity={0.7}
@@ -139,7 +144,7 @@ export function Anotacao({
       <path
         d="M2,6 C34,2.5 64,8.5 100,4.5 C134,1 168,7.5 198,3.5"
         fill="none"
-        stroke="#7a5f42"
+        stroke={tinta}
         strokeWidth={1.6}
         strokeLinecap="round"
         strokeOpacity={0.75}
@@ -156,7 +161,9 @@ export function Anotacao({
       {naMargem ? (
         children
       ) : (
-        <span className="font-serif text-[1.05rem] text-khaki-ink italic">
+        <span
+          className={`font-serif text-[1.05rem] italic ${noEscuro ? "text-khaki" : "text-khaki-ink"}`}
+        >
           {children}
         </span>
       )}
@@ -164,7 +171,7 @@ export function Anotacao({
       {traco}
 
       <span
-        className={`an-lapis pointer-events-none absolute text-khaki-ink ${
+        className={`an-lapis pointer-events-none absolute ${noEscuro ? "text-khaki" : "text-khaki-ink"} ${
           naMargem ? "top-0 -left-[7px]" : "-bottom-[18px] left-0"
         }`}
         aria-hidden="true"

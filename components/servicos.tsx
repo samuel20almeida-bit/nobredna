@@ -13,11 +13,11 @@ import { servicos } from "@/lib/servicos";
  */
 export function Servicos() {
   return (
-    <section id="servicos" className="relative bg-almond py-24 lg:py-32">
+    <section id="servicos" className="grain grain-on-dark relative bg-ink py-24 lg:py-32">
       <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
         <div className="max-w-[42rem]">
           <motion.p
-            className="label"
+            className="label label-on-dark"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -26,20 +26,20 @@ export function Servicos() {
             o que a casa faz
           </motion.p>
           <motion.h2
-            className="mt-5 text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-ink"
+            className="mt-5 text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-almond"
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             Um livro não fica pronto sozinho.
-            <span className="text-ink/40 italic">
+            <span className="text-almond/40 italic">
               {" "}
               Alguém precisa sentar à mesa com ele.
             </span>
           </motion.h2>
           <motion.p
-            className="mt-7 max-w-[34rem] text-[1rem] leading-[1.85] text-ink/60"
+            className="mt-7 max-w-[34rem] text-[1rem] leading-[1.85] text-almond/60"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -55,7 +55,7 @@ export function Servicos() {
           {servicos.map((servico, i) => (
             <motion.li
               key={servico.id}
-              className="hairline border-t py-9 last:border-b"
+              className="hairline-on-dark border-t py-9 last:border-b"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -66,20 +66,20 @@ export function Servicos() {
               }}
             >
               <div className="grid gap-4 md:grid-cols-[0.9fr_1.4fr_0.7fr] md:items-baseline md:gap-10">
-                <h3 className="text-[clamp(1.4rem,2.6vw,1.85rem)] leading-tight font-light text-ink">
+                <h3 className="text-[clamp(1.4rem,2.6vw,1.85rem)] leading-tight font-light text-almond">
                   {servico.nome}
                 </h3>
 
                 <div>
-                  <p className="font-serif text-[1.2rem] leading-relaxed text-lavender-ink italic">
+                  <p className="font-serif text-[1.2rem] leading-relaxed text-lavender italic">
                     {servico.linha}
                   </p>
-                  <p className="mt-3 max-w-[38rem] text-[0.95rem] leading-[1.85] text-ink/55">
+                  <p className="mt-3 max-w-[38rem] text-[0.95rem] leading-[1.85] text-almond/55">
                     {servico.descricao}
                   </p>
                 </div>
 
-                <p className="font-serif text-[1rem] text-khaki-ink italic md:text-right">
+                <p className="font-serif text-[1rem] text-khaki italic md:text-right">
                   {servico.entrega}
                 </p>
               </div>
@@ -96,7 +96,7 @@ export function Servicos() {
         >
           <Link
             href="/publique"
-            className="group inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 font-serif text-[1.15rem] text-almond transition-colors duration-500 hover:bg-ink-soft"
+            className="group inline-flex items-center gap-3 rounded-full bg-almond px-8 py-4 font-serif text-[1.15rem] text-ink transition-colors duration-500 hover:bg-almond-lift"
           >
             Enviar meu original
             <span className="transition-transform duration-500 group-hover:translate-x-1">
@@ -104,7 +104,7 @@ export function Servicos() {
             </span>
           </Link>
           <p className="mt-6">
-            <Anotacao>
+            <Anotacao tom="escuro">
               o diagnóstico é gratuito, e a resposta sai em até 30 dias
             </Anotacao>
           </p>

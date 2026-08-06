@@ -15,12 +15,14 @@ import { autora } from "@/lib/autora";
  */
 export function VitrineAutora() {
   return (
-    <section id="livros" className="relative bg-almond py-24 lg:py-32">
+    // O bloco da loja na home usa o sépia da /livros: quem desce a página
+    // atravessa o mesmo chão que encontrará ao entrar por aquela porta.
+    <section id="livros" className="grain relative bg-sepia py-24 lg:py-32">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
         <div className="hairline flex flex-col gap-8 border-b pb-10 md:flex-row md:items-end md:justify-between">
           <div>
             <motion.p
-              className="label"
+              className="label label-on-sepia"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-80px" }}
@@ -29,14 +31,14 @@ export function VitrineAutora() {
               meus livros
             </motion.p>
             <motion.h2
-              className="mt-5 max-w-[20ch] text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-ink"
+              className="mt-5 max-w-[20ch] text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-almond"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               Escritos para dias comuns.
-              <span className="text-ink/40 italic">
+              <span className="text-almond/45 italic">
                 {" "}
                 Leia um antes de levar.
               </span>
@@ -45,7 +47,7 @@ export function VitrineAutora() {
 
           <Link
             href="/livros"
-            className="group inline-flex shrink-0 items-center gap-3 font-serif text-[1.12rem] text-lavender-ink transition-colors duration-500 hover:text-ink"
+            className="group inline-flex shrink-0 items-center gap-3 font-serif text-[1.12rem] text-khaki transition-colors duration-500 hover:text-almond"
           >
             todos os livros
             <span className="transition-transform duration-500 group-hover:translate-x-1">
@@ -58,7 +60,7 @@ export function VitrineAutora() {
           <EstanteAutora />
         </div>
 
-        <p className="mt-12 max-w-[34rem] font-serif text-[1.1rem] leading-relaxed text-ink/45 italic">
+        <p className="mt-12 max-w-[34rem] font-serif text-[1.1rem] leading-relaxed text-almond/45 italic">
           {autora.chamada}
         </p>
       </div>

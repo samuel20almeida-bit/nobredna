@@ -23,6 +23,10 @@ const portas = [
     texto:
       "Devocionais curtos, para caber numa manhã de verdade. Cada título tem um dia inteiro para ler antes de decidir.",
     acao: "ver os livros",
+    // sépia: o chão da leitora, repetido em toda a /livros
+    fundo: "bg-sepia hover:bg-sepia-soft",
+    acento: "text-khaki",
+    rotulo: "label-on-sepia",
   },
   {
     href: "/publique",
@@ -32,6 +36,10 @@ const portas = [
     texto:
       "Leitura, preparação, revisão, projeto gráfico e registro do seu original. O diagnóstico é gratuito, e o livro continua seu.",
     acao: "enviar meu original",
+    // azul-tinta: o chão do autor cliente, repetido em toda a /publique
+    fundo: "bg-ink hover:bg-ink-soft",
+    acento: "text-lavender",
+    rotulo: "label-on-dark",
   },
 ];
 
@@ -39,11 +47,11 @@ export function Portas() {
   return (
     <section className="relative bg-almond-deep/35 py-20 lg:py-28">
       <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
-        <ul className="grid gap-px overflow-hidden border border-ink/12 bg-ink/12 md:grid-cols-2">
+        <ul className="grid gap-px overflow-hidden bg-almond-deep md:grid-cols-2">
           {portas.map((porta, i) => (
             <motion.li
               key={porta.href}
-              className="bg-almond"
+              className={porta.fundo}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -55,22 +63,25 @@ export function Portas() {
             >
               <Link
                 href={porta.href}
-                className="group flex h-full flex-col px-8 py-11 transition-colors duration-500 hover:bg-almond-lift sm:px-11 sm:py-14"
+                className="group flex h-full flex-col px-8 py-11 transition-colors duration-500 sm:px-11 sm:py-14"
               >
-                <p className="label flex items-center gap-3">
+                <p className={`label ${porta.rotulo} flex items-center gap-3`}>
                   <porta.Icon size={17} />
                   {porta.etiqueta}
                 </p>
 
-                <h2 className="mt-6 text-[clamp(1.8rem,3.6vw,2.5rem)] leading-tight font-light text-ink">
+                <h2 className="mt-6 text-[clamp(1.8rem,3.6vw,2.5rem)] leading-tight font-light text-almond">
                   {porta.titulo}
                 </h2>
 
-                <p className="mt-4 max-w-[26rem] flex-1 text-[0.98rem] leading-[1.85] text-ink/55">
+                <p className="mt-4 max-w-[26rem] flex-1 text-[0.98rem] leading-[1.85] text-almond/60">
                   {porta.texto}
                 </p>
 
-                <span className="mt-8 inline-flex items-center gap-3 font-serif text-[1.12rem] text-lavender-ink">
+                <span
+                  className={`mt-8 inline-flex items-center gap-3 font-serif text-[1.12rem] ${porta.acento}`}
+                >
+
                   {porta.acao}
                   <span className="transition-transform duration-500 group-hover:translate-x-1.5">
                     <ArrowRight size={16} />

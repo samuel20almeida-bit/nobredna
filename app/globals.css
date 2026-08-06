@@ -33,6 +33,22 @@
   --color-lavender: #7f8cb5;
   --color-lavender-ink: #4e5878;
 
+  /* Sépia couro: o chão da trilha da leitora.
+     Existe porque a cor precisava dizer em que lado do site se está, e não
+     dizia — loja e assessoria dividiam o mesmo creme. Agora cada trilha tem
+     seu fundo profundo: sépia para quem vem comprar, azul-tinta para quem vem
+     publicar. A bifurcação da home ensina o código, e as páginas o cumprem.
+
+     Contraste medido:
+       creme sobre sépia ....... 10,05:1
+       khaki sobre sépia ........ 6,04:1  ← passa AA como texto
+       sépia sobre creme ....... 10,05:1
+     O khaki é a novidade: sobre o creme ele dá 1,66:1 e só serve de ornamento;
+     sobre o sépia ele vira texto. A trilha quente ganha paleta própria, não
+     apenas outro fundo. */
+  --color-sepia: #3b2e26;
+  --color-sepia-soft: #4a3728;
+
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-inter), "Manrope", system-ui, sans-serif;
 
@@ -108,6 +124,15 @@
     color: var(--color-lavender);
   }
 
+  /* Sobre o sépia da trilha da leitora.
+     Precisa existir como classe: `.label` e as utilitárias de cor do Tailwind
+     dividem a mesma camada, então um `text-khaki` solto ao lado de `label`
+     perde por ordem de fonte e o rótulo fica lavanda escuro sobre sépia —
+     1,86:1, praticamente invisível. */
+  .label-on-sepia {
+    color: var(--color-khaki);
+  }
+
   /* Fio: mais claro que uma borda, para dividir sem cortar. */
   .hairline {
     border-color: rgb(1 22 56 / 0.1);
@@ -138,6 +163,17 @@
       60% 55% at 50% 45%,
       rgb(127 140 181 / 0.18) 0%,
       rgb(127 140 181 / 0.05) 48%,
+      transparent 74%
+    );
+  }
+
+  /* O par quente do glow-lavender, para os fundos sépia da trilha da leitora.
+     O lavanda é frio e sujaria o sépia. */
+  .glow-khaki {
+    background: radial-gradient(
+      60% 55% at 50% 45%,
+      rgb(198 172 143 / 0.16) 0%,
+      rgb(198 172 143 / 0.05) 48%,
       transparent 74%
     );
   }
