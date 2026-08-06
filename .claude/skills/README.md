@@ -1,5 +1,21 @@
 # Skills instaladas neste projeto
 
+## claude-automation-recommender
+
+Origem: <https://github.com/anthropics/claude-plugins-official> — plugin
+`claude-code-setup`, commit `36b0017`. Licença Apache 2.0
+(`LICENSE-claude-plugins-official`).
+
+Analisa o repositório e recomenda automações do Claude Code — hooks,
+subagentes, skills, plugins e servidores MCP — de acordo com o que encontra no
+código. É somente-leitura: não cria nem altera arquivo nenhum, só devolve
+recomendações.
+
+Instalada à mão porque `/plugin install` é um comando embutido da CLI e esta
+sessão é remota e não-interativa. Se você rodar o Claude Code no seu
+computador, vale instalar por lá também — assim ela acompanha as atualizações
+da marketplace oficial em vez de ficar congelada nesta cópia.
+
 ## ui-ux-pro-max (e skills irmãs)
 
 Origem: <https://github.com/nextlevelbuilder/ui-ux-pro-max-skill>
