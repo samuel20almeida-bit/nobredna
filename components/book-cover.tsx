@@ -2,9 +2,9 @@ import { Crown, HelixMark, Seal } from "@/components/icons";
 import type { Book } from "@/lib/books";
 
 const tones: Record<Book["cover"]["tone"], string> = {
-  navy: "linear-gradient(168deg,#16243f 0%,#0f1b33 52%,#0a1226 100%)",
-  deep: "linear-gradient(168deg,#0f1b33 0%,#091121 55%,#060c18 100%)",
-  soft: "linear-gradient(168deg,#20304f 0%,#16243f 58%,#0f1b33 100%)",
+  navy: "linear-gradient(168deg,#18243a 0%,#101a2c 52%,#0b1223 100%)",
+  deep: "linear-gradient(168deg,#101a2c 0%,#0a1220 55%,#070c16 100%)",
+  soft: "linear-gradient(168deg,#212f49 0%,#18243a 58%,#101a2c 100%)",
 };
 
 function Ornament({ kind }: { kind: Book["cover"]["ornament"] }) {

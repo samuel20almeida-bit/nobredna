@@ -27,7 +27,7 @@ function CoverHalf({ side }: { side: "left" | "right" }) {
           className="grain relative h-full w-full"
           style={{
             background:
-              "linear-gradient(155deg,#1b2b4a 0%,#0f1b33 48%,#080f1f 100%)",
+              "linear-gradient(155deg,#1d2941 0%,#101a2c 48%,#090f1c 100%)",
           }}
         >
           <div
@@ -81,7 +81,7 @@ function Spread() {
     <div
       className="grain relative h-full w-full overflow-hidden"
       style={{
-        background: "linear-gradient(180deg,#f7f3ea 0%,#ece5d5 100%)",
+        background: "linear-gradient(180deg,#f6e9dc 0%,#e9dbc8 100%)",
         boxShadow: "var(--shadow-panel)",
       }}
     >

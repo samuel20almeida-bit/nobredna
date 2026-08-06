@@ -20,7 +20,7 @@ export function Colecoes() {
       <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
         <div className="grid gap-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <p className="eyebrow flex items-center gap-3 text-gold-deep">
+            <p className="eyebrow flex items-center gap-3 text-gold-ink">
               <Bookmark size={16} />
               O legado em três linhas
             </p>
@@ -67,7 +67,7 @@ export function Colecoes() {
                 }}
               >
                 <div className="flex items-baseline gap-6">
-                  <span className="font-serif text-[0.95rem] text-gold-deep tabular-nums">
+                  <span className="font-serif text-[0.95rem] text-gold-ink tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div className="flex-1">
@@ -82,7 +82,7 @@ export function Colecoes() {
                     </p>
                     <Link
                       href="#acervo"
-                      className="group mt-6 inline-flex items-center gap-3 text-[0.7rem] tracking-[0.22em] uppercase text-gold-deep transition-colors duration-300 hover:text-navy"
+                      className="group mt-6 inline-flex items-center gap-3 text-[0.7rem] tracking-[0.22em] uppercase text-gold-ink transition-colors duration-300 hover:text-navy"
                     >
                       Ver títulos
                       <span className="transition-transform duration-300 group-hover:translate-x-1">

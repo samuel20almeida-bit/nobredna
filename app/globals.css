@@ -1,34 +1,59 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────
-   Editora Nobre DNA — tokens de marca
-   navy #0F1B33 · dourado #C9A24B · creme #F7F3EA · dourado claro #E8D9A8
+   Nobre DNA — tokens de marca, lidos do logo.
+
+   O logo é creme quente com ouro metálico e pérola. Os tons daqui saem
+   dele: o creme puxa para o rosa em vez do verde, e o ouro tem três
+   estágios (champanhe, corpo, sombra) porque no logo ele é gradiente,
+   não chapado. O navy continua como tinta profunda — o logo não o traz,
+   mas sem um fundo escuro o ouro não tem onde brilhar.
+
+   Contraste verificado: creme sobre navy 14,6:1 · ouro sobre navy 7,2:1 ·
+   ouro-tinta sobre creme 4,6:1. O ouro-sombra (3,2:1) só é usado em
+   ornamento e ícone, nunca em texto.
    ───────────────────────────────────────────────────────────── */
 
 @theme {
-  --color-navy: #0f1b33;
-  --color-navy-deep: #091121;
-  --color-navy-soft: #1a2745;
-  --color-gold: #c9a24b;
-  --color-gold-light: #e8d9a8;
-  --color-gold-deep: #a5813a;
-  --color-cream: #f7f3ea;
-  --color-cream-dim: #e6dfd0;
+  --color-navy: #101a2c;
+  --color-navy-deep: #0a1220;
+  --color-navy-soft: #1c2740;
+  --color-gold: #c9a15c;
+  --color-gold-light: #e8ce96;
+  --color-gold-deep: #a87a33;
+  /* único ouro aprovado para texto sobre creme */
+  --color-gold-ink: #8a6127;
+  --color-cream: #f6e9dc;
+  --color-cream-dim: #e2d3c0;
+  --color-pearl: #fdf8f0;
 
   --font-serif: var(--font-playfair), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-inter), "Manrope", system-ui, sans-serif;
 
+  /* O ouro do logo é metálico: champanhe no alto, sombra embaixo, um
+     último reflexo na saída. Onde o ouro tem área, usa este gradiente;
+     onde é só um fio de 1px, a cor chapada basta. */
+  --metal-gold: linear-gradient(
+    135deg,
+    #e8ce96 0%,
+    #c9a15c 40%,
+    #a87a33 74%,
+    #dcbd7e 100%
+  );
+
   /* Sombras por hierarquia — cada nível tem peso e cor própria.
      Nada de box-shadow genérico repetido em tudo. */
-  --shadow-rule: 0 1px 0 0 rgb(201 162 75 / 0.18);
-  --shadow-card: 0 1px 2px rgb(9 17 33 / 0.28), 0 10px 24px -12px rgb(9 17 33 / 0.4);
-  --shadow-card-hover: 0 2px 4px rgb(9 17 33 / 0.3),
-    0 26px 50px -20px rgb(9 17 33 / 0.55);
-  --shadow-book: 18px 26px 60px -20px rgb(9 17 33 / 0.72),
-    2px 4px 10px -4px rgb(9 17 33 / 0.5);
-  --shadow-seal: 0 0 0 1px rgb(201 162 75 / 0.35),
-    0 12px 30px -14px rgb(201 162 75 / 0.55);
-  --shadow-panel: 0 30px 90px -50px rgb(9 17 33 / 0.9);
+  --shadow-rule: 0 1px 0 0 rgb(201 161 92 / 0.18);
+  --shadow-card: 0 1px 2px rgb(10 18 32 / 0.28), 0 10px 24px -12px rgb(10 18 32 / 0.4);
+  --shadow-card-hover: 0 2px 4px rgb(10 18 32 / 0.3),
+    0 26px 50px -20px rgb(10 18 32 / 0.55);
+  --shadow-book: 18px 26px 60px -20px rgb(10 18 32 / 0.72),
+    2px 4px 10px -4px rgb(10 18 32 / 0.5);
+  --shadow-seal: 0 0 0 1px rgb(201 161 92 / 0.35),
+    0 12px 30px -14px rgb(201 161 92 / 0.55);
+  --shadow-pearl: 0 1px 2px rgb(10 18 32 / 0.35),
+    inset -1px -1px 3px rgb(168 122 51 / 0.3);
+  --shadow-panel: 0 30px 90px -50px rgb(10 18 32 / 0.9);
 
   --ease-vellum: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-page: cubic-bezier(0.33, 0.02, 0.15, 1);
@@ -60,7 +85,7 @@
   }
 
   ::selection {
-    background: rgb(201 162 75 / 0.28);
+    background: rgb(201 161 92 / 0.28);
     color: var(--color-cream);
   }
 
@@ -79,11 +104,20 @@
     pointer-events: none;
     opacity: 0.16;
     mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.79 0 0 0 0 0.63 0 0 0 0 0.29 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.79 0 0 0 0 0.63 0 0 0 0 0.36 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
   }
 
   .rule-gold {
-    border-top: 1px solid rgb(201 162 75 / 0.22);
+    border-top: 1px solid rgb(201 161 92 / 0.22);
+  }
+
+  /* Texto em ouro metálico — só para números e cifras curtas, onde o
+     recorte do gradiente ainda deixa a forma legível. */
+  .metal-text {
+    background: var(--metal-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .eyebrow {
@@ -100,10 +134,22 @@
   .glow-gold {
     background: radial-gradient(
       55% 55% at 50% 45%,
-      rgb(201 162 75 / 0.22) 0%,
-      rgb(201 162 75 / 0.06) 45%,
+      rgb(201 161 92 / 0.22) 0%,
+      rgb(201 161 92 / 0.06) 45%,
       transparent 72%
     );
+  }
+
+  /* Pérola: o brilho vem do alto à esquerda, como no logo. */
+  .pearl {
+    background: radial-gradient(
+      circle at 34% 30%,
+      #fffdf9 0%,
+      #fdf8f0 28%,
+      #ece0cd 62%,
+      #cdb493 100%
+    );
+    box-shadow: var(--shadow-pearl);
   }
 }
 

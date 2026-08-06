@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { DivisorPerola } from "@/components/perola";
 
 const depoimentos = [
   {
@@ -180,6 +181,8 @@ export function Testemunhos() {
             </button>
           ))}
         </div>
+
+        <DivisorPerola tone="dark" className="mt-20" width="min(20rem,55%)" />
       </div>
     </section>
   );

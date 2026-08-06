@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HelixMark } from "@/components/icons";
+import { DivisorPerola } from "@/components/perola";
 import { collections } from "@/lib/books";
 
 const catalogo = [
@@ -90,7 +91,10 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-gold/12 pt-8 text-[0.7rem] text-cream/35 sm:flex-row sm:items-center sm:justify-between">
+        {/* o ornamento da base do logo, no lugar onde ele nasceu */}
+        <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
+
+        <div className="mt-10 flex flex-col gap-4 border-t border-gold/12 pt-8 text-[0.7rem] text-cream/35 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Editora Nobre DNA · CNPJ 00.000.000/0001-00</p>
           <p>Pagamentos por Mercado Pago · Envio por Melhor Envio</p>
         </div>

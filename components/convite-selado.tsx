@@ -17,7 +17,7 @@ function CardHalf({ side }: { side: "left" | "right" }) {
           className="grain relative flex h-full w-full items-center justify-center"
           style={{
             background:
-              "linear-gradient(150deg,#1b2b4a 0%,#0f1b33 55%,#080f1f 100%)",
+              "linear-gradient(150deg,#1d2941 0%,#101a2c 55%,#090f1c 100%)",
           }}
         >
           <div className="absolute inset-[6%] border border-gold/22" />
@@ -34,7 +34,7 @@ function CardHalf({ side }: { side: "left" | "right" }) {
               className="absolute inset-0 rounded-full"
               style={{
                 background:
-                  "radial-gradient(circle at 34% 30%,#e8d9a8 0%,#c9a24b 42%,#8d6c2c 100%)",
+                  "radial-gradient(circle at 34% 30%,#e8ce96 0%,#c9a15c 42%,#8a6127 100%)",
                 boxShadow: "var(--shadow-seal)",
               }}
             />
@@ -72,7 +72,7 @@ function Carta() {
     <div
       className="grain relative flex h-full w-full items-center justify-center overflow-hidden px-[9%] text-navy"
       style={{
-        background: "linear-gradient(180deg,#f7f3ea 0%,#eae2d1 100%)",
+        background: "linear-gradient(180deg,#f6e9dc 0%,#e7d8c4 100%)",
         boxShadow: "var(--shadow-panel)",
       }}
     >
@@ -132,7 +132,7 @@ export function ConviteSelado() {
         className="mt-8 text-center text-[0.66rem] tracking-[0.28em] uppercase"
         animate={{
           opacity: aberto ? 0.4 : 0.75,
-          color: aberto ? "#f7f3ea" : "#c9a24b",
+          color: aberto ? "#f6e9dc" : "#c9a15c",
         }}
         transition={{ duration: 0.8 }}
       >
