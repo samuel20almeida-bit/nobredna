@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
 import {
   motion,
@@ -10,99 +10,12 @@ import {
   useTransform,
 } from "framer-motion";
 import { Helix } from "@/components/helix";
-import { Opening } from "@/components/opening";
-import { HelixMark } from "@/components/icons";
+import { Manuscrito } from "@/components/manuscrito";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-/**
- * Metade da capa: as duas juntas formam uma capa contínua quando fechada.
- * O livro é o único objeto escuro da página — por isso ele pesa sem que a
- * página inteira precise pesar junto.
- */
-function CoverHalf({ side }: { side: "left" | "right" }) {
-  return (
-    <div className="relative h-full w-full overflow-hidden">
-      <div
-        className="absolute inset-y-0 w-[200%]"
-        style={{ left: side === "left" ? 0 : "-100%" }}
-      >
-        <div
-          className="grain grain-on-dark relative h-full w-full"
-          style={{
-            background:
-              "linear-gradient(155deg,#0a2440 0%,#011638 52%,#010e26 100%)",
-          }}
-        >
-          <div className="absolute inset-[8%] border border-khaki/20" />
-
-          <div className="relative flex h-full flex-col items-center justify-center gap-7 px-[13%] text-center">
-            <span className="text-lavender">
-              <HelixMark size={30} />
-            </span>
-            <h2 className="font-serif text-[clamp(1.6rem,3.6vw,2.7rem)] leading-[1.06] font-light text-almond">
-              Nobre
-              <br />
-              DNA
-            </h2>
-            <span className="font-serif text-[0.95rem] text-khaki italic">
-              assessoria editorial
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="pointer-events-none absolute inset-y-0 w-8"
-        style={{
-          [side === "left" ? "right" : "left"]: 0,
-          background:
-            side === "left"
-              ? "linear-gradient(to right,transparent,rgb(1 10 26 / .45))"
-              : "linear-gradient(to left,transparent,rgb(1 10 26 / .45))",
-        }}
-      />
-    </div>
-  );
-}
-
-/** Miolo revelado — a página aberta. */
-function Spread() {
-  return (
-    <div
-      className="grain relative h-full w-full overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg,#f4ede5 0%,#e5dacd 100%)",
-        boxShadow: "var(--shadow-panel)",
-      }}
-    >
-      <div
-        className="absolute inset-y-0 left-1/2 w-12 -translate-x-1/2"
-        style={{
-          background:
-            "linear-gradient(to right,transparent,rgb(1 22 56 / .09) 48%,rgb(1 22 56 / .09) 52%,transparent)",
-        }}
-      />
-
-      <div className="relative flex h-full items-center justify-center px-[14%]">
-        <div className="flex flex-col items-center gap-5 text-center">
-          <p className="font-serif text-[clamp(1.15rem,2.1vw,1.7rem)] leading-[1.45] font-light text-ink/85">
-            Um original é matéria-prima.
-            <br />O livro vem depois da mesa.
-          </p>
-          <span className="h-px w-8 bg-khaki" />
-          <span className="font-serif text-[0.95rem] text-ink/45 italic">
-            desde 2011, em São Paulo
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function Hero() {
   const section = useRef<HTMLElement>(null);
-  const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
@@ -110,7 +23,7 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const helixRaw = useTransform(scrollYProgress, [0, 1], [0, -640]);
+  const helixRaw = useTransform(scrollYProgress, [0, 1], [0, -420]);
   const helixY = useSpring(helixRaw, {
     stiffness: 90,
     damping: 24,
@@ -121,11 +34,6 @@ export function Hero() {
   const textY = useTransform(scrollYProgress, [0, 1], [0, -32]);
   const cueOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
 
-  useEffect(() => {
-    const t = window.setTimeout(() => setOpen(true), reduced ? 0 : 900);
-    return () => window.clearTimeout(t);
-  }, [reduced]);
-
   return (
     <section
       ref={section}
@@ -133,14 +41,17 @@ export function Hero() {
     >
       <div className="glow-lavender pointer-events-none absolute inset-x-0 top-[-6%] h-[70%]" />
 
-      <div className="pointer-events-none absolute inset-y-[-25%] right-[-14%] w-[min(52vw,300px)] opacity-45 sm:right-[-4%] sm:opacity-60 lg:right-[13%] lg:w-[min(30vw,420px)] lg:opacity-100">
+      {/* marca d'água: a hélice deixou de ser uma tira lateral e virou o fundo
+          da seção inteira — presença sem disputar espaço com o texto */}
+      <div className="pointer-events-none absolute inset-y-[-30%] left-1/2 w-[min(88vw,430px)] -translate-x-1/2 opacity-70 lg:w-[min(46vw,520px)]">
         <Helix
           className="relative h-full w-full"
-          width={150}
-          viewHeight={1100}
-          turns={5}
-          rungsPerTurn={10}
-          strokeWidth={1.2}
+          width={300}
+          viewHeight={1350}
+          turns={3}
+          rungsPerTurn={9}
+          strokeWidth={1.15}
+          intensity={0.45}
           y={helixY}
         />
       </div>
@@ -214,22 +125,7 @@ export function Hero() {
           style={{ y: reduced ? 0 : bookY, opacity: bookOpacity }}
           className="relative mx-auto w-[min(62vw,290px)] sm:w-[min(56vw,330px)] lg:w-[min(30vw,380px)]"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 36, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1.8, delay: 0.5, ease }}
-          >
-            <Opening
-              className="aspect-[3/4.05] w-full"
-              open={open}
-              angle={72}
-              duration={2}
-              left={<CoverHalf side="left" />}
-              right={<CoverHalf side="right" />}
-              inner={<Spread />}
-              innerClassName="[transform:translateZ(-12px)]"
-            />
-          </motion.div>
+          <Manuscrito className="w-full" />
         </motion.div>
       </div>
 
