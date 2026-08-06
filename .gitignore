@@ -6,3 +6,7 @@ out
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
+
+# cache de bytecode das skills em Python — regenerado a cada execução
+__pycache__/
+*.pyc
