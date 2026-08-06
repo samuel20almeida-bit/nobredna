@@ -1,7 +1,7 @@
-# Editora Nobre DNA
+# Nobre DNA Assessoria Editorial
 
-Site da casa editorial: catálogo, página de livro, convite à publicação e
-checkout com Mercado Pago e frete pelo Melhor Envio.
+Site da assessoria editorial: catálogo, página de livro, convite à publicação
+e checkout com Mercado Pago e frete pelo Melhor Envio.
 
 Next.js 15 (App Router) · Tailwind CSS 4 · Framer Motion · deploy na Vercel.
 

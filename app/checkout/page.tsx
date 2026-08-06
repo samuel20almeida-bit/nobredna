@@ -4,7 +4,7 @@ import { HelixRail } from "@/components/helix-rail";
 
 export const metadata: Metadata = {
   title: "Checkout",
-  description: "Finalize seu pedido na Editora Nobre DNA.",
+  description: "Finalize seu pedido na Nobre DNA Assessoria Editorial.",
   robots: { index: false },
 };
 

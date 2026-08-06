@@ -7,7 +7,7 @@ export type ShippingOption = {
   service: string;
   carrier: string;
   priceCents: number;
-  /** prazo em dias úteis, já com o tempo de expedição da editora */
+  /** prazo em dias úteis, já com o tempo de expedição da casa */
   days: number;
 };
 
@@ -18,7 +18,7 @@ export type ShippingQuote = {
   notice?: string;
 };
 
-/** Dias úteis que a editora leva para despachar. */
+/** Dias úteis que a casa leva para despachar. */
 const HANDLING_DAYS = 2;
 
 export type NormalizedCart = {
@@ -161,7 +161,7 @@ export async function quoteShipping(
       Accept: "application/json",
       "User-Agent":
         process.env.MELHOR_ENVIO_USER_AGENT ??
-        "Editora Nobre DNA (contato@nobredna.com.br)",
+        "Nobre DNA Assessoria Editorial (contato@nobredna.com.br)",
     },
     body: JSON.stringify({
       from: { postal_code: origin },

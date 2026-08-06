@@ -12,7 +12,7 @@ const mensagens = {
   aprovado: {
     titulo: "Pedido confirmado.",
     texto:
-      "O pagamento foi aprovado. A editora despacha o exemplar em até dois dias úteis e envia o código de rastreio por e-mail.",
+      "O pagamento foi aprovado. A casa despacha o exemplar em até dois dias úteis e envia o código de rastreio por e-mail.",
   },
   pendente: {
     titulo: "Pagamento em análise.",
