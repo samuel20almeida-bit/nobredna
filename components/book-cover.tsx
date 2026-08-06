@@ -82,8 +82,19 @@ export function BookCover({
           }}
         />
 
-        {/* moldura gravada */}
-        <div className="absolute inset-[7.5%] left-[12%] rounded-[1px] border border-gold/25" />
+        {/* moldura gravada: o fio dourado também é metal, mais claro no alto
+            à esquerda e mais escuro na saída, como a luz do logo */}
+        <div
+          className="absolute inset-[7.5%] left-[12%] rounded-[1px] p-px"
+          style={{
+            background:
+              "linear-gradient(135deg,rgb(232 206 150 / .5) 0%,rgb(201 161 92 / .28) 45%,rgb(168 122 51 / .38) 100%)",
+            WebkitMask:
+              "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
 
         <div className="relative flex h-full flex-col items-center justify-between py-[13cqw] pr-[13cqw] pl-[20cqw] text-center">
           <span className="block w-[13cqw] text-gold/85">
@@ -91,7 +102,7 @@ export function BookCover({
           </span>
 
           <div className="flex flex-col gap-[0.55em]">
-            <h3 className="font-serif text-[8.4cqw] leading-[1.14] text-gold-light">
+            <h3 className="metal-text font-serif text-[8.4cqw] leading-[1.14]">
               {book.title}
             </h3>
             <span

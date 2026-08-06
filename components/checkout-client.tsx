@@ -240,7 +240,7 @@ export function CheckoutClient() {
                       type="button"
                       onClick={() => remove(book.slug)}
                       aria-label={`Remover ${book.title}`}
-                      className="text-cream/30 transition-colors duration-300 hover:text-gold"
+                      className="tap text-cream/30 transition-colors duration-300 hover:text-gold"
                     >
                       <Close size={16} />
                     </button>
@@ -252,7 +252,7 @@ export function CheckoutClient() {
                         type="button"
                         onClick={() => setQty(book.slug, qty - 1)}
                         aria-label="Diminuir"
-                        className="px-2.5 py-2 text-gold transition-colors duration-300 hover:bg-gold/10"
+                        className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10"
                       >
                         <Minus size={14} />
                       </button>
@@ -264,7 +264,7 @@ export function CheckoutClient() {
                         onClick={() => setQty(book.slug, qty + 1)}
                         disabled={qty >= 12}
                         aria-label="Aumentar"
-                        className="px-2.5 py-2 text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
+                        className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
                       >
                         <Plus size={14} />
                       </button>
@@ -459,7 +459,7 @@ export function CheckoutClient() {
             </div>
             <div className="flex justify-between border-t border-gold/15 pt-5 text-cream">
               <dt className="text-[0.7rem] tracking-[0.24em] uppercase">Total</dt>
-              <dd className="font-serif text-[1.5rem] tabular-nums text-gold-light">
+              <dd className="metal-text font-serif text-[1.5rem] tabular-nums">
                 {formatBRL(totalCents)}
               </dd>
             </div>

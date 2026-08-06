@@ -169,7 +169,7 @@ export function Testemunhos() {
               onClick={() => go(i)}
               aria-label={`Depoimento de ${d.name}`}
               aria-current={i === index}
-              className="group py-3"
+              className="group grid min-h-11 min-w-11 place-items-center"
             >
               <span
                 className={`block h-px transition-all duration-[900ms] ease-out ${

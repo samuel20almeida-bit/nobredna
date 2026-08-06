@@ -67,7 +67,7 @@ export function SiteNav() {
             type="button"
             onClick={() => setDrawerOpen(true)}
             aria-label={`Abrir a sacola${ready && count ? ` — ${count} item(ns)` : ""}`}
-            className="relative flex items-center gap-2 text-gold transition-opacity duration-500 hover:opacity-80"
+            className="tap relative flex items-center gap-2 text-gold transition-opacity duration-500 hover:opacity-80"
           >
             <Bag size={20} />
             {ready && count > 0 && (
@@ -82,7 +82,7 @@ export function SiteNav() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
-            className="text-gold md:hidden"
+            className="tap text-gold md:hidden"
           >
             {menuOpen ? <Close size={22} /> : <Menu size={22} />}
           </button>

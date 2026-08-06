@@ -61,12 +61,26 @@ export function Acervo() {
                   type="button"
                   onClick={() => setFilter(name)}
                   aria-pressed={active}
-                  className={`border px-4 py-2 text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 ${
+                  className={`flex min-h-11 items-center gap-2.5 border px-4 text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 ${
                     active
                       ? "border-gold bg-gold/12 text-gold-light"
                       : "border-gold/20 text-cream/50 hover:border-gold/50 hover:text-cream/80"
                   }`}
                 >
+                  {/* a pérola marca a escolha; o espaço dela existe sempre,
+                      para o botão não pular de largura ao ser selecionado */}
+                  <span className="grid h-[7px] w-[7px] place-items-center">
+                    <motion.span
+                      className="pearl block rounded-full"
+                      initial={false}
+                      animate={{
+                        width: active ? 7 : 0,
+                        height: active ? 7 : 0,
+                        opacity: active ? 1 : 0,
+                      }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  </span>
                   {name}
                 </button>
               );
@@ -99,7 +113,7 @@ export function Acervo() {
                   <p className="mt-1.5 text-[0.8rem] text-cream/45">
                     {book.author}
                   </p>
-                  <p className="mt-3 text-[0.85rem] tabular-nums text-gold">
+                  <p className="metal-text mt-3 text-[0.85rem] font-medium tabular-nums">
                     {formatBRL(book.priceCents)}
                   </p>
                 </div>

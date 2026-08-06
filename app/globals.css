@@ -93,6 +93,15 @@
     outline: 1px solid var(--color-gold);
     outline-offset: 3px;
   }
+
+  /* O preflight do Tailwind 4 devolve `cursor: default` aos botões, seguindo
+     o padrão do navegador. Num site com dezenas de controles em botão — filtro
+     do acervo, passos de quantidade, abrir sacola — isso faz o que é clicável
+     não parecer clicável. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 }
 
 @layer utilities {
@@ -112,12 +121,26 @@
   }
 
   /* Texto em ouro metálico — só para números e cifras curtas, onde o
-     recorte do gradiente ainda deixa a forma legível. */
+     recorte do gradiente ainda deixa a forma legível. Todas as paradas do
+     gradiente passam 4,5:1 sobre navy, a mais escura em 4,56:1. */
   .metal-text {
-    background: var(--metal-gold);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--color-gold-light);
+  }
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .metal-text {
+      background: var(--metal-gold);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+
+  /* Alvo de toque de 44px para botão só de ícone, sem mover o ícone:
+     a área cresce por padding e volta por margem negativa. */
+  .tap {
+    padding: 12px;
+    margin: -12px;
   }
 
   .eyebrow {

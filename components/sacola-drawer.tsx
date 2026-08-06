@@ -88,7 +88,7 @@ export function SacolaDrawer() {
             onPointerDown={(e) => e.stopPropagation()}
             onClick={drawer.close}
             aria-label="Fechar sacola"
-            className="text-cream/40 transition-colors duration-300 hover:text-gold"
+            className="tap text-cream/40 transition-colors duration-300 hover:text-gold"
           >
             <Close size={20} />
           </button>
@@ -142,7 +142,7 @@ export function SacolaDrawer() {
                         type="button"
                         onClick={() => remove(book.slug)}
                         aria-label={`Remover ${book.title}`}
-                        className="shrink-0 text-cream/25 transition-colors duration-300 hover:text-gold"
+                        className="tap shrink-0 text-cream/25 transition-colors duration-300 hover:text-gold"
                       >
                         <Close size={14} />
                       </button>
@@ -154,7 +154,7 @@ export function SacolaDrawer() {
                           type="button"
                           onClick={() => setQty(book.slug, qty - 1)}
                           aria-label="Diminuir"
-                          className="px-2.5 py-1.5 text-gold transition-colors duration-300 hover:bg-gold/10"
+                          className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10"
                         >
                           <Minus size={13} />
                         </button>
@@ -166,7 +166,7 @@ export function SacolaDrawer() {
                           onClick={() => setQty(book.slug, qty + 1)}
                           disabled={qty >= 12}
                           aria-label="Aumentar"
-                          className="px-2.5 py-1.5 text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
+                          className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
                         >
                           <Plus size={13} />
                         </button>
@@ -188,7 +188,7 @@ export function SacolaDrawer() {
               <span className="text-[0.66rem] tracking-[0.24em] uppercase text-cream/45">
                 Subtotal
               </span>
-              <span className="font-serif text-[1.5rem] tabular-nums text-gold-light">
+              <span className="metal-text font-serif text-[1.5rem] tabular-nums">
                 {formatBRL(subtotalCents)}
               </span>
             </div>

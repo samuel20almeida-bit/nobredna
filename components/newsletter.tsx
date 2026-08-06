@@ -110,7 +110,7 @@ export function Newsletter() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="nome@dominio.com.br"
-                      className="w-full bg-transparent text-[1rem] text-cream outline-none placeholder:text-cream/25"
+                      className="h-11 w-full bg-transparent text-[1rem] text-cream outline-none placeholder:text-cream/25"
                     />
                     <button
                       type="submit"

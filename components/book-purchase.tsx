@@ -23,7 +23,7 @@ export function BookPurchase({ book }: { book: Book }) {
           <p className="text-[0.6rem] tracking-[0.28em] uppercase text-cream/35">
             Preço
           </p>
-          <p className="mt-2 font-serif text-[2rem] tabular-nums text-gold-light">
+          <p className="metal-text mt-2 font-serif text-[2rem] tabular-nums">
             {formatBRL(book.priceCents)}
           </p>
           <p className="mt-1 text-[0.78rem] text-cream/40">
@@ -37,7 +37,7 @@ export function BookPurchase({ book }: { book: Book }) {
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             disabled={qty <= 1}
             aria-label="Diminuir quantidade"
-            className="px-3 py-3 text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
+            className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
           >
             <Minus size={16} />
           </button>
@@ -49,7 +49,7 @@ export function BookPurchase({ book }: { book: Book }) {
             onClick={() => setQty((q) => Math.min(12, q + 1))}
             disabled={qty >= 12}
             aria-label="Aumentar quantidade"
-            className="px-3 py-3 text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
+            className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
           >
             <Plus size={16} />
           </button>
