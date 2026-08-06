@@ -51,7 +51,7 @@ export function SacolaDrawer() {
         aria-hidden
         style={{ opacity: drawer.veil }}
         onClick={drawer.close}
-        className="absolute inset-0 bg-navy-deep/70 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-ink/70 backdrop-blur-[2px]"
       />
 
       <motion.div
@@ -64,20 +64,20 @@ export function SacolaDrawer() {
           touchAction: "pan-y",
           boxShadow: "var(--shadow-panel)",
         }}
-        className={`absolute inset-y-0 right-0 flex flex-col border-l border-gold/25 bg-navy outline-none ${
+        className={`absolute inset-y-0 right-0 flex flex-col border-l border-almond/25 bg-ink outline-none ${
           drawer.dragging ? "select-none" : ""
         }`}
         {...drawer.panelProps}
       >
         <header
           onPointerDown={drawer.gripProps.onPointerDown}
-          className={`flex select-none items-center justify-between gap-4 border-b border-gold/15 px-7 py-6 ${
+          className={`flex select-none items-center justify-between gap-4 border-b border-almond/15 px-7 py-6 ${
             drawer.dragging ? "cursor-grabbing" : "cursor-grab"
           }`}
         >
           <div>
-            <p className="eyebrow">Sua sacola</p>
-            <p className="mt-2 text-[0.82rem] text-cream/40">
+            <p className="label label-on-dark">Sua sacola</p>
+            <p className="mt-2 text-[0.82rem] text-almond/40">
               {count === 0
                 ? "nenhum exemplar"
                 : `${count} ${count === 1 ? "exemplar" : "exemplares"}`}
@@ -88,7 +88,7 @@ export function SacolaDrawer() {
             onPointerDown={(e) => e.stopPropagation()}
             onClick={drawer.close}
             aria-label="Fechar sacola"
-            className="tap text-cream/40 transition-colors duration-300 hover:text-gold"
+            className="tap text-almond/40 transition-colors duration-300 hover:text-lavender"
           >
             <Close size={20} />
           </button>
@@ -97,23 +97,23 @@ export function SacolaDrawer() {
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-7">
           {items.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-5 text-center">
-              <p className="font-serif text-[1.3rem] text-cream/75">
+              <p className="font-serif text-[1.3rem] text-almond/75">
                 Ainda vazia.
               </p>
-              <p className="max-w-[24ch] text-[0.88rem] leading-relaxed text-cream/40">
+              <p className="max-w-[24ch] text-[0.88rem] leading-relaxed text-almond/40">
                 O catálogo tem oito títulos, e cada um responde a uma pergunta
                 diferente.
               </p>
               <Link
                 href="/#acervo"
                 onClick={drawer.close}
-                className="mt-2 text-[0.7rem] tracking-[0.22em] uppercase text-gold underline decoration-gold/30 underline-offset-[7px] transition-colors duration-300 hover:text-gold-light"
+                className="mt-2 text-[0.7rem] font-serif italic text-lavender underline decoration-lavender/30 underline-offset-[7px] transition-colors duration-300 hover:text-almond"
               >
                 Ver o acervo
               </Link>
             </div>
           ) : (
-            <ul className="divide-y divide-gold/10">
+            <ul className="divide-y divide-almond/10">
               {items.map(({ book, qty }) => (
                 <li key={book.slug} className="flex gap-5 py-6">
                   <Link
@@ -130,11 +130,11 @@ export function SacolaDrawer() {
                         <Link
                           href={`/livro/${book.slug}`}
                           onClick={drawer.close}
-                          className="block truncate text-[0.95rem] text-cream transition-colors duration-300 hover:text-gold-light"
+                          className="block truncate text-[0.95rem] text-almond transition-colors duration-300 hover:text-almond"
                         >
                           {book.title}
                         </Link>
-                        <p className="mt-1 truncate text-[0.76rem] text-cream/40">
+                        <p className="mt-1 truncate text-[0.76rem] text-almond/40">
                           {book.author}
                         </p>
                       </div>
@@ -142,23 +142,23 @@ export function SacolaDrawer() {
                         type="button"
                         onClick={() => remove(book.slug)}
                         aria-label={`Remover ${book.title}`}
-                        className="tap shrink-0 text-cream/25 transition-colors duration-300 hover:text-gold"
+                        className="tap shrink-0 text-almond/25 transition-colors duration-300 hover:text-lavender"
                       >
                         <Close size={14} />
                       </button>
                     </div>
 
                     <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center border border-gold/20">
+                      <div className="flex items-center border border-almond/20">
                         <button
                           type="button"
                           onClick={() => setQty(book.slug, qty - 1)}
                           aria-label="Diminuir"
-                          className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10"
+                          className="grid h-11 w-11 place-items-center text-lavender transition-colors duration-300 hover:bg-lavender/10"
                         >
                           <Minus size={13} />
                         </button>
-                        <span className="w-6 text-center text-[0.8rem] tabular-nums text-cream">
+                        <span className="w-6 text-center text-[0.8rem] tabular-nums text-almond">
                           {qty}
                         </span>
                         <button
@@ -166,12 +166,12 @@ export function SacolaDrawer() {
                           onClick={() => setQty(book.slug, qty + 1)}
                           disabled={qty >= 12}
                           aria-label="Aumentar"
-                          className="grid h-11 w-11 place-items-center text-gold transition-colors duration-300 hover:bg-gold/10 disabled:opacity-30"
+                          className="grid h-11 w-11 place-items-center text-lavender transition-colors duration-300 hover:bg-lavender/10 disabled:opacity-30"
                         >
                           <Plus size={13} />
                         </button>
                       </div>
-                      <span className="text-[0.88rem] tabular-nums text-gold">
+                      <span className="text-[0.88rem] tabular-nums text-lavender">
                         {formatBRL(book.priceCents * qty)}
                       </span>
                     </div>
@@ -183,18 +183,18 @@ export function SacolaDrawer() {
         </div>
 
         {items.length > 0 && (
-          <div className="border-t border-gold/15 px-7 py-6">
+          <div className="border-t border-almond/15 px-7 py-6">
             <div className="flex items-baseline justify-between">
-              <span className="text-[0.66rem] tracking-[0.24em] uppercase text-cream/45">
+              <span className="font-serif text-[1rem] italic text-almond/45">
                 Subtotal
               </span>
-              <span className="metal-text font-serif text-[1.5rem] tabular-nums">
+              <span className="font-serif text-[1.5rem] tabular-nums">
                 {formatBRL(subtotalCents)}
               </span>
             </div>
 
-            <p className="mt-3 flex items-start gap-2.5 text-[0.74rem] leading-relaxed text-cream/35">
-              <span className="mt-0.5 shrink-0 text-gold/70">
+            <p className="mt-3 flex items-start gap-2.5 text-[0.74rem] leading-relaxed text-almond/35">
+              <span className="mt-0.5 shrink-0 text-lavender/70">
                 <Route size={14} />
               </span>
               Frete calculado pelo CEP no passo seguinte.
@@ -203,7 +203,7 @@ export function SacolaDrawer() {
             <Link
               href="/checkout"
               onClick={drawer.close}
-              className="group mt-6 flex items-center justify-center gap-3 border border-gold bg-gold/10 px-6 py-4 text-[0.74rem] tracking-[0.2em] uppercase text-gold-light transition-colors duration-500 hover:bg-gold/20"
+              className="group mt-6 flex items-center justify-center gap-3 rounded-full bg-almond px-6 py-4 font-serif text-[1.1rem] text-ink transition-colors duration-500 hover:bg-almond-lift"
             >
               Finalizar pedido
               <span className="transition-transform duration-500 group-hover:translate-x-1">

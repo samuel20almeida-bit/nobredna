@@ -61,15 +61,15 @@ export function Testemunhos() {
   return (
     <section
       id="testemunhos"
-      className="relative overflow-hidden bg-navy-deep py-28 lg:py-40"
+      className="relative overflow-hidden bg-ink py-28 lg:py-40"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="glow-gold pointer-events-none absolute inset-x-0 top-1/4 h-1/2" />
+      <div className="glow-lavender pointer-events-none absolute inset-x-0 top-1/4 h-1/2" />
 
       <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
         <motion.p
-          className="eyebrow"
+          className="label label-on-dark"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-120px" }}
@@ -88,8 +88,8 @@ export function Testemunhos() {
               exit={{ opacity: 0, transition: { duration: 0.7, ease: "easeIn" } }}
               transition={{ duration: 0.9 }}
             >
-              <blockquote className="max-w-[24ch] font-serif text-[clamp(1.75rem,4.4vw,3.4rem)] leading-[1.28] text-cream md:max-w-[20ch]">
-                <span className="text-gold-light/70">“</span>
+              <blockquote className="max-w-[24ch] font-serif text-[clamp(1.75rem,4.4vw,3.4rem)] leading-[1.28] text-almond md:max-w-[20ch]">
+                <span className="text-almond/70">“</span>
                 {atual.quote.split(" ").map((word, i) => (
                   <motion.span
                     key={`${index}-${i}`}
@@ -110,7 +110,7 @@ export function Testemunhos() {
                     {" "}
                   </motion.span>
                 ))}
-                <span className="text-gold-light/70">”</span>
+                <span className="text-almond/70">”</span>
               </blockquote>
 
               <motion.figcaption
@@ -119,11 +119,11 @@ export function Testemunhos() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.4, delay: 1.15 }}
               >
-                <span className="text-[0.85rem] tracking-[0.12em] text-gold-light">
+                <span className="text-[0.85rem] tracking-[0.12em] text-almond">
                   {atual.name}
                 </span>
-                <span className="text-[0.78rem] text-cream/40">{atual.role}</span>
-                <span className="mt-2 text-[0.62rem] tracking-[0.28em] uppercase text-cream/30">
+                <span className="text-[0.78rem] text-almond/40">{atual.role}</span>
+                <span className="mt-2 font-serif text-[1rem] italic text-almond/30">
                   sobre {atual.book}
                 </span>
               </motion.figcaption>
@@ -132,25 +132,25 @@ export function Testemunhos() {
           </div>
 
           {/* índice de vozes: dá endereço à seção sem apressar a leitura */}
-          <ul className="hidden lg:block lg:self-end lg:border-t lg:border-gold/15 lg:pt-8">
+          <ul className="hidden lg:block lg:self-end lg:border-t lg:border-almond/15 lg:pt-8">
             {depoimentos.map((d, i) => (
               <li key={`indice-${d.name}`}>
                 <button
                   type="button"
                   onClick={() => go(i)}
                   aria-current={i === index}
-                  className="w-full border-b border-gold/10 py-4 text-left last:border-none"
+                  className="w-full border-b border-almond/10 py-4 text-left last:border-none"
                 >
                   <span
                     className={`block text-[0.82rem] transition-colors duration-700 ${
-                      i === index ? "text-gold-light" : "text-cream/35"
+                      i === index ? "text-almond" : "text-almond/35"
                     }`}
                   >
                     {d.name}
                   </span>
                   <span
-                    className={`mt-1 block text-[0.66rem] tracking-[0.2em] uppercase transition-colors duration-700 ${
-                      i === index ? "text-gold/70" : "text-cream/20"
+                    className={`mt-1 block font-serif text-[1rem] italic transition-colors duration-700 ${
+                      i === index ? "text-lavender/70" : "text-almond/20"
                     }`}
                   >
                     {d.book}
@@ -174,8 +174,8 @@ export function Testemunhos() {
               <span
                 className={`block h-px transition-all duration-[900ms] ease-out ${
                   i === index
-                    ? "w-16 bg-gold"
-                    : "w-8 bg-cream/20 group-hover:bg-cream/45"
+                    ? "w-16 bg-lavender"
+                    : "w-8 bg-almond/20 group-hover:bg-almond/45"
                 }`}
               />
             </button>

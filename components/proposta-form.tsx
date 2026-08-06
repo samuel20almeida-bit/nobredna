@@ -45,20 +45,20 @@ export function PropostaForm() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="border border-gold/30 bg-gold/5 px-8 py-12 text-center"
+          className="border border-almond/30 bg-lavender/5 px-8 py-12 text-center"
         >
-          <span className="mx-auto block w-fit text-gold">
+          <span className="mx-auto block w-fit text-lavender">
             <Seal size={30} />
           </span>
-          <p className="mt-6 font-serif text-[1.5rem] text-gold-light">
+          <p className="mt-6 font-serif text-[1.5rem] text-almond">
             Seu manuscrito entrou na fila de leitura.
           </p>
-          <p className="mx-auto mt-4 max-w-[34rem] text-[0.92rem] leading-[1.8] text-cream/55">
+          <p className="mx-auto mt-4 max-w-[34rem] text-[0.92rem] leading-[1.8] text-almond/55">
             O conselho editorial responde a todas as propostas em até 60 dias,
             com um parecer escrito — inclusive quando a resposta é não.
           </p>
           {protocolo && (
-            <p className="mt-6 text-[0.68rem] tracking-[0.24em] uppercase text-cream/35">
+            <p className="mt-6 font-serif text-[1rem] italic text-almond/35">
               Protocolo {protocolo}
             </p>
           )}
@@ -79,20 +79,20 @@ export function PropostaForm() {
                 campo.name === "titulo" ? "md:col-span-2" : ""
               }`}
             >
-              <span className="text-[0.6rem] tracking-[0.28em] uppercase text-cream/40">
+              <span className="text-[0.6rem] font-serif italic text-almond/40">
                 {campo.label}
               </span>
               <input
                 name={campo.name}
                 type={campo.type}
                 required
-                className="border-b border-gold/25 bg-transparent pb-3 text-[1rem] text-cream outline-none transition-colors duration-300 focus:border-gold"
+                className="border-b border-almond/25 bg-transparent pb-3 text-[1rem] text-almond outline-none transition-colors duration-300 focus:border-almond"
               />
             </label>
           ))}
 
           <label className="flex flex-col gap-3 md:col-span-2">
-            <span className="text-[0.6rem] tracking-[0.28em] uppercase text-cream/40">
+            <span className="text-[0.6rem] font-serif italic text-almond/40">
               Em até 800 caracteres: sobre o que é o livro
             </span>
             <textarea
@@ -100,7 +100,7 @@ export function PropostaForm() {
               required
               rows={5}
               maxLength={800}
-              className="resize-none border border-gold/25 bg-transparent p-4 text-[0.98rem] leading-[1.8] text-cream outline-none transition-colors duration-300 focus:border-gold"
+              className="resize-none border border-almond/25 bg-transparent p-4 text-[0.98rem] leading-[1.8] text-almond outline-none transition-colors duration-300 focus:border-almond"
             />
           </label>
 
@@ -108,14 +108,14 @@ export function PropostaForm() {
             <button
               type="submit"
               disabled={estado === "enviando"}
-              className="group inline-flex items-center gap-3 border border-gold bg-gold/10 px-8 py-4 text-[0.76rem] tracking-[0.2em] uppercase text-gold-light transition-colors duration-500 hover:bg-gold/20 disabled:opacity-40"
+              className="group inline-flex items-center gap-3 rounded-full bg-almond px-8 py-4 font-serif text-[1.1rem] text-ink transition-colors duration-500 hover:bg-almond-lift disabled:opacity-40"
             >
               {estado === "enviando" ? "Enviando" : "Enviar proposta"}
               <span className="transition-transform duration-500 group-hover:translate-x-1">
                 <ArrowRight size={16} />
               </span>
             </button>
-            {erro && <p className="text-[0.85rem] text-gold-light/80">{erro}</p>}
+            {erro && <p className="text-[0.85rem] text-almond/80">{erro}</p>}
           </div>
         </motion.form>
       )}

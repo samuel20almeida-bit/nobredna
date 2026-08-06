@@ -32,22 +32,17 @@ export function SiteNav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-700 ${
         scrolled
-          ? "border-b border-gold/12 bg-navy/85 backdrop-blur-md"
+          ? "hairline border-b bg-almond/85 backdrop-blur-md"
           : "border-b border-transparent"
       }`}
     >
       <nav className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
-          className="flex items-center gap-3 text-gold transition-opacity duration-500 hover:opacity-80"
+          className="flex items-center gap-3 text-lavender-ink transition-opacity duration-500 hover:opacity-70"
         >
           <HelixMark size={22} />
-          <span
-            className="text-[0.7rem] text-cream"
-            style={{ letterSpacing: "0.3em", textTransform: "uppercase" }}
-          >
-            Nobre DNA
-          </span>
+          <span className="font-serif text-[1.15rem] text-ink">Nobre DNA</span>
         </Link>
 
         <div className="hidden items-center gap-10 md:flex">
@@ -55,7 +50,7 @@ export function SiteNav() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-[0.72rem] tracking-[0.22em] uppercase text-cream/60 transition-colors duration-500 hover:text-gold-light"
+              className="font-serif text-[1.08rem] text-ink/60 transition-colors duration-500 hover:text-ink"
             >
               {link.label}
             </Link>
@@ -67,11 +62,11 @@ export function SiteNav() {
             type="button"
             onClick={() => setDrawerOpen(true)}
             aria-label={`Abrir a sacola${ready && count ? ` — ${count} item(ns)` : ""}`}
-            className="tap relative flex items-center gap-2 text-gold transition-opacity duration-500 hover:opacity-80"
+            className="tap relative flex items-center gap-2 text-lavender-ink transition-opacity duration-500 hover:opacity-70"
           >
             <Bag size={20} />
             {ready && count > 0 && (
-              <span className="text-[0.7rem] tabular-nums text-cream/75">
+              <span className="font-serif text-[0.95rem] tabular-nums text-ink/70">
                 {count}
               </span>
             )}
@@ -82,7 +77,7 @@ export function SiteNav() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
-            className="tap text-gold md:hidden"
+            className="tap text-lavender-ink md:hidden"
           >
             {menuOpen ? <Close size={22} /> : <Menu size={22} />}
           </button>
@@ -96,14 +91,14 @@ export function SiteNav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-gold/12 bg-navy/95 backdrop-blur-md md:hidden"
+            className="hairline overflow-hidden border-t bg-almond/95 backdrop-blur-md md:hidden"
           >
             <div className="flex flex-col px-6 py-4">
               {links.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="border-b border-gold/10 py-4 text-[0.78rem] tracking-[0.22em] uppercase text-cream/70 last:border-none"
+                  className="hairline border-b py-4 font-serif text-[1.15rem] text-ink/70 last:border-none"
                 >
                   {link.label}
                 </Link>

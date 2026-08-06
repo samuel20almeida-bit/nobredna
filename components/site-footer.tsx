@@ -17,27 +17,27 @@ const casa = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative border-t border-gold/15 bg-navy-deep">
+    <footer className="relative border-t border-almond/15 bg-ink">
       <div className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
         <div className="grid gap-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-3 text-gold">
+            <Link href="/" className="flex items-center gap-3 text-lavender">
               <HelixMark size={24} />
               <span
-                className="text-[0.7rem] text-cream"
-                style={{ letterSpacing: "0.3em", textTransform: "uppercase" }}
+                className="text-[0.7rem] text-almond"
+                style={{ fontStyle: "italic" }}
               >
                 Editora Nobre DNA
               </span>
             </Link>
-            <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-cream/50">
+            <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/50">
               Casa editorial dedicada a obras sobre origem, continuidade e
               legado. Rua Bela Cintra, 1200 — Consolação, São Paulo.
             </p>
           </div>
 
           <nav aria-label="Catálogo">
-            <h4 className="text-[0.62rem] tracking-[0.3em] uppercase text-gold">
+            <h4 className="font-serif text-[1rem] italic text-lavender">
               Catálogo
             </h4>
             <ul className="mt-5 space-y-3">
@@ -45,7 +45,7 @@ export function SiteFooter() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-cream/55 transition-colors duration-500 hover:text-gold-light"
+                    className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
                   >
                     {item.label}
                   </Link>
@@ -55,7 +55,7 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="Coleções">
-            <h4 className="text-[0.62rem] tracking-[0.3em] uppercase text-gold">
+            <h4 className="font-serif text-[1rem] italic text-lavender">
               Coleções
             </h4>
             <ul className="mt-5 space-y-3">
@@ -63,7 +63,7 @@ export function SiteFooter() {
                 <li key={c.name}>
                   <Link
                     href="/#colecoes"
-                    className="text-sm text-cream/55 transition-colors duration-500 hover:text-gold-light"
+                    className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
                   >
                     {c.name}
                   </Link>
@@ -73,7 +73,7 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="A casa">
-            <h4 className="text-[0.62rem] tracking-[0.3em] uppercase text-gold">
+            <h4 className="font-serif text-[1rem] italic text-lavender">
               A casa
             </h4>
             <ul className="mt-5 space-y-3">
@@ -81,7 +81,7 @@ export function SiteFooter() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-cream/55 transition-colors duration-500 hover:text-gold-light"
+                    className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
                   >
                     {item.label}
                   </Link>
@@ -94,7 +94,7 @@ export function SiteFooter() {
         {/* o ornamento da base do logo, no lugar onde ele nasceu */}
         <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-gold/12 pt-8 text-[0.7rem] text-cream/35 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.7rem] text-almond/35 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Editora Nobre DNA · CNPJ 00.000.000/0001-00</p>
           <p>Pagamentos por Mercado Pago · Envio por Melhor Envio</p>
         </div>

@@ -1,10 +1,24 @@
 import { Crown, HelixMark, Seal } from "@/components/icons";
 import type { Book } from "@/lib/books";
 
-const tones: Record<Book["cover"]["tone"], string> = {
-  navy: "linear-gradient(168deg,#18243a 0%,#101a2c 52%,#0b1223 100%)",
-  deep: "linear-gradient(168deg,#101a2c 0%,#0a1220 55%,#070c16 100%)",
-  soft: "linear-gradient(168deg,#212f49 0%,#18243a 58%,#101a2c 100%)",
+/* As capas deixam de ser objetos escuros e lacados: agora são papel.
+   Cada coleção tem seu tom, os três dentro da paleta. */
+const tones: Record<Book["cover"]["tone"], { fundo: string; tinta: string; fio: string }> = {
+  navy: {
+    fundo: "linear-gradient(168deg,#003249 0%,#012238 60%,#011638 100%)",
+    tinta: "text-almond",
+    fio: "rgb(198 172 143 / .3)",
+  },
+  deep: {
+    fundo: "linear-gradient(168deg,#8f9cc0 0%,#7f8cb5 55%,#6a769c 100%)",
+    tinta: "text-ink",
+    fio: "rgb(1 22 56 / .22)",
+  },
+  soft: {
+    fundo: "linear-gradient(168deg,#d3bda2 0%,#c6ac8f 55%,#b2977a 100%)",
+    tinta: "text-ink",
+    fio: "rgb(1 22 56 / .22)",
+  },
 };
 
 function Ornament({ kind }: { kind: Book["cover"]["ornament"] }) {
@@ -45,22 +59,24 @@ export function BookCover({
   book: Book;
   className?: string;
 }) {
+  const tom = tones[book.cover.tone];
+
   return (
     <div
       className={`relative aspect-[2/3] w-full select-none @container ${className}`}
       style={{ filter: "drop-shadow(var(--shadow-book))" }}
     >
       <div
-        className="grain absolute inset-0 overflow-hidden rounded-[3px]"
-        style={{ background: tones[book.cover.tone] }}
+        className="grain absolute inset-0 overflow-hidden rounded-[2px]"
+        style={{ background: tom.fundo }}
       >
         {/* miolo: as folhas aparecem como uma faixa estreita na borda direita */}
         <div
           className="absolute inset-y-[1.5%] right-0 w-[2.2%]"
           style={{
             background:
-              "repeating-linear-gradient(to right,#b6ac95 0px,#b6ac95 1px,#7d7460 1px,#7d7460 2px)",
-            boxShadow: "inset 4px 0 6px -3px rgb(6 11 22 / .9)",
+              "repeating-linear-gradient(to right,#eae0d5 0px,#eae0d5 1px,#c3b6a6 1px,#c3b6a6 2px)",
+            boxShadow: "inset 4px 0 6px -3px rgb(1 22 56 / .55)",
           }}
         />
         {/* lombada */}
@@ -68,56 +84,41 @@ export function BookCover({
           className="absolute inset-y-0 left-0 w-[7%]"
           style={{
             background:
-              "linear-gradient(to right,rgb(6 11 22 / .85) 0%,rgb(6 11 22 / .35) 45%,transparent 100%)",
+              "linear-gradient(to right,rgb(1 22 56 / .3) 0%,rgb(1 22 56 / .1) 45%,transparent 100%)",
           }}
         />
-        <div className="absolute inset-y-0 left-[7%] w-px bg-gold/20" />
 
         {/* luz rasante vinda do alto à esquerda */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(122deg,rgb(232 217 168 / .13) 0%,transparent 38%)",
+              "linear-gradient(122deg,rgb(255 255 255 / .16) 0%,transparent 40%)",
           }}
         />
 
-        {/* moldura gravada: o fio dourado também é metal, mais claro no alto
-            à esquerda e mais escuro na saída, como a luz do logo */}
+        {/* moldura: um fio só, sem metal e sem gravação */}
         <div
-          className="absolute inset-[7.5%] left-[12%] rounded-[1px] p-px"
-          style={{
-            background:
-              "linear-gradient(135deg,rgb(232 206 150 / .5) 0%,rgb(201 161 92 / .28) 45%,rgb(168 122 51 / .38) 100%)",
-            WebkitMask:
-              "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-            WebkitMaskComposite: "xor",
-            maskComposite: "exclude",
-          }}
+          className="absolute inset-[8%] left-[12%]"
+          style={{ border: `1px solid ${tom.fio}` }}
         />
 
         <div className="relative flex h-full flex-col items-center justify-between py-[13cqw] pr-[13cqw] pl-[20cqw] text-center">
-          <span className="block w-[13cqw] text-gold/85">
+          <span className={`block w-[12cqw] opacity-70 ${tom.tinta}`}>
             <Ornament kind={book.cover.ornament} />
           </span>
 
           <div className="flex flex-col gap-[0.55em]">
-            <h3 className="metal-text font-serif text-[8.4cqw] leading-[1.14]">
+            <h3 className={`font-serif text-[8.6cqw] leading-[1.12] font-light ${tom.tinta}`}>
               {book.title}
             </h3>
-            <span
-              className="text-[3.1cqw] text-gold/70"
-              style={{ letterSpacing: "0.22em", textTransform: "uppercase" }}
-            >
+            <span className={`font-serif text-[3.9cqw] italic opacity-65 ${tom.tinta}`}>
               {book.author}
             </span>
           </div>
 
-          <span
-            className="text-[2.9cqw] text-gold/55"
-            style={{ letterSpacing: "0.26em", textTransform: "uppercase" }}
-          >
-            Coleção {book.collection}
+          <span className={`font-serif text-[3.4cqw] italic opacity-45 ${tom.tinta}`}>
+            coleção {book.collection}
           </span>
         </div>
       </div>

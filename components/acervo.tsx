@@ -26,29 +26,29 @@ export function Acervo() {
   );
 
   return (
-    <section id="acervo" className="relative bg-navy py-24 lg:py-32">
+    <section id="acervo" className="relative bg-almond py-24 lg:py-32">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div className="flex flex-col gap-8 border-b border-gold/15 pb-8 md:flex-row md:items-end md:justify-between">
+        <div className="hairline flex flex-col gap-8 border-b pb-10 md:flex-row md:items-end md:justify-between">
           <div>
             <motion.p
-              className="eyebrow flex items-center gap-3"
+              className="label flex items-center gap-3"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.4 }}
             >
-              <Spines size={16} />
-              Acervo Nobre
+              <Spines size={17} />
+              o acervo
             </motion.p>
             <motion.h2
-              className="mt-5 max-w-[20ch] text-[clamp(1.9rem,4vw,3rem)] leading-[1.12] text-cream"
+              className="mt-5 max-w-[20ch] text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-ink"
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               Oito títulos em catálogo.
-              <span className="text-cream/45"> Nenhum por acaso.</span>
+              <span className="text-ink/40 italic"> Nenhum por acaso.</span>
             </motion.h2>
           </div>
 
@@ -61,17 +61,17 @@ export function Acervo() {
                   type="button"
                   onClick={() => setFilter(name)}
                   aria-pressed={active}
-                  className={`flex min-h-11 items-center gap-2.5 border px-4 text-[0.68rem] tracking-[0.2em] uppercase transition-colors duration-200 ${
+                  className={`flex min-h-11 items-center gap-2.5 rounded-full px-4 font-serif text-[1.05rem] transition-colors duration-200 ${
                     active
-                      ? "border-gold bg-gold/12 text-gold-light"
-                      : "border-gold/20 text-cream/50 hover:border-gold/50 hover:text-cream/80"
+                      ? "bg-lavender/18 text-lavender-ink"
+                      : "text-ink/45 hover:bg-ink/5 hover:text-ink/75"
                   }`}
                 >
                   {/* a pérola marca a escolha; o espaço dela existe sempre,
                       para o botão não pular de largura ao ser selecionado */}
                   <span className="grid h-[7px] w-[7px] place-items-center">
                     <motion.span
-                      className="pearl block rounded-full"
+                      className="block rounded-full bg-khaki"
                       initial={false}
                       animate={{
                         width: active ? 7 : 0,
@@ -107,13 +107,13 @@ export function Acervo() {
                 </div>
 
                 <div className="mt-6">
-                  <h3 className="text-[1.05rem] leading-snug text-cream transition-colors duration-200 group-hover:text-gold-light">
+                  <h3 className="font-serif text-[1.3rem] leading-snug text-ink transition-colors duration-200 group-hover:text-lavender-ink">
                     {book.title}
                   </h3>
-                  <p className="mt-1.5 text-[0.8rem] text-cream/45">
+                  <p className="mt-1 font-serif text-[1.02rem] text-ink/45 italic">
                     {book.author}
                   </p>
-                  <p className="metal-text mt-3 text-[0.85rem] font-medium tabular-nums">
+                  <p className="mt-3 text-[0.85rem] tabular-nums text-khaki-ink">
                     {formatBRL(book.priceCents)}
                   </p>
                 </div>

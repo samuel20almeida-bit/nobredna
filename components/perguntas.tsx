@@ -72,19 +72,19 @@ function Linha({
   }, [ref, open]);
 
   return (
-    <div className="border-b border-gold/12">
+    <div className="border-b border-almond/12">
       <div role="heading" aria-level={3}>
         <button
           {...header}
           className="flex w-full items-start gap-6 py-7 text-left outline-none"
         >
-          <span className="mt-1 font-serif text-[0.85rem] tabular-nums text-gold-deep">
+          <span className="mt-1 font-serif text-[0.85rem] tabular-nums text-khaki">
             {String(index + 1).padStart(2, "0")}
           </span>
 
           <span
             className={`flex-1 font-serif text-[clamp(1.1rem,2.1vw,1.4rem)] leading-snug transition-colors duration-500 ${
-              open ? "text-gold-light" : "text-cream/85"
+              open ? "text-almond" : "text-almond/85"
             }`}
           >
             {item.q}
@@ -93,7 +93,7 @@ function Linha({
           {/* o mesmo gesto de abrir do resto do site, reduzido a um traço */}
           <motion.span
             aria-hidden="true"
-            className="relative mt-2 block h-3 w-3 shrink-0 text-gold"
+            className="relative mt-2 block h-3 w-3 shrink-0 text-lavender"
             initial={false}
             animate={{ rotate: open ? 45 : 0 }}
             transition={reduced ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -120,7 +120,7 @@ function Linha({
             initial={false}
             animate={{ opacity: open ? 1 : 0 }}
             transition={{ duration: open ? 0.5 : 0.2, ease: "easeOut" }}
-            className="max-w-[54ch] pr-10 pb-8 pl-[3.1rem] text-[0.97rem] leading-[1.85] text-cream/55"
+            className="max-w-[54ch] pr-10 pb-8 pl-[3.1rem] text-[0.97rem] leading-[1.85] text-almond/55"
           >
             {item.a}
           </motion.p>
@@ -144,7 +144,7 @@ export function Perguntas() {
   });
 
   return (
-    <div className="border-t border-gold/12">
+    <div className="border-t border-almond/12">
       {perguntas.map((item, i) => (
         <Linha
           key={item.id}

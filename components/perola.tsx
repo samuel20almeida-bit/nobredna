@@ -1,5 +1,5 @@
 /**
- * Pérola e divisor de pérola.
+ * Conta e divisor de conta.
  *
  * O logo termina num ornamento simples: fio fino, pérola, fio fino. É o
  * detalhe mais reconhecível da marca depois do monograma, e não existia no
@@ -17,7 +17,7 @@ export function Perola({
   return (
     <span
       aria-hidden="true"
-      className={`pearl block shrink-0 rounded-full ${className}`}
+      className={`block shrink-0 rounded-full bg-khaki ${className}`}
       style={{ width: size, height: size }}
     />
   );
@@ -35,8 +35,8 @@ export function DivisorPerola({
 }) {
   const fio =
     tone === "dark"
-      ? "linear-gradient(to right,transparent,rgb(201 161 92 / .55))"
-      : "linear-gradient(to right,transparent,rgb(168 122 51 / .5))";
+      ? "linear-gradient(to right,transparent,rgb(198 172 143 / .8))"
+      : "linear-gradient(to right,transparent,rgb(1 22 56 / .22))";
 
   return (
     <div

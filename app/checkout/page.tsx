@@ -14,10 +14,10 @@ export default function CheckoutPage() {
       {/* mesmo fio, em volume mínimo: o checkout não é lugar de ornamento */}
       <HelixRail side="left" width={26} fadeIn={0.04} from={0.6} />
 
-      <div className="relative z-10 bg-navy pt-32 pb-24">
+      <div className="relative z-10 bg-almond pt-32 pb-24">
         <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
-          <p className="eyebrow">Finalizar pedido</p>
-          <h1 className="mt-5 max-w-[20ch] text-[clamp(2rem,4.4vw,3rem)] leading-[1.1] text-cream">
+          <p className="label">Finalizar pedido</p>
+          <h1 className="mt-5 max-w-[20ch] text-[clamp(2rem,4.4vw,3rem)] leading-[1.1] text-ink">
             Um exemplar sai daqui em até dois dias úteis.
           </h1>
 

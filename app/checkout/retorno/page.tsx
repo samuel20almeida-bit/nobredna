@@ -41,22 +41,22 @@ export default async function RetornoPage({
   const mensagem = mensagens[chave];
 
   return (
-    <div className="relative z-10 bg-navy pt-40 pb-32">
+    <div className="relative z-10 bg-almond pt-40 pb-32">
       {chave === "aprovado" && <LimparSacola />}
 
       <div className="mx-auto max-w-[720px] px-6 text-center lg:px-10">
-        <span className="mx-auto block w-fit text-gold">
+        <span className="mx-auto block w-fit text-lavender-ink">
           <Seal size={34} />
         </span>
-        <h1 className="mt-8 text-[clamp(2rem,4.4vw,3rem)] leading-[1.12] text-cream">
+        <h1 className="mt-8 text-[clamp(2rem,4.4vw,3rem)] leading-[1.12] text-ink">
           {mensagem.titulo}
         </h1>
-        <p className="mx-auto mt-6 max-w-[36rem] text-[1rem] leading-[1.8] text-cream/55">
+        <p className="mx-auto mt-6 max-w-[36rem] text-[1rem] leading-[1.8] text-ink/55">
           {mensagem.texto}
         </p>
 
         {pedido && (
-          <p className="mt-8 text-[0.68rem] tracking-[0.26em] uppercase text-cream/35">
+          <p className="mt-8 font-serif text-[1rem] italic text-ink/35">
             Pedido {pedido}
           </p>
         )}
@@ -64,7 +64,7 @@ export default async function RetornoPage({
         <div className="mt-12 flex flex-wrap justify-center gap-6">
           <Link
             href="/#acervo"
-            className="group inline-flex items-center gap-3 border border-gold/40 px-7 py-3.5 text-[0.75rem] tracking-[0.2em] uppercase text-gold-light transition-colors duration-500 hover:border-gold hover:bg-gold/8"
+            className="group inline-flex items-center gap-3 rounded-full bg-ink/6 px-7 py-3.5 font-serif text-[1.1rem] text-ink transition-colors duration-500 hover:bg-ink/12"
           >
             Voltar ao acervo
             <span className="transition-transform duration-500 group-hover:translate-x-1">
@@ -74,7 +74,7 @@ export default async function RetornoPage({
           {chave === "recusado" && (
             <Link
               href="/checkout"
-              className="text-[0.75rem] tracking-[0.2em] uppercase text-cream/50 underline decoration-gold/30 underline-offset-[7px] transition-colors duration-500 hover:text-gold-light"
+              className="font-serif text-[1rem] italic text-ink/50 underline decoration-lavender-ink/30 underline-offset-[7px] transition-colors duration-500 hover:text-ink"
             >
               Tentar novamente
             </Link>

@@ -17,13 +17,13 @@ function CardHalf({ side }: { side: "left" | "right" }) {
           className="grain relative flex h-full w-full items-center justify-center"
           style={{
             background:
-              "linear-gradient(150deg,#1d2941 0%,#101a2c 55%,#090f1c 100%)",
+              "linear-gradient(150deg,#0a2440 0%,#011638 55%,#010e26 100%)",
           }}
         >
-          <div className="absolute inset-[6%] border border-gold/22" />
+          <div className="absolute inset-[6%] border border-almond/22" />
           <div
-            className="absolute inset-x-[6%] top-[16%] text-center text-[0.58rem] text-gold/60"
-            style={{ letterSpacing: "0.42em", textTransform: "uppercase" }}
+            className="absolute inset-x-[6%] top-[16%] text-center text-[0.58rem] text-lavender/60"
+            style={{ fontStyle: "italic" }}
           >
             Editora Nobre DNA
           </div>
@@ -34,19 +34,19 @@ function CardHalf({ side }: { side: "left" | "right" }) {
               className="absolute inset-0 rounded-full"
               style={{
                 background:
-                  "radial-gradient(circle at 34% 30%,#e8ce96 0%,#c9a15c 42%,#8a6127 100%)",
+                  "radial-gradient(circle at 34% 30%,#e0d2bd 0%,#c6ac8f 45%,#9c8060 100%)",
                 boxShadow: "var(--shadow-seal)",
               }}
             />
             <div className="absolute inset-[9%] rounded-full border border-navy/25" />
-            <span className="relative text-navy">
+            <span className="relative text-ink">
               <Crown size={30} />
             </span>
           </div>
 
           <div
-            className="absolute inset-x-[6%] bottom-[15%] text-center text-[0.56rem] text-gold/45"
-            style={{ letterSpacing: "0.34em", textTransform: "uppercase" }}
+            className="absolute inset-x-[6%] bottom-[15%] text-center text-[0.56rem] text-lavender/45"
+            style={{ fontStyle: "italic" }}
           >
             Convite à publicação
           </div>
@@ -70,27 +70,27 @@ function CardHalf({ side }: { side: "left" | "right" }) {
 function Carta() {
   return (
     <div
-      className="grain relative flex h-full w-full items-center justify-center overflow-hidden px-[9%] text-navy"
+      className="grain relative flex h-full w-full items-center justify-center overflow-hidden px-[9%] text-ink"
       style={{
-        background: "linear-gradient(180deg,#f6e9dc 0%,#e7d8c4 100%)",
+        background: "linear-gradient(180deg,#f4ede5 0%,#e5dacd 100%)",
         boxShadow: "var(--shadow-panel)",
       }}
     >
       <div className="max-w-[30rem] text-center">
-        <span className="mx-auto block w-fit text-gold-deep">
+        <span className="mx-auto block w-fit text-khaki">
           <HelixMark size={26} />
         </span>
         <p className="mt-5 font-serif text-[clamp(1.05rem,2.2vw,1.6rem)] leading-[1.5]">
           A casa lê tudo o que chega. Publica quatro títulos por ano.
         </p>
-        <p className="mt-4 text-[0.86rem] leading-[1.8] text-navy/60">
+        <p className="mt-4 text-[0.86rem] leading-[1.8] text-ink/60">
           Se o seu manuscrito trata de origem, continuidade ou do que uma
           geração deixa para a seguinte, ele tem lugar nesta mesa.
         </p>
-        <div className="mx-auto mt-6 h-px w-12 bg-navy/20" />
+        <div className="mx-auto mt-6 h-px w-12 bg-ink/20" />
         <p
-          className="mt-5 text-[0.55rem] text-navy/45"
-          style={{ letterSpacing: "0.34em", textTransform: "uppercase" }}
+          className="mt-5 text-[0.55rem] text-ink/45"
+          style={{ fontStyle: "italic" }}
         >
           Conselho editorial · São Paulo
         </p>
@@ -129,10 +129,10 @@ export function ConviteSelado() {
       )}
 
       <motion.p
-        className="mt-8 text-center text-[0.66rem] tracking-[0.28em] uppercase"
+        className="mt-8 text-center font-serif text-[1rem] italic"
         animate={{
           opacity: aberto ? 0.4 : 0.75,
-          color: aberto ? "#f6e9dc" : "#c9a15c",
+          color: aberto ? "#eae0d5" : "#7a5f42",
         }}
         transition={{ duration: 0.8 }}
       >
@@ -143,7 +143,7 @@ export function ConviteSelado() {
         <button
           type="button"
           onClick={() => setAberto(false)}
-          className="mx-auto mt-3 block text-[0.62rem] tracking-[0.2em] uppercase text-cream/30 transition-colors duration-500 hover:text-cream/60"
+          className="mx-auto mt-3 block font-serif text-[1rem] italic text-almond/30 transition-colors duration-500 hover:text-almond/60"
         >
           fechar
         </button>

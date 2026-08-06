@@ -36,18 +36,18 @@ export function Newsletter() {
   }
 
   return (
-    <section id="assine" className="relative bg-navy py-24 lg:py-28">
+    <section id="assine" className="relative bg-almond py-24 lg:py-28">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div className="grid items-center gap-12 border-y border-gold/15 py-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
+        <div className="grid items-center gap-12 border-y border-ink/15 py-16 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
-            <p className="eyebrow flex items-center gap-3">
+            <p className="label flex items-center gap-3">
               <Stamp size={16} />
               Carta mensal
             </p>
-            <h2 className="mt-5 max-w-[18ch] text-[clamp(1.7rem,3.4vw,2.6rem)] leading-[1.14] text-cream">
+            <h2 className="mt-5 max-w-[18ch] text-[clamp(1.7rem,3.4vw,2.6rem)] leading-[1.14] text-ink">
               Uma carta por mês, sobre um livro só.
             </h2>
-            <p className="mt-6 max-w-[32rem] text-[0.98rem] leading-[1.8] text-cream/55">
+            <p className="mt-6 max-w-[32rem] text-[0.98rem] leading-[1.8] text-ink/55">
               Escrevemos sobre o título que entrou em catálogo, o motivo da
               escolha e o trecho que sustentou a decisão. Sem calendário
               comercial, sem promoção.
@@ -64,13 +64,13 @@ export function Newsletter() {
                   className="flex flex-col gap-5"
                 >
                   <motion.span
-                    className="block h-px bg-gold origin-left"
+                    className="block h-px bg-lavender origin-left"
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   />
                   <motion.p
-                    className="font-serif text-[1.35rem] leading-snug text-gold-light"
+                    className="font-serif text-[1.35rem] leading-snug text-ink"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.35 }}
@@ -78,13 +78,13 @@ export function Newsletter() {
                     Está registrado.
                   </motion.p>
                   <motion.p
-                    className="text-[0.9rem] leading-relaxed text-cream/50"
+                    className="text-[0.9rem] leading-relaxed text-ink/50"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.5 }}
                   >
                     A próxima carta sai na primeira semana do mês, para{" "}
-                    <span className="text-cream/75">{email}</span>.
+                    <span className="text-ink/75">{email}</span>.
                   </motion.p>
                 </motion.div>
               ) : (
@@ -98,11 +98,11 @@ export function Newsletter() {
                 >
                   <label
                     htmlFor="carta-email"
-                    className="text-[0.62rem] tracking-[0.28em] uppercase text-cream/40"
+                    className="font-serif text-[1rem] italic text-ink/40"
                   >
                     Seu e-mail
                   </label>
-                  <div className="flex items-center gap-4 border-b border-gold/30 pb-3 transition-colors duration-300 focus-within:border-gold">
+                  <div className="flex items-center gap-4 border-b border-ink/30 pb-3 transition-colors duration-300 focus-within:border-ink">
                     <input
                       id="carta-email"
                       type="email"
@@ -110,12 +110,12 @@ export function Newsletter() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="nome@dominio.com.br"
-                      className="h-11 w-full bg-transparent text-[1rem] text-cream outline-none placeholder:text-cream/25"
+                      className="h-11 w-full bg-transparent text-[1rem] text-ink outline-none placeholder:text-ink/25"
                     />
                     <button
                       type="submit"
                       disabled={estado === "enviando"}
-                      className="group flex shrink-0 items-center gap-2 text-[0.7rem] tracking-[0.22em] uppercase text-gold transition-opacity duration-300 hover:text-gold-light disabled:opacity-40"
+                      className="group flex shrink-0 items-center gap-2 text-[0.7rem] font-serif italic text-lavender-ink transition-opacity duration-300 hover:text-ink disabled:opacity-40"
                     >
                       {estado === "enviando" ? "Enviando" : "Assinar"}
                       <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -124,9 +124,9 @@ export function Newsletter() {
                     </button>
                   </div>
                   {erro && (
-                    <p className="text-[0.8rem] text-gold-light/80">{erro}</p>
+                    <p className="text-[0.8rem] text-ink/80">{erro}</p>
                   )}
-                  <p className="text-[0.72rem] leading-relaxed text-cream/30">
+                  <p className="text-[0.72rem] leading-relaxed text-ink/30">
                     Cancelamento em um clique, em qualquer carta.
                   </p>
                 </motion.form>
