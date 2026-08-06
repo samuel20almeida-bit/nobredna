@@ -23,10 +23,10 @@ const portas = [
     texto:
       "Devocionais curtos, para caber numa manhã de verdade. Cada título tem um dia inteiro para ler antes de decidir.",
     acao: "ver os livros",
-    // sépia: o chão da leitora, repetido em toda a /livros
-    fundo: "bg-sepia hover:bg-sepia-soft",
+    // vinho: o chão da leitora, repetido em toda a /livros
+    fundo: "bg-vinho hover:bg-vinho-soft",
     acento: "text-khaki",
-    rotulo: "label-on-sepia",
+    rotulo: "label-on-vinho",
   },
   {
     href: "/publique",

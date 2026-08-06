@@ -13,7 +13,7 @@ import { useCart } from "@/lib/cart";
  * Rotas cujo topo é escuro.
  *
  * A nav é transparente antes de rolar, então ela empresta o fundo do hero. Com
- * a /livros em sépia, a tinta escura do logo e dos links praticamente sumia —
+ * a /livros em vinho, a tinta escura do logo e dos links praticamente sumia —
  * o preço de dar um chão profundo à trilha da leitora. Aqui a nav inverte para
  * o creme enquanto está no topo dessas rotas; assim que rola, ela ganha o
  * próprio fundo claro e volta ao normal.

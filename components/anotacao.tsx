@@ -41,7 +41,7 @@ export function Anotacao({
 }: {
   children: ReactNode;
   marca?: "sublinhado" | "margem";
-  /** `escuro` para fundos sépia ou tinta: o lápis vira khaki claro */
+  /** `escuro` para fundos vinho ou tinta: o lápis vira khaki claro */
   tom?: "claro" | "escuro";
   className?: string;
 }) {

@@ -21,13 +21,13 @@ export default function LivrosPage() {
       <HelixRail side="right" width={40} fadeIn={0.05} from={0.75} />
 
       <div className="relative z-10">
-        {/* sépia: o chão da leitora. Quebra o creme logo na primeira dobra e
+        {/* vinho: o chão da leitora. Quebra o creme logo na primeira dobra e
             diz, antes de qualquer texto, em que lado do site se está. */}
-        <section className="grain relative overflow-hidden bg-sepia pt-36 pb-16 lg:pt-44">
+        <section className="grain relative overflow-hidden bg-vinho pt-36 pb-16 lg:pt-44">
           <div className="glow-khaki pointer-events-none absolute inset-x-0 top-0 h-[60%]" />
 
           <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-            <p className="label label-on-sepia">{autora.linha.toLowerCase()}</p>
+            <p className="label label-on-vinho">{autora.linha.toLowerCase()}</p>
             <h1 className="mt-6 max-w-[16ch] text-[clamp(2.6rem,5.6vw,4.2rem)] leading-[1.02] font-light text-balance text-almond">
               Livros para dias
               <span className="text-khaki italic"> comuns.</span>

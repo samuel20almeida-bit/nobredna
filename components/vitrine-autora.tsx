@@ -15,14 +15,14 @@ import { autora } from "@/lib/autora";
  */
 export function VitrineAutora() {
   return (
-    // O bloco da loja na home usa o sépia da /livros: quem desce a página
+    // O bloco da loja na home usa o vinho da /livros: quem desce a página
     // atravessa o mesmo chão que encontrará ao entrar por aquela porta.
-    <section id="livros" className="grain relative bg-sepia py-24 lg:py-32">
+    <section id="livros" className="grain relative bg-vinho py-24 lg:py-32">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
         <div className="hairline flex flex-col gap-8 border-b pb-10 md:flex-row md:items-end md:justify-between">
           <div>
             <motion.p
-              className="label label-on-sepia"
+              className="label label-on-vinho"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "-80px" }}
