@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BookCover } from "@/components/book-cover";
 import { BookPurchase } from "@/components/book-purchase";
 import { HelixRail } from "@/components/helix-rail";
+import { DivisorPerola } from "@/components/perola";
 import { ArrowLeft, Route } from "@/components/icons";
 import { books, getBook, relatedBooks } from "@/lib/books";
 import { formatBRL } from "@/lib/format";
@@ -31,10 +32,16 @@ export default async function BookPage({ params }: Params) {
   if (!book) notFound();
 
   const relacionados = relatedBooks(slug);
+  const daAutora = book.origem === "autora";
 
   const ficha = [
     { k: "Autoria", v: book.author },
-    { k: "Coleção", v: book.collection },
+    daAutora
+      ? {
+          k: "Formato",
+          v: book.formato === "devocional" ? "Devocional" : "Leitura corrida",
+        }
+      : { k: "Coleção", v: book.collection },
     { k: "Publicação", v: String(book.year) },
     { k: "Páginas", v: String(book.pages) },
     { k: "Acabamento", v: book.binding },
@@ -49,13 +56,13 @@ export default async function BookPage({ params }: Params) {
       <article className="relative z-10 bg-almond pt-32 pb-24">
         <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
           <Link
-            href="/#acervo"
+            href={daAutora ? "/livros" : "/#acervo"}
             className="group inline-flex items-center gap-3 font-serif text-[1.05rem] italic text-ink/40 transition-colors duration-500 hover:text-ink"
           >
             <span className="transition-transform duration-500 group-hover:-translate-x-1">
               <ArrowLeft size={15} />
             </span>
-            livros feitos aqui
+            {daAutora ? "todos os livros" : "livros feitos aqui"}
           </Link>
 
           <div className="mt-12 grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
@@ -69,7 +76,15 @@ export default async function BookPage({ params }: Params) {
             </div>
 
             <div>
-              <p className="label">Coleção {book.collection}</p>
+              <p className="label">
+                {daAutora
+                  ? book.serie
+                    ? `Série ${book.serie}`
+                    : book.formato === "devocional"
+                      ? "Devocional"
+                      : "Livro"
+                  : `Coleção ${book.collection}`}
+              </p>
               <h1 className="mt-5 text-[clamp(2.1rem,4.6vw,3.4rem)] leading-[1.08] text-balance text-ink">
                 {book.title}
               </h1>
@@ -102,6 +117,37 @@ export default async function BookPage({ params }: Params) {
                 </cite>
               </blockquote>
 
+              {/* Um devocional não se decide pela sinopse: se decide lendo um
+                  dia inteiro e vendo se a voz serve. A amostra é a vitrine. */}
+              {book.origem === "autora" && book.amostra && (
+                <section
+                  aria-label="Leitura de amostra"
+                  className="mt-16 max-w-[38rem] border border-ink/12 bg-almond-lift/70 px-7 py-9 sm:px-9"
+                >
+                  <p className="label">leia um dia antes de levar</p>
+                  <h2 className="mt-4 font-serif text-[1.45rem] leading-snug font-light text-ink">
+                    {book.amostra.titulo}
+                  </h2>
+
+                  <p className="mt-6 font-serif text-[1.12rem] leading-[1.6] text-lavender-ink italic">
+                    “{book.amostra.versiculo}”
+                  </p>
+                  <p className="mt-2 font-serif text-[1rem] text-khaki-ink italic">
+                    {book.amostra.referencia}
+                  </p>
+
+                  <DivisorPerola
+                    tone="light"
+                    className="my-7"
+                    width="min(12rem,60%)"
+                  />
+
+                  <p className="text-[1rem] leading-[1.9] text-ink/70">
+                    {book.amostra.texto}
+                  </p>
+                </section>
+              )}
+
               <dl className="mt-16 grid max-w-[38rem] grid-cols-1 gap-px border border-ink/12 bg-lavender/12 sm:grid-cols-2">
                 {ficha.map((item) => (
                   <div key={item.k} className="bg-almond px-6 py-5">
@@ -115,25 +161,29 @@ export default async function BookPage({ params }: Params) {
                 ))}
               </dl>
 
-              {/* o portfólio da casa vive aqui: o que foi feito neste título */}
-              <div className="hairline mt-12 max-w-[38rem] border-t pt-8">
-                <p className="label">o que a casa fez neste livro</p>
-                <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-2">
-                  {book.trabalho.map((etapa) => (
-                    <li
-                      key={etapa}
-                      className="rounded-full bg-khaki/25 px-4 py-1.5 font-serif text-[1rem] text-ink/75"
-                    >
-                      {etapa}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 max-w-[34rem] text-[0.9rem] leading-[1.8] text-ink/50">
-                  Os direitos e o ISBN são de {book.author}. A Nobre DNA
-                  assinou o trabalho de mesa e cuida da venda deste exemplar
-                  em nome do autor.
-                </p>
-              </div>
+              {/* o portfólio da casa vive aqui: o que foi feito neste título.
+                  Só existe do lado da assessoria — na estante da autora não há
+                  cliente a creditar, e a página não deve fingir que há. */}
+              {book.origem === "assessoria" && (
+                <div className="hairline mt-12 max-w-[38rem] border-t pt-8">
+                  <p className="label">o que a casa fez neste livro</p>
+                  <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-2">
+                    {book.trabalho.map((etapa) => (
+                      <li
+                        key={etapa}
+                        className="rounded-full bg-khaki/25 px-4 py-1.5 font-serif text-[1rem] text-ink/75"
+                      >
+                        {etapa}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-6 max-w-[34rem] text-[0.9rem] leading-[1.8] text-ink/50">
+                    Os direitos e o ISBN são de {book.author}. A Nobre DNA
+                    assinou o trabalho de mesa e cuida da venda deste exemplar
+                    em nome do autor.
+                  </p>
+                </div>
+              )}
 
               <p className="mt-8 flex items-start gap-3 text-[0.85rem] leading-relaxed text-ink/45">
                 <span className="mt-0.5 shrink-0 text-lavender-ink">

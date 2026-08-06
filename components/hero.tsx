@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import { Helix } from "@/components/helix";
 import { Manuscrito } from "@/components/manuscrito";
+import { autora } from "@/lib/autora";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -64,11 +65,11 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.35, ease }}
           >
-            assessoria editorial
+            {autora.linha.toLowerCase()}
           </motion.p>
 
           <h1 className="mt-6 text-[clamp(2.9rem,7vw,5.2rem)] leading-[0.98] font-light text-ink">
-            {["Seu livro existe.", "Falta o trabalho", "de mesa."].map(
+            {["Escrevo livros.", "E ajudo outros", "a escrever."].map(
               (line, i) => (
                 <motion.span
                   key={line}
@@ -93,10 +94,10 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.3, delay: 1.55, ease }}
           >
-            Somos uma assessoria editorial. Lemos, preparamos, revisamos,
-            desenhamos e pomos para circular livros sobre origem, continuidade
-            e o que uma geração entrega à seguinte. O livro continua sendo do
-            autor — nós assinamos só o ofício.
+            Sou {autora.nome}, escritora de devocionais. Depois de publicar os
+            meus livros aprendendo cada etapa do ofício, abri esta casa para
+            fazer o mesmo trabalho de mesa por outros autores — sem nunca tomar
+            deles o que é seu.
           </motion.p>
 
           <motion.div
@@ -106,17 +107,17 @@ export function Hero() {
             transition={{ duration: 1.2, delay: 1.95, ease }}
           >
             <Link
-              href="#servicos"
+              href="/livros"
               className="group font-serif text-[1.2rem] text-ink transition-colors duration-500 hover:text-lavender-ink"
             >
-              O que a casa faz
+              Ver meus livros
               <span className="mt-1.5 block h-px w-full origin-left scale-x-100 bg-ink/25 transition-colors duration-500 group-hover:bg-lavender-ink" />
             </Link>
             <Link
               href="/publique"
               className="font-serif text-[1.2rem] text-ink/45 italic transition-colors duration-500 hover:text-ink/80"
             >
-              enviar meu original
+              quero publicar o meu
             </Link>
           </motion.div>
         </motion.div>

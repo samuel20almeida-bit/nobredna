@@ -142,7 +142,10 @@ export async function POST(request: Request) {
       return {
         id: book.slug,
         title: book.title,
-        description: `${book.author} · Coleção ${book.collection}`,
+        description:
+          book.origem === "assessoria"
+            ? `${book.author} · Coleção ${book.collection}`
+            : `${book.author}${book.serie ? ` · Série ${book.serie}` : ""}`,
         category_id: "books",
         quantity: product.quantity,
         currency_id: "BRL",

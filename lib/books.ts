@@ -1,9 +1,25 @@
-export type Book = {
+/**
+ * A casa tem duas estantes, e elas não se misturam.
+ *
+ * A da autora é loja: são os livros dela, que o leitor compra. A da assessoria
+ * é portfólio: são livros de outros autores, que passaram por esta mesa e estão
+ * aqui para mostrar o trabalho — a venda acontece em nome de quem escreveu.
+ *
+ * A distinção é um union discriminado por `origem` de propósito. Os dois tipos
+ * carregam campos que só fazem sentido de um lado (`trabalho` é portfólio,
+ * `formato` é leitura), e o TypeScript recusa a mistura em vez de deixar passar
+ * um devocional com etapa de copidesque ou um livro de cliente na vitrine dela.
+ */
+
+import { AUTORA_NOME } from "@/lib/autora";
+
+export type Colecao = "Origem" | "Linhagem" | "Herança";
+
+type LivroBase = {
   slug: string;
   title: string;
   subtitle: string;
   author: string;
-  collection: "Origem" | "Linhagem" | "Herança";
   /** preço em centavos — nunca em float */
   priceCents: number;
   pages: number;
@@ -12,8 +28,6 @@ export type Book = {
   binding: string;
   /** frase curta de vitrine */
   line: string;
-  /** o que a assessoria fez neste título — é o portfólio da casa */
-  trabalho: string[];
   synopsis: string[];
   excerpt: string;
   /** variação de capa: define o tom e o ornamento gravado */
@@ -30,6 +44,35 @@ export type Book = {
   };
 };
 
+/** Livro da autora da casa — vai para a loja. */
+export type LivroDaAutora = LivroBase & {
+  origem: "autora";
+  /** série devocional a que pertence, quando houver */
+  serie?: string;
+  /**
+   * Devocional se lê por dia, não do começo ao fim — e por isso a página
+   * mostra uma leitura de amostra em vez de só sinopse e botão.
+   */
+  formato: "devocional" | "integral";
+  /** amostra de leitura: uma entrada do devocional, para experimentar antes */
+  amostra?: {
+    titulo: string;
+    versiculo: string;
+    referencia: string;
+    texto: string;
+  };
+};
+
+/** Livro de autor atendido pela assessoria — vai para o portfólio. */
+export type LivroDaAssessoria = LivroBase & {
+  origem: "assessoria";
+  collection: Colecao;
+  /** o que a assessoria fez neste título — é o portfólio da casa */
+  trabalho: string[];
+};
+
+export type Book = LivroDaAutora | LivroDaAssessoria;
+
 const parcel = {
   weightKg: 0.48,
   widthCm: 16,
@@ -38,8 +81,98 @@ const parcel = {
 };
 
 export const books: Book[] = [
+  /* ── A estante da autora ──────────────────────────────────────────────
+     PROVISÓRIO. Títulos, textos, preços, ISBN e páginas são de exemplo,
+     escritos só para a estrutura ficar de pé e navegável. Trocar por dados
+     reais antes de qualquer divulgação — nada aqui foi escrito por ela.
+     O nome sai de lib/autora.ts, então basta editar num lugar só. */
+  {
+    slug: "manhas-com-ele",
+    origem: "autora",
+    title: "Manhãs com Ele",
+    subtitle: "Devocional de sessenta dias",
+    author: AUTORA_NOME,
+    formato: "devocional",
+    serie: "Manhãs",
+    priceCents: 6900,
+    pages: 168,
+    year: 2024,
+    isbn: "978-65-0000-101-2",
+    binding: "Capa dura, costurada, papel pólen 80g, marcador em fita",
+    line: "Sessenta manhãs para começar o dia com Ele antes de tudo.",
+    synopsis: [
+      "Sessenta leituras curtas, uma para cada manhã, pensadas para quem quer começar o dia na presença de Deus mas nunca encontra tempo.",
+      "Cada entrada traz um versículo, uma reflexão de uma página e uma oração breve — o suficiente para caber antes da casa acordar.",
+    ],
+    excerpt:
+      "Deus não pede a sua manhã inteira. Pede o primeiro pensamento dela.",
+    amostra: {
+      titulo: "Dia 1 · O primeiro pensamento",
+      versiculo:
+        "De manhã, ó Senhor, ouves a minha voz; de manhã te apresento a minha oração e fico esperando.",
+      referencia: "Salmos 5:3",
+      texto:
+        "Há uma diferença entre acordar e despertar. A maioria de nós acorda com o celular na mão e desperta já devendo alguma coisa a alguém. Este devocional é um convite a inverter a ordem: antes da lista, antes da notícia, antes do primeiro pedido do dia, uma frase dirigida a Deus. Não precisa ser bonita. Precisa ser primeira.",
+    },
+    cover: { tone: "soft", ornament: "rule" },
+    shipping: parcel,
+  },
+  {
+    slug: "o-deserto-tambem-floresce",
+    origem: "autora",
+    title: "O Deserto Também Floresce",
+    subtitle: "Devocional para tempos de espera",
+    author: AUTORA_NOME,
+    formato: "devocional",
+    priceCents: 7400,
+    pages: 192,
+    year: 2023,
+    isbn: "978-65-0000-102-9",
+    binding: "Brochura com orelhas, papel pólen 80g",
+    line: "Para quem está no meio da travessia e ainda não vê a outra margem.",
+    synopsis: [
+      "Quarenta leituras escritas para o tempo em que a oração parece não ser respondida e a espera já dura mais do que se imaginava suportar.",
+      "O livro não promete atalho: acompanha o deserto de dentro, com os textos bíblicos de quem também esperou muito antes de ver.",
+    ],
+    excerpt:
+      "O deserto não é o desvio do caminho. Muitas vezes é o caminho, e é nele que se aprende a andar.",
+    amostra: {
+      titulo: "Dia 7 · O que cresce no seco",
+      versiculo:
+        "O deserto e a terra ressequida se alegrarão; o ermo exultará e florescerá como o açafrão.",
+      referencia: "Isaías 35:1",
+      texto:
+        "Ninguém escolhe o deserto. Chegamos nele por perda, por demora, por uma porta que não abriu. E a primeira coisa que o deserto faz é calar as vozes que nos distraíam — inclusive as boas. É por isso que ele é lugar de encontro: sobra pouca coisa, e o pouco que sobra é o essencial.",
+    },
+    cover: { tone: "navy", ornament: "seal" },
+    shipping: parcel,
+  },
+  {
+    slug: "cartas-para-dias-dificeis",
+    origem: "autora",
+    title: "Cartas para Dias Difíceis",
+    subtitle: "Trinta cartas de fé",
+    author: AUTORA_NOME,
+    formato: "integral",
+    priceCents: 6400,
+    pages: 144,
+    year: 2022,
+    isbn: "978-65-0000-103-6",
+    binding: "Brochura, papel avena 90g",
+    line: "Trinta cartas para ler quando faltar chão.",
+    synopsis: [
+      "Trinta cartas escritas ao longo de dois anos para mulheres que atravessavam luto, diagnóstico, separação ou desemprego.",
+      "Publicadas com autorização das destinatárias, com os nomes trocados e o essencial mantido: a fé dita em voz baixa, no meio da dor, sem resposta pronta.",
+    ],
+    excerpt:
+      "Não vou te dizer que Deus tem um propósito nisso. Vou te dizer que Ele está aí dentro com você, e isso eu sei porque já estive.",
+    cover: { tone: "deep", ornament: "crown" },
+    shipping: parcel,
+  },
+  /* ── A estante da assessoria: livros de outros autores ───────────────── */
   {
     slug: "heranca-invisivel",
+    origem: "assessoria",
     title: "Herança Invisível",
     subtitle: "Sobre o que se transmite sem escritura",
     author: "Marina Vasconcelos",
@@ -62,6 +195,7 @@ export const books: Book[] = [
   },
   {
     slug: "o-nome-que-carregamos",
+    origem: "assessoria",
     title: "O Nome que Carregamos",
     subtitle: "Ensaio sobre pertencimento e peso",
     author: "Rui Belmonte",
@@ -84,6 +218,7 @@ export const books: Book[] = [
   },
   {
     slug: "arquitetura-do-legado",
+    origem: "assessoria",
     title: "Arquitetura do Legado",
     subtitle: "Como instituições duram",
     author: "Helena Prado Cardim",
@@ -106,6 +241,7 @@ export const books: Book[] = [
   },
   {
     slug: "cartas-ao-herdeiro",
+    origem: "assessoria",
     title: "Cartas ao Herdeiro",
     subtitle: "Correspondência reunida, 1968–1994",
     author: "Antônio Meireles",
@@ -128,6 +264,7 @@ export const books: Book[] = [
   },
   {
     slug: "materia-de-origem",
+    origem: "assessoria",
     title: "Matéria de Origem",
     subtitle: "Poemas reunidos",
     author: "Clarice Bandeira",
@@ -150,6 +287,7 @@ export const books: Book[] = [
   },
   {
     slug: "a-casa-e-o-sangue",
+    origem: "assessoria",
     title: "A Casa e o Sangue",
     subtitle: "Romance",
     author: "Joaquim Ferraz de Sá",
@@ -172,6 +310,7 @@ export const books: Book[] = [
   },
   {
     slug: "vinte-geracoes",
+    origem: "assessoria",
     title: "Vinte Gerações",
     subtitle: "Uma investigação sobre continuidade",
     author: "Teresa Almendra",
@@ -194,6 +333,7 @@ export const books: Book[] = [
   },
   {
     slug: "o-peso-do-sobrenome",
+    origem: "assessoria",
     title: "O Peso do Sobrenome",
     subtitle: "Conversas com nove herdeiros",
     author: "Vicente Coutinho",
@@ -220,16 +360,42 @@ export function getBook(slug: string): Book | undefined {
   return books.find((b) => b.slug === slug);
 }
 
+/** A loja: os livros dela. */
+export const livrosDaAutora = books.filter(
+  (b): b is LivroDaAutora => b.origem === "autora",
+);
+
+/** O portfólio: os livros que passaram pela mesa. */
+export const livrosDaAssessoria = books.filter(
+  (b): b is LivroDaAssessoria => b.origem === "assessoria",
+);
+
+/**
+ * Relacionados nunca cruzam as estantes: quem está lendo um devocional dela
+ * não deve receber o romance de um cliente como sugestão, e vice-versa —
+ * seriam duas ofertas diferentes disfarçadas de uma só.
+ */
 export function relatedBooks(slug: string, limit = 3): Book[] {
   const current = getBook(slug);
-  if (!current) return books.slice(0, limit);
-  const sameCollection = books.filter(
-    (b) => b.slug !== slug && b.collection === current.collection,
+  if (!current) return livrosDaAutora.slice(0, limit);
+
+  const mesmaEstante = books.filter(
+    (b) => b.slug !== slug && b.origem === current.origem,
   );
-  const rest = books.filter(
-    (b) => b.slug !== slug && b.collection !== current.collection,
+
+  if (current.origem === "assessoria") {
+    const mesmaLinha = mesmaEstante.filter(
+      (b) => b.origem === "assessoria" && b.collection === current.collection,
+    );
+    const resto = mesmaEstante.filter((b) => !mesmaLinha.includes(b));
+    return [...mesmaLinha, ...resto].slice(0, limit);
+  }
+
+  const mesmaSerie = mesmaEstante.filter(
+    (b) => b.origem === "autora" && current.serie && b.serie === current.serie,
   );
-  return [...sameCollection, ...rest].slice(0, limit);
+  const resto = mesmaEstante.filter((b) => !mesmaSerie.includes(b));
+  return [...mesmaSerie, ...resto].slice(0, limit);
 }
 
 /* A casa não tem catálogo próprio: tem especialidade. Estas são as três

@@ -7,10 +7,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Bag, Close, HelixMark, Menu } from "@/components/icons";
 import { useCart } from "@/lib/cart";
 
+/* Uma entrada por porta, mais a página que costura as duas. A ordem é a da
+   home: primeiro o que se compra, depois o que se contrata. */
 const links = [
-  { href: "/#servicos", label: "Serviços" },
-  { href: "/#acervo", label: "Livros feitos aqui" },
-  { href: "/publique", label: "Envie seu original" },
+  { href: "/livros", label: "Livros" },
+  { href: "/publique", label: "Publicar" },
+  { href: "/sobre", label: "Sobre" },
 ];
 
 export function SiteNav() {

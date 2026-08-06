@@ -118,7 +118,13 @@ export function BookCover({
           </div>
 
           <span className={`font-serif text-[3.4cqw] italic opacity-45 ${tom.tinta}`}>
-            coleção {book.collection}
+            {book.origem === "assessoria"
+              ? `coleção ${book.collection}`
+              : book.serie
+                ? `série ${book.serie}`
+                : book.formato === "devocional"
+                  ? "devocional"
+                  : ""}
           </span>
         </div>
       </div>

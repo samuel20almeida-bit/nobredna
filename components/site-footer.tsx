@@ -2,17 +2,18 @@ import Link from "next/link";
 import { HelixMark } from "@/components/icons";
 import { DivisorPerola } from "@/components/perola";
 import { collections } from "@/lib/books";
+import { autora } from "@/lib/autora";
 
-const catalogo = [
-  { href: "/#servicos", label: "O que a casa faz" },
-  { href: "/#acervo", label: "Livros feitos aqui" },
-  { href: "/#testemunhos", label: "Quem passou por aqui" },
+const leitura = [
+  { href: "/livros", label: "Todos os livros" },
+  { href: "/sobre", label: "Sobre a autora" },
+  { href: "/#assine", label: "Carta mensal" },
 ];
 
-const casa = [
+const assessoria = [
   { href: "/publique", label: "Envie seu original" },
-  { href: "/#assine", label: "Carta mensal" },
-  { href: "mailto:contato@nobredna.com.br", label: "contato@nobredna.com.br" },
+  { href: "/#servicos", label: "O que a casa faz" },
+  { href: "/#acervo", label: "Livros feitos aqui" },
 ];
 
 export function SiteFooter() {
@@ -28,18 +29,17 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/50">
-              Assessoria editorial dedicada a livros sobre origem,
-              continuidade e legado. Rua Bela Cintra, 1200 — Consolação,
-              São Paulo.
+              Os devocionais de {autora.nome} e a assessoria editorial que
+              nasceu deles. Rua Bela Cintra, 1200 — Consolação, São Paulo.
             </p>
           </div>
 
-          <nav aria-label="A assessoria">
+          <nav aria-label="Para ler">
             <h4 className="font-serif text-[1rem] italic text-lavender">
-              A assessoria
+              Para ler
             </h4>
             <ul className="mt-5 space-y-3">
-              {catalogo.map((item) => (
+              {leitura.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
@@ -70,12 +70,12 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="A casa">
+          <nav aria-label="Para publicar">
             <h4 className="font-serif text-[1rem] italic text-lavender">
-              A casa
+              Para publicar
             </h4>
             <ul className="mt-5 space-y-3">
-              {casa.map((item) => (
+              {assessoria.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}

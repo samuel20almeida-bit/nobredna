@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { BookCover } from "@/components/book-cover";
 import { Spines } from "@/components/icons";
-import { books, collections } from "@/lib/books";
+import { collections, livrosDaAssessoria } from "@/lib/books";
 import { formatBRL } from "@/lib/format";
 
 type Filter = "Todos" | (typeof collections)[number]["name"];
@@ -21,7 +21,10 @@ export function Acervo() {
   const [filter, setFilter] = useState<Filter>("Todos");
 
   const visible = useMemo(
-    () => (filter === "Todos" ? books : books.filter((b) => b.collection === filter)),
+    () =>
+      filter === "Todos"
+        ? livrosDaAssessoria
+        : livrosDaAssessoria.filter((b) => b.collection === filter),
     [filter],
   );
 
@@ -47,7 +50,7 @@ export function Acervo() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              Oito livros que passaram por esta mesa.
+              Livros que passaram por esta mesa.
               <span className="text-ink/40 italic">
                 {" "}
                 Todos deles, dos seus autores.
