@@ -4,13 +4,13 @@ import { DivisorPerola } from "@/components/perola";
 import { collections } from "@/lib/books";
 
 const catalogo = [
-  { href: "/#acervo", label: "Acervo completo" },
-  { href: "/#colecoes", label: "Coleções" },
-  { href: "/#testemunhos", label: "Leitores" },
+  { href: "/#servicos", label: "O que a casa faz" },
+  { href: "/#acervo", label: "Livros feitos aqui" },
+  { href: "/#testemunhos", label: "Quem passou por aqui" },
 ];
 
 const casa = [
-  { href: "/publique", label: "Publique seu livro" },
+  { href: "/publique", label: "Envie seu original" },
   { href: "/#assine", label: "Carta mensal" },
   { href: "mailto:contato@nobredna.com.br", label: "contato@nobredna.com.br" },
 ];
@@ -23,22 +23,20 @@ export function SiteFooter() {
           <div>
             <Link href="/" className="flex items-center gap-3 text-lavender">
               <HelixMark size={24} />
-              <span
-                className="text-[0.7rem] text-almond"
-                style={{ fontStyle: "italic" }}
-              >
-                Editora Nobre DNA
+              <span className="font-serif text-[1.2rem] text-almond">
+                Nobre DNA
               </span>
             </Link>
             <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/50">
-              Casa editorial dedicada a obras sobre origem, continuidade e
-              legado. Rua Bela Cintra, 1200 — Consolação, São Paulo.
+              Assessoria editorial dedicada a livros sobre origem,
+              continuidade e legado. Rua Bela Cintra, 1200 — Consolação,
+              São Paulo.
             </p>
           </div>
 
-          <nav aria-label="Catálogo">
+          <nav aria-label="A assessoria">
             <h4 className="font-serif text-[1rem] italic text-lavender">
-              Catálogo
+              A assessoria
             </h4>
             <ul className="mt-5 space-y-3">
               {catalogo.map((item) => (
@@ -56,7 +54,7 @@ export function SiteFooter() {
 
           <nav aria-label="Coleções">
             <h4 className="font-serif text-[1rem] italic text-lavender">
-              Coleções
+              Linhas
             </h4>
             <ul className="mt-5 space-y-3">
               {collections.map((c) => (
@@ -95,8 +93,8 @@ export function SiteFooter() {
         <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
 
         <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.7rem] text-almond/35 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Editora Nobre DNA · CNPJ 00.000.000/0001-00</p>
-          <p>Pagamentos por Mercado Pago · Envio por Melhor Envio</p>
+          <p>© {new Date().getFullYear()} Nobre DNA Assessoria Editorial · CNPJ 00.000.000/0001-00</p>
+          <p>Os livros à venda são de seus autores · Pagamentos por Mercado Pago</p>
         </div>
       </div>
     </footer>

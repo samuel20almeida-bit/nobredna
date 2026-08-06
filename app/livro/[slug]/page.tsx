@@ -50,12 +50,12 @@ export default async function BookPage({ params }: Params) {
         <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
           <Link
             href="/#acervo"
-            className="group inline-flex items-center gap-3 font-serif text-[1rem] italic text-ink/40 transition-colors duration-500 hover:text-ink"
+            className="group inline-flex items-center gap-3 font-serif text-[1.05rem] italic text-ink/40 transition-colors duration-500 hover:text-ink"
           >
             <span className="transition-transform duration-500 group-hover:-translate-x-1">
               <ArrowLeft size={15} />
             </span>
-            Acervo
+            livros feitos aqui
           </Link>
 
           <div className="mt-12 grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
@@ -97,7 +97,7 @@ export default async function BookPage({ params }: Params) {
                 <p className="font-serif text-[clamp(1.2rem,2.4vw,1.7rem)] leading-[1.5] text-ink/90">
                   “{book.excerpt}”
                 </p>
-                <cite className="mt-4 block text-[0.7rem] font-serif italic not-italic text-ink/35">
+                <cite className="mt-4 block font-serif text-[1rem] not-italic text-ink/35">
                   Trecho · {book.title}
                 </cite>
               </blockquote>
@@ -114,6 +114,26 @@ export default async function BookPage({ params }: Params) {
                   </div>
                 ))}
               </dl>
+
+              {/* o portfólio da casa vive aqui: o que foi feito neste título */}
+              <div className="hairline mt-12 max-w-[38rem] border-t pt-8">
+                <p className="label">o que a casa fez neste livro</p>
+                <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-2">
+                  {book.trabalho.map((etapa) => (
+                    <li
+                      key={etapa}
+                      className="rounded-full bg-khaki/25 px-4 py-1.5 font-serif text-[1rem] text-ink/75"
+                    >
+                      {etapa}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-6 max-w-[34rem] text-[0.9rem] leading-[1.8] text-ink/50">
+                  Os direitos e o ISBN são de {book.author}. A Nobre DNA
+                  assinou o trabalho de mesa e cuida da venda deste exemplar
+                  em nome do autor.
+                </p>
+              </div>
 
               <p className="mt-8 flex items-start gap-3 text-[0.85rem] leading-relaxed text-ink/45">
                 <span className="mt-0.5 shrink-0 text-lavender-ink">

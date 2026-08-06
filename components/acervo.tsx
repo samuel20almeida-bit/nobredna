@@ -38,7 +38,7 @@ export function Acervo() {
               transition={{ duration: 0.4 }}
             >
               <Spines size={17} />
-              o acervo
+              livros feitos aqui
             </motion.p>
             <motion.h2
               className="mt-5 max-w-[20ch] text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-ink"
@@ -47,8 +47,11 @@ export function Acervo() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              Oito títulos em catálogo.
-              <span className="text-ink/40 italic"> Nenhum por acaso.</span>
+              Oito livros que passaram por esta mesa.
+              <span className="text-ink/40 italic">
+                {" "}
+                Todos deles, dos seus autores.
+              </span>
             </motion.h2>
           </div>
 

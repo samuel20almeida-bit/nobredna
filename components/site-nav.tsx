@@ -8,9 +8,9 @@ import { Bag, Close, HelixMark, Menu } from "@/components/icons";
 import { useCart } from "@/lib/cart";
 
 const links = [
-  { href: "/#acervo", label: "Acervo" },
-  { href: "/#colecoes", label: "Coleções" },
-  { href: "/publique", label: "Publique seu livro" },
+  { href: "/#servicos", label: "Serviços" },
+  { href: "/#acervo", label: "Livros feitos aqui" },
+  { href: "/publique", label: "Envie seu original" },
 ];
 
 export function SiteNav() {

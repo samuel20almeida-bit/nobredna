@@ -22,23 +22,27 @@ export function Colecoes() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <p className="label label-on-dark flex items-center gap-3">
               <Bookmark size={16} />
-              o legado em três linhas
+              as três linhas da casa
             </p>
             <h2 className="mt-5 text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.06] font-light text-balance">
-              Um catálogo se organiza como uma família:
-              <span className="text-almond/45 italic"> por linha de descendência.</span>
+              A casa não aceita qualquer livro.
+              <span className="text-almond/45 italic">
+                {" "}
+                Aceita os que sabe editar.
+              </span>
             </h2>
             <p className="mt-7 max-w-[30rem] text-[1rem] leading-[1.85] text-almond/60">
-              As três coleções da casa não separam gêneros. Separam o momento em
-              que a herança aparece — antes de você escolher, enquanto você
-              segue, e depois que ela vira sua responsabilidade.
+              Uma assessoria vale pelo que já leu antes. Estas são as três
+              linhas de assunto em que a Nobre DNA tem repertório — e quando um
+              original chega de outro território, dizemos isso no diagnóstico
+              em vez de aceitar o trabalho.
             </p>
 
             <dl className="mt-12 grid max-w-[26rem] grid-cols-3 gap-6 border-t border-navy/12 pt-8">
               {[
-                { k: "Fundada", v: "2011" },
-                { k: "Títulos", v: "08" },
-                { k: "Tiragem", v: "Limitada" },
+                { k: "Desde", v: "2011" },
+                { k: "Livros", v: "08" },
+                { k: "Por vez", v: "Três" },
               ].map((stat) => (
                 <div key={stat.k}>
                   <dt className="text-[0.6rem] font-serif italic text-navy/40">

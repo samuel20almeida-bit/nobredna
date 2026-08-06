@@ -41,12 +41,12 @@ function CoverHalf({ side }: { side: "left" | "right" }) {
               <HelixMark size={30} />
             </span>
             <h2 className="font-serif text-[clamp(1.6rem,3.6vw,2.7rem)] leading-[1.06] font-light text-almond">
-              Editora
+              Nobre
               <br />
-              Nobre DNA
+              DNA
             </h2>
             <span className="font-serif text-[0.95rem] text-khaki italic">
-              catálogo 2026
+              assessoria editorial
             </span>
           </div>
         </div>
@@ -87,8 +87,8 @@ function Spread() {
       <div className="relative flex h-full items-center justify-center px-[14%]">
         <div className="flex flex-col items-center gap-5 text-center">
           <p className="font-serif text-[clamp(1.15rem,2.1vw,1.7rem)] leading-[1.45] font-light text-ink/85">
-            Toda casa editorial guarda uma pergunta.
-            <br />A nossa é o que se transmite.
+            Um original é matéria-prima.
+            <br />O livro vem depois da mesa.
           </p>
           <span className="h-px w-8 bg-khaki" />
           <span className="font-serif text-[0.95rem] text-ink/45 italic">
@@ -153,11 +153,11 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.35, ease }}
           >
-            casa editorial
+            assessoria editorial
           </motion.p>
 
           <h1 className="mt-6 text-[clamp(2.9rem,7vw,5.2rem)] leading-[0.98] font-light text-ink">
-            {["Cada linhagem", "tem um livro", "por escrever."].map(
+            {["Seu livro existe.", "Falta o trabalho", "de mesa."].map(
               (line, i) => (
                 <motion.span
                   key={line}
@@ -182,9 +182,10 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.3, delay: 1.55, ease }}
           >
-            Publicamos obras sobre origem, continuidade e o que uma geração
-            entrega à seguinte. Um catálogo curto, editado com o cuidado de
-            quem sabe que o livro vai durar mais que todos nós.
+            Somos uma assessoria editorial. Lemos, preparamos, revisamos,
+            desenhamos e pomos para circular livros sobre origem, continuidade
+            e o que uma geração entrega à seguinte. O livro continua sendo do
+            autor — nós assinamos só o ofício.
           </motion.p>
 
           <motion.div
@@ -194,17 +195,17 @@ export function Hero() {
             transition={{ duration: 1.2, delay: 1.95, ease }}
           >
             <Link
-              href="#acervo"
+              href="#servicos"
               className="group font-serif text-[1.2rem] text-ink transition-colors duration-500 hover:text-lavender-ink"
             >
-              Ver o acervo
+              O que a casa faz
               <span className="mt-1.5 block h-px w-full origin-left scale-x-100 bg-ink/25 transition-colors duration-500 group-hover:bg-lavender-ink" />
             </Link>
             <Link
               href="/publique"
               className="font-serif text-[1.2rem] text-ink/45 italic transition-colors duration-500 hover:text-ink/80"
             >
-              publique seu livro
+              enviar meu original
             </Link>
           </motion.div>
         </motion.div>

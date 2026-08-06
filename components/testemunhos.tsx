@@ -7,30 +7,30 @@ import { DivisorPerola } from "@/components/perola";
 const depoimentos = [
   {
     quote:
-      "Comprei para entender a minha própria casa. Terminei entendendo a decisão que meu pai nunca explicou.",
+      "Cheguei com 600 páginas e a certeza de que estava pronto. Saí com 380 e o livro que eu queria ter escrito.",
     name: "Beatriz Sandoval",
-    role: "Leitora desde 2016 · Porto Alegre",
+    role: "autora · Porto Alegre",
     book: "Cartas ao Herdeiro",
   },
   {
     quote:
-      "É a única editora que me manda um livro sabendo exatamente por que aquele livro é meu.",
+      "O parecer da primeira leitura foi mais útil que os três cursos de escrita que eu tinha feito. E era gratuito.",
     name: "Otávio Nakamura",
-    role: "Assinante da coleção Linhagem · Curitiba",
+    role: "autor · Curitiba",
     book: "Vinte Gerações",
   },
   {
     quote:
-      "O objeto tem a mesma seriedade do texto. Ficou na estante da sala, não na de cima.",
+      "O objeto ficou com a mesma seriedade do texto. Está na estante da sala, não na de cima.",
     name: "Rafaela D'Ávila",
-    role: "Arquiteta · Recife",
+    role: "autora · Recife",
     book: "Arquitetura do Legado",
   },
   {
     quote:
-      "Publiquei com eles porque queria que o livro durasse mais que a minha vontade de escrevê-lo.",
+      "Eles me disseram não na primeira versão. Foi a coisa mais cara e mais barata que já me aconteceu.",
     name: "Henrique Sá Barreto",
-    role: "Autor da casa · Salvador",
+    role: "autor · Salvador",
     book: "A Casa e o Sangue",
   },
 ];
@@ -75,7 +75,7 @@ export function Testemunhos() {
           viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 1.6, ease: "easeOut" }}
         >
-          Quem já recebeu
+          quem passou por aqui
         </motion.p>
 
         <div className="mt-14 grid gap-16 lg:grid-cols-[1.35fr_0.65fr] lg:gap-20">

@@ -1,5 +1,6 @@
 import { Hero } from "@/components/hero";
 import { HelixRail } from "@/components/helix-rail";
+import { Servicos } from "@/components/servicos";
 import { Acervo } from "@/components/acervo";
 import { Colecoes } from "@/components/colecoes";
 import { Testemunhos } from "@/components/testemunhos";
@@ -12,6 +13,7 @@ export default function HomePage() {
       <HelixRail side="right" />
       <div className="relative z-10">
         <Hero />
+        <Servicos />
         <Acervo />
         <Colecoes />
         <Testemunhos />

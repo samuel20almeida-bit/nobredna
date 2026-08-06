@@ -14,33 +14,33 @@ type Pergunta = { id: string; q: string; a: string };
 const perguntas: Pergunta[] = [
   {
     id: "custo",
-    q: "Publicar com a casa tem algum custo para o autor?",
-    a: "Nenhum. A editora assume impressão, edição, projeto gráfico e distribuição do que aceita. Se em algum momento aparecer uma proposta de pacote pago com o nosso nome, não é nossa.",
+    q: "Quanto custa?",
+    a: "Depende do original: preparar um romance de 400 páginas escrito com pressa não custa o mesmo que revisar 140 páginas de poesia já maduras. Por isso o valor só aparece depois da leitura, discriminado por etapa, e você escolhe quais contratar. O diagnóstico que gera esse orçamento é gratuito.",
   },
   {
     id: "pronto",
-    q: "Preciso ter o manuscrito terminado?",
-    a: "Não necessariamente. Aceitamos originais concluídos e também projetos com estrutura fechada e ao menos um terço escrito — nesse caso, o parecer trata do plano da obra tanto quanto do texto existente.",
+    q: "Preciso ter o original terminado?",
+    a: "Não. Trabalhamos com originais concluídos e também com projetos em andamento — nesse caso o parecer trata do plano da obra tanto quanto do que já está escrito, e às vezes a conversa começa antes de existir capítulo nenhum.",
   },
   {
     id: "prazo",
     q: "Quanto tempo até uma resposta?",
-    a: "Até 60 dias corridos, contados do envio do manuscrito completo. Toda proposta recebe parecer escrito de dois pareceristas, inclusive quando a resposta é não — é a parte do trabalho que leva mais tempo e a que nos parece inegociável.",
+    a: "O parecer de diagnóstico sai em até 30 dias do envio do original. O prazo do trabalho em si vai na proposta, etapa a etapa: uma preparação leva de seis a doze semanas, um projeto gráfico de quatro a oito.",
   },
   {
     id: "direitos",
     q: "Quem fica com os direitos da obra?",
-    a: "O autor. O contrato é de cinco anos, com direitos revertendo integralmente ao fim do período. Direitos autorais são de 12% sobre o preço de capa nas vendas diretas e 10% nas livrarias, pagos semestralmente.",
+    a: "O autor, integralmente e desde sempre. O ISBN sai no nome dele, os arquivos fechados são entregues a ele e não há cessão de direitos em nenhuma etapa. A casa presta serviço; não vira sócia do seu livro.",
   },
   {
     id: "genero",
-    q: "Vocês publicam ficção, poesia, primeiro livro?",
-    a: "Os três. O catálogo reúne ensaio, romance, poesia e correspondência, e metade dos títulos é de estreia. O que orienta a escolha é o assunto — origem, linhagem, continuidade, herança — e não o gênero nem o currículo.",
+    q: "Vocês atendem ficção, poesia, primeiro livro?",
+    a: "Os três. Já passaram por aqui ensaio, romance, poesia e correspondência reunida, e metade era estreia. O que a casa sabe fazer bem é assunto de origem, linhagem e herança — se o seu livro é de outro território, dizemos isso no diagnóstico em vez de aceitar o trabalho.",
   },
   {
     id: "tiragem",
-    q: "Qual é a tiragem e como o livro circula?",
-    a: "Primeira tiragem entre 1.500 e 3.000 exemplares, conforme o título. A distribuição é em livrarias independentes, na loja da casa e no catálogo digital, sempre acompanhada da carta mensal aos leitores.",
+    q: "E depois de pronto, como o livro circula?",
+    a: "A tiragem é decisão do autor — em geral entre 300 e 3.000 exemplares. A casa cota a gráfica, acompanha a prova e, se contratada para isso, coloca o título em livrarias independentes, nas plataformas digitais e nesta loja, repassando ao autor o valor de cada venda menos a comissão combinada em contrato.",
   },
 ];
 

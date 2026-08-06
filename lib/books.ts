@@ -12,6 +12,8 @@ export type Book = {
   binding: string;
   /** frase curta de vitrine */
   line: string;
+  /** o que a assessoria fez neste título — é o portfólio da casa */
+  trabalho: string[];
   synopsis: string[];
   excerpt: string;
   /** variação de capa: define o tom e o ornamento gravado */
@@ -48,6 +50,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-001-4",
     binding: "Capa dura, costurada, papel pólen 80g",
     line: "O que uma família passa adiante antes de passar bens.",
+    trabalho: ["Leitura crítica", "Preparação de texto", "Projeto gráfico", "Capa"],
     synopsis: [
       "Marina Vasconcelos parte de um inventário comum — três casas, um relógio, uma caligrafia — para investigar o que atravessa gerações sem nunca constar em documento.",
       "Ao longo de nove ensaios, o livro examina gestos herdados, silêncios repetidos e escolhas que se explicam melhor por linhagem do que por biografia.",
@@ -69,6 +72,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-002-1",
     binding: "Brochura com orelhas, papel pólen 80g",
     line: "Um sobrenome é um endereço — e também uma dívida.",
+    trabalho: ["Diagnóstico", "Copidesque", "Revisão", "ISBN e ficha"],
     synopsis: [
       "Rui Belmonte escreve a partir de arquivos de cartório, cartas de imigração e conversas de cozinha para reconstruir o percurso de um nome ao longo de cinco gerações.",
       "O resultado é menos genealogia e mais retrato: como um sobrenome organiza expectativas, define lugares e cobra continuidade.",
@@ -90,6 +94,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-003-8",
     binding: "Capa dura, lombada quadrada, guardas em creme",
     line: "Nenhuma casa dura por acaso. Dura por método.",
+    trabalho: ["Leitura crítica", "Preparação", "Projeto gráfico", "Impressão", "Lançamento"],
     synopsis: [
       "Helena Prado Cardim estuda casas centenárias — editoras, alfaiatarias, cartórios, vinícolas — para entender o desenho interno que as manteve de pé.",
       "O livro descreve os mecanismos concretos de continuidade: sucessão, arquivo, ofício e a decisão, sempre difícil, sobre o que não deve mudar.",
@@ -111,6 +116,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-004-5",
     binding: "Capa dura, papel avena 90g, marcador em fita",
     line: "Vinte e seis anos de cartas de um pai que não sabia se seriam lidas.",
+    trabalho: ["Organização do arquivo", "Preparação", "Projeto gráfico", "Capa"],
     synopsis: [
       "Reunião integral das cartas que Antônio Meireles escreveu ao filho mais velho entre 1968 e 1994, encontradas em 2019 dentro de um arquivo de escritório.",
       "A correspondência acompanha a formação de um herdeiro, mas também a lenta revisão de um pai sobre o que valia a pena transmitir.",
@@ -132,6 +138,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-005-2",
     binding: "Brochura, papel avena 90g, tipografia em duas cores",
     line: "Poesia sobre o corpo como arquivo.",
+    trabalho: ["Leitura crítica", "Revisão", "Projeto gráfico"],
     synopsis: [
       "Clarice Bandeira escreve a origem como matéria física: mãos, ossos, cheiro de casa, cicatriz que se repete no mesmo lugar em três mulheres da mesma família.",
       "São 62 poemas curtos, organizados em quatro séries, que tratam a herança como algo que se carrega no corpo antes de virar história.",
@@ -153,6 +160,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-006-9",
     binding: "Capa dura, sobrecapa em creme, costura aparente",
     line: "Três irmãos, uma casa que nenhum deles quer vender.",
+    trabalho: ["Diagnóstico", "Copidesque", "Revisão", "Capa", "Distribuição"],
     synopsis: [
       "Após a morte da matriarca, três irmãos voltam à casa de Guaratinguetá para decidir o destino do imóvel — e descobrem que o inventário é a menor das disputas.",
       "Joaquim Ferraz de Sá constrói um romance de família em que cada objeto da casa carrega uma versão diferente do mesmo passado.",
@@ -174,6 +182,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-007-6",
     binding: "Capa dura, papel pólen 80g, mapas em dobra dupla",
     line: "Quatro séculos de uma mesma família, lidos linha a linha.",
+    trabalho: ["Leitura crítica", "Preparação", "Pesquisa de imagens", "Projeto gráfico"],
     synopsis: [
       "Teresa Almendra reconstrói vinte gerações de uma família portuguesa e brasileira a partir de registros paroquiais, listas de embarque e testamentos.",
       "O livro acompanha o que se mantém e o que se rompe: ofícios, nomes repetidos, escolhas de casamento e as duas vezes em que a linhagem quase terminou.",
@@ -195,6 +204,7 @@ export const books: Book[] = [
     isbn: "978-65-0000-008-3",
     binding: "Brochura com orelhas, papel pólen 80g",
     line: "Nove entrevistas com quem recebeu uma casa pronta.",
+    trabalho: ["Transcrição das entrevistas", "Preparação", "Revisão", "Capa"],
     synopsis: [
       "Vicente Coutinho entrevistou nove herdeiros de negócios familiares brasileiros com mais de sessenta anos de operação.",
       "As conversas tratam de sucessão, obrigação e do momento exato em que cada um deles decidiu ficar — ou decidiu sair.",
@@ -222,23 +232,26 @@ export function relatedBooks(slug: string, limit = 3): Book[] {
   return [...sameCollection, ...rest].slice(0, limit);
 }
 
+/* A casa não tem catálogo próprio: tem especialidade. Estas são as três
+   linhas de assunto que ela sabe acompanhar, e é por elas que os livros
+   feitos aqui se agrupam. */
 export const collections = [
   {
     name: "Origem" as const,
     line: "De onde vem o que você já era antes de decidir.",
     description:
-      "Títulos que tratam da formação: o que chega pelo corpo, pela casa e pela repetição, antes de virar escolha.",
+      "Formação: o que chega pelo corpo, pela casa e pela repetição, antes de virar escolha. É onde a casa mais trabalha memória e primeira pessoa.",
   },
   {
     name: "Linhagem" as const,
     line: "O percurso de um nome através do tempo.",
     description:
-      "Investigações longas sobre famílias, arquivos e continuidade — o trabalho de seguir uma linha até o começo dela.",
+      "Investigações longas sobre famílias, arquivos e continuidade. Aqui a assessoria costuma entrar cedo, ainda na organização do material bruto.",
   },
   {
     name: "Herança" as const,
     line: "O que se recebe pronto e precisa ser sustentado.",
     description:
-      "Livros sobre instituições, casas e ofícios que duraram, e sobre o preço de mantê-los de pé.",
+      "Instituições, casas e ofícios que duraram. São livros de pesquisa densa, em que o trabalho de mesa pesa mais que o de escrita.",
   },
 ];
