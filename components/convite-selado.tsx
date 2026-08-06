@@ -38,7 +38,8 @@ function CardHalf({ side }: { side: "left" | "right" }) {
                 boxShadow: "var(--shadow-seal)",
               }}
             />
-            <div className="absolute inset-[9%] rounded-full border border-navy/25" />
+            {/* era border-navy/25, de uma paleta que não existe mais */}
+            <div className="absolute inset-[9%] rounded-full border border-ink/25" />
             <span className="relative text-ink">
               <Crown size={30} />
             </span>
