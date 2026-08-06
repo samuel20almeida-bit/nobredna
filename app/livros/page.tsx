@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { EstanteAutora } from "@/components/estante-autora";
+import { Anotacao } from "@/components/anotacao";
 import { HelixRail } from "@/components/helix-rail";
 import { DivisorPerola } from "@/components/perola";
 import { ArrowRight } from "@/components/icons";
@@ -30,9 +31,14 @@ export default function LivrosPage() {
               <span className="text-lavender-ink italic"> comuns.</span>
             </h1>
             <p className="mt-8 max-w-[34rem] text-[1.02rem] leading-[1.85] text-ink/60">
-              Devocionais curtos, escritos para caber numa manhã de verdade. Cada
-              título tem um dia inteiro disponível para ler antes de decidir —
-              porque devocional não se escolhe pela sinopse, se escolhe pela voz.
+              Devocionais curtos, escritos para caber numa manhã de verdade.
+              Cada título tem um dia inteiro disponível para ler antes de
+              decidir.
+            </p>
+            <p className="mt-7">
+              <Anotacao>
+                devocional não se escolhe pela sinopse, se escolhe pela voz
+              </Anotacao>
             </p>
 
             <DivisorPerola

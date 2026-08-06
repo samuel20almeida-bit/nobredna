@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BookCover } from "@/components/book-cover";
 import { BookPurchase } from "@/components/book-purchase";
 import { HelixRail } from "@/components/helix-rail";
+import { Anotacao } from "@/components/anotacao";
 import { DivisorPerola } from "@/components/perola";
 import { ArrowLeft, Route } from "@/components/icons";
 import { books, getBook, relatedBooks } from "@/lib/books";
@@ -129,12 +130,17 @@ export default async function BookPage({ params }: Params) {
                     {book.amostra.titulo}
                   </h2>
 
-                  <p className="mt-6 font-serif text-[1.12rem] leading-[1.6] text-lavender-ink italic">
-                    “{book.amostra.versiculo}”
-                  </p>
-                  <p className="mt-2 font-serif text-[1rem] text-khaki-ink italic">
-                    {book.amostra.referencia}
-                  </p>
+                  {/* o versículo é riscado na margem quando entra em cena —
+                      o gesto de quem marca a passagem do dia na própria
+                      Bíblia, que é exatamente o que este bloco simula */}
+                  <Anotacao marca="margem" className="mt-6">
+                    <p className="font-serif text-[1.12rem] leading-[1.6] text-lavender-ink italic">
+                      “{book.amostra.versiculo}”
+                    </p>
+                    <p className="mt-2 font-serif text-[1rem] text-khaki-ink italic">
+                      {book.amostra.referencia}
+                    </p>
+                  </Anotacao>
 
                   <DivisorPerola
                     tone="light"
