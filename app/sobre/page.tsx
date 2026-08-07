@@ -4,12 +4,13 @@ import { EstanteAutora } from "@/components/estante-autora";
 import { HelixRail } from "@/components/helix-rail";
 import { Anotacao } from "@/components/anotacao";
 import { DivisorPerola } from "@/components/perola";
+import { Pilares } from "@/components/pilares";
 import { ArrowRight } from "@/components/icons";
 import { autora } from "@/lib/autora";
 
 export const metadata: Metadata = {
   title: "Sobre",
-  description: `${autora.nome} — ${autora.linha.toLowerCase()}. A autora por trás dos livros e da assessoria editorial Nobre DNA.`,
+  description: `${autora.nome} — ${autora.linha.toLowerCase()}. A fundadora da NobreDNA, a Casa editorial por trás dos livros.`,
 };
 
 export default function SobrePage() {
@@ -76,10 +77,13 @@ export default function SobrePage() {
           </div>
         </section>
 
-        {/* 3 — a costura: por que uma autora abre uma casa */}
+        {/* 3 — os pilares e o manifesto, direto do livro de marca dela */}
+        <Pilares />
+
+        {/* 4 — a costura: por que uma autora abre uma Casa */}
         <section className="bg-ink py-24 lg:py-32">
           <div className="mx-auto max-w-[900px] px-6 lg:px-10">
-            <p className="label label-on-dark">por que a casa existe</p>
+            <p className="label label-on-dark">por que a Casa existe</p>
             <h2 className="mt-5 max-w-[22ch] text-[clamp(1.9rem,4vw,2.8rem)] leading-[1.1] font-light text-almond">
               Aprendi cada etapa fazendo nos meus próprios livros.
             </h2>
@@ -91,9 +95,9 @@ export default function SobrePage() {
                 tanto quanto de escrever.
               </p>
               <p>
-                A Nobre DNA é isso posto à disposição de outros autores. Com uma
+                A NobreDNA é isso posto à disposição de outras autoras. Com uma
                 regra que não muda: o livro é de quem escreveu. Os direitos, o
-                ISBN e a última palavra sobre cada vírgula ficam com o autor. A
+                ISBN e a última palavra sobre cada vírgula ficam com a autora. A
                 casa assina apenas o trabalho de mesa.
               </p>
             </div>

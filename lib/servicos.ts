@@ -2,7 +2,7 @@
  * O que a assessoria faz.
  *
  * Este é o produto da casa — não os livros. Os títulos do acervo são obra dos
- * autores; o que a Nobre DNA vende é o trabalho de mesa que os levou até lá.
+ * autores; o que a NobreDNA vende é o trabalho de mesa que os levou até lá.
  *
  * Os preços não estão aqui de propósito: o custo de uma preparação depende do
  * estado e do tamanho do original, e um número fixo no site seria mentira ou

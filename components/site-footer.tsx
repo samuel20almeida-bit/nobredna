@@ -26,14 +26,14 @@ export function SiteFooter() {
             <Link href="/" className="flex items-center gap-3 text-lavender">
               <HelixMark size={24} />
               <span className="font-serif text-[1.2rem] text-almond">
-                Nobre DNA
+                NobreDNA
               </span>
             </Link>
             <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/50">
               {/* o logradouro que estava aqui era inventado, e endereço de rua
                   fictício é pior que cidade fictícia: pode ser o de alguém.
                   Fica só a cidade até haver um endereço real para publicar. */}
-              Os devocionais de {autora.nome} e a assessoria editorial que
+              Os devocionais de {autora.nome} e a Casa editorial que
               nasceu deles. {autora.cidade}.
             </p>
           </div>
@@ -97,8 +97,8 @@ export function SiteFooter() {
         <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
 
         <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.7rem] text-almond/35 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Nobre DNA Assessoria Editorial · CNPJ 00.000.000/0001-00</p>
-          <p>Os livros à venda são de seus autores · Pagamentos por Mercado Pago</p>
+          <p>© {new Date().getFullYear()} NobreDNA Editorial · CNPJ 00.000.000/0001-00</p>
+          <p>Os livros à venda são de suas autoras · Pagamentos por Mercado Pago</p>
         </div>
       </div>
     </footer>

@@ -88,8 +88,8 @@ export function Colecoes() {
               </span>
             </h2>
             <p className="mt-7 max-w-[30rem] text-[1rem] leading-[1.85] text-almond/60">
-              Uma assessoria vale pelo que já leu antes. Estas são as três
-              linhas de assunto em que a Nobre DNA tem repertório — e quando um
+              Uma Casa vale pelo que já leu antes. Estas são as três
+              linhas de assunto em que a NobreDNA tem repertório — e quando um
               original chega de outro território, dizemos isso no diagnóstico
               em vez de aceitar o trabalho.
             </p>

@@ -45,9 +45,9 @@ export function Servicos() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
-            A Nobre DNA é uma assessoria editorial. O livro é do autor — a
-            ideia, os direitos, a última palavra. O que fica com a casa é o
-            ofício: ler, preparar, revisar, desenhar e pôr para circular.
+            A NobreDNA é uma Casa editorial. O livro é da autora — a ideia, os
+            direitos, a última palavra. O que fica com a Casa é o ofício:
+            escutar, preparar, revisar, desenhar e pôr para circular.
           </motion.p>
         </div>
 

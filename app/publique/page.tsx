@@ -9,22 +9,22 @@ import { Anotacao } from "@/components/anotacao";
 export const metadata: Metadata = {
   title: "Envie seu original",
   description:
-    "Assessoria editorial: leitura crítica, preparação, revisão, projeto gráfico e circulação. O diagnóstico do seu original é gratuito.",
+    "Uma Casa que acolhe autoras: escuta, preparação, revisão, projeto gráfico e publicação. O primeiro encontro é uma conversa, e não custa nada.",
 };
 
 const criterios = [
   {
-    title: "O que a casa faz bem",
+    title: "O que a Casa faz bem",
     items: [
       "Livros sobre origem, linhagem, continuidade e herança — em ensaio, romance, poesia, memória ou correspondência reunida.",
       "Originais concluídos e também projetos em andamento, quando já existe estrutura.",
-      "Autoria disposta ao trabalho de mesa: o texto sai daqui diferente de como entrou.",
+      "Autoria disposta ao trabalho de mesa: nenhuma voz é substituída aqui, apenas fortalecida.",
     ],
   },
   {
-    title: "O que a casa não faz",
+    title: "O que a Casa não faz",
     items: [
-      "Comprar direitos. O livro é do autor do começo ao fim, e o ISBN sai no nome dele.",
+      "Comprar direitos. O livro é da autora do começo ao fim, e o ISBN sai no nome dela.",
       "Aceitar tudo. São três projetos por vez, e um original fora do nosso repertório recebe essa resposta no diagnóstico.",
       "Prometer venda. Ninguém sério garante leitor — o que se garante é o cuidado com o objeto.",
     ],
@@ -52,7 +52,7 @@ export default function PubliquePage() {
                 </span>
               </h1>
               <p className="mt-8 max-w-[32rem] text-[1.02rem] leading-[1.85] text-ink/60">
-                A Nobre DNA lê originais o ano inteiro. A primeira leitura é
+                A NobreDNA lê originais o ano inteiro. A primeira leitura é
                 gratuita e termina num parecer escrito: o que o texto já tem, o
                 que falta, e quanto custaria cada etapa do trabalho — para você
                 decidir com número na mão.
@@ -107,7 +107,7 @@ export default function PubliquePage() {
           <div className="mx-auto max-w-[900px] px-6 lg:px-10">
             <p className="label label-on-dark">antes de enviar</p>
             <h2 className="mt-5 max-w-[20ch] text-[clamp(2rem,4vw,3rem)] leading-[1.08] font-light text-almond">
-              O que todo autor pergunta primeiro.
+              O que toda autora pergunta primeiro.
             </h2>
             <div className="mt-12">
               <Perguntas />

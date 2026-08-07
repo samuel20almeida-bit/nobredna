@@ -70,7 +70,7 @@ export function SiteNav() {
           <span
             className={`font-serif text-[1.15rem] transition-colors duration-500 ${invertida ? "text-almond" : "text-ink"}`}
           >
-            Nobre DNA
+            NobreDNA
           </span>
         </Link>
 

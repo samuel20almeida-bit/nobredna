@@ -204,9 +204,9 @@ export default async function BookPage({ params }: Params) {
                     ))}
                   </ul>
                   <p className="mt-6 max-w-[34rem] text-[0.9rem] leading-[1.8] text-ink/50">
-                    Os direitos e o ISBN são de {book.author}. A Nobre DNA
+                    Os direitos e o ISBN são de {book.author}. A NobreDNA
                     assinou o trabalho de mesa e cuida da venda deste exemplar
-                    em nome do autor.
+                    em nome da autora.
                   </p>
                 </div>
               )}

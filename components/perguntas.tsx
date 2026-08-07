@@ -40,7 +40,7 @@ const perguntas: Pergunta[] = [
   {
     id: "tiragem",
     q: "E depois de pronto, como o livro circula?",
-    a: "A tiragem é decisão do autor — em geral entre 300 e 3.000 exemplares. A casa cota a gráfica, acompanha a prova e, se contratada para isso, coloca o título em livrarias independentes, nas plataformas digitais e nesta loja, repassando ao autor o valor de cada venda menos a comissão combinada em contrato.",
+    a: "A tiragem é decisão da autora — em geral entre 300 e 3.000 exemplares. A casa cota a gráfica, acompanha a prova e, se contratada para isso, coloca o título em livrarias independentes, nas plataformas digitais e nesta loja, repassando à autora o valor de cada venda menos a comissão combinada em contrato.",
   },
 ];
 

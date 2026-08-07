@@ -22,7 +22,7 @@ export function Abertura() {
           <br />
           DNA
         </span>
-        <span className="abertura-linha">assessoria editorial</span>
+        <span className="abertura-linha">Casa editorial</span>
       </span>
     </div>
   );

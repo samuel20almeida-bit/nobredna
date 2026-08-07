@@ -169,7 +169,7 @@ export async function quoteShipping(
       Accept: "application/json",
       "User-Agent":
         process.env.MELHOR_ENVIO_USER_AGENT ??
-        "Nobre DNA Assessoria Editorial (contato@nobredna.com.br)",
+        "NobreDNA Editorial (contato@nobredna.com.br)",
     },
     body: JSON.stringify({
       from: { postal_code: origin },

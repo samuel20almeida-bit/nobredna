@@ -53,7 +53,7 @@ export function Acervo() {
               Livros que passaram por esta mesa.
               <span className="text-ink/40 italic">
                 {" "}
-                Todos deles, dos seus autores.
+                Todos delas, das suas autoras.
               </span>
             </motion.h2>
           </div>

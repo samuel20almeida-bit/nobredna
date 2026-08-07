@@ -32,11 +32,11 @@ const portas = [
     href: "/publique",
     Icon: Quill,
     etiqueta: "para publicar",
-    titulo: "A assessoria",
+    titulo: "A Casa",
     texto:
       "Leitura, preparação, revisão, projeto gráfico e registro do seu original. O diagnóstico é gratuito, e o livro continua seu.",
     acao: "enviar meu original",
-    // azul-tinta: o chão do autor cliente, repetido em toda a /publique
+    // azul-tinta: o chão da autora atendida, repetido em toda a /publique
     fundo: "bg-ink hover:bg-ink-soft",
     acento: "text-lavender",
     rotulo: "label-on-dark",
@@ -93,7 +93,7 @@ export function Portas() {
         </ul>
 
         <p className="mt-8 text-center font-serif text-[1.05rem] text-ink/40 italic">
-          {livrosDaAutora.length} títulos publicados · assessoria aberta o ano
+          {livrosDaAutora.length} títulos publicados · a Casa aberta o ano
           inteiro
         </p>
       </div>

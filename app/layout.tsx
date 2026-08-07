@@ -26,16 +26,16 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Nobre DNA — assessoria editorial",
-    template: "%s · Nobre DNA",
+    default: "NobreDNA — Casa editorial",
+    template: "%s · NobreDNA",
   },
   description:
-    "Assessoria editorial: leitura crítica, preparação, revisão, projeto gráfico e circulação de livros sobre origem, continuidade e legado.",
+    "Uma Casa editorial: acolhemos autoras, cuidamos de histórias e preservamos legados. Antes de existir um livro, existe uma vida.",
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "Nobre DNA",
-    title: "Nobre DNA — assessoria editorial",
+    siteName: "NobreDNA",
+    title: "NobreDNA — Casa editorial",
     description:
       "O livro é seu. O trabalho de mesa é nosso. Diagnóstico gratuito do seu original.",
   },

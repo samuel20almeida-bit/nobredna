@@ -26,7 +26,7 @@ function CardHalf({ side }: { side: "left" | "right" }) {
             className="absolute inset-x-[6%] top-[16%] text-center text-[0.58rem] text-lavender/60"
             style={{ fontStyle: "italic" }}
           >
-            Nobre DNA
+            NobreDNA
           </div>
 
           {/* lacre */}

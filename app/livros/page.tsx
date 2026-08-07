@@ -63,17 +63,17 @@ export default function LivrosPage() {
           <div className="mx-auto max-w-[900px] px-6 text-center lg:px-10">
             <p className="label label-on-dark">e se você também escreve</p>
             <h2 className="mt-5 text-[clamp(1.6rem,3.4vw,2.4rem)] leading-[1.12] font-light text-almond">
-              Esta casa também prepara o livro de outros autores.
+              Esta Casa também prepara o livro de outras autoras.
             </h2>
             <p className="mx-auto mt-6 max-w-[34rem] text-[0.98rem] leading-[1.85] text-almond/55">
-              A Nobre DNA nasceu do percurso de publicar os livros acima. Hoje
+              A NobreDNA nasceu do percurso de publicar os livros acima. Hoje
               faz o mesmo trabalho de mesa para quem tem um original na gaveta.
             </p>
             <Link
               href="/publique"
               className="group mt-9 inline-flex items-center gap-3 font-serif text-[1.15rem] text-khaki transition-colors duration-500 hover:text-almond"
             >
-              conheça a assessoria
+              conheça a Casa
               <span className="transition-transform duration-500 group-hover:translate-x-1">
                 <ArrowRight size={16} />
               </span>
