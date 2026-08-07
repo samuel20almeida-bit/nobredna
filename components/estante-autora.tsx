@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { BookCover } from "@/components/book-cover";
 import { livrosDaAutora } from "@/lib/books";
 import { formatBRL } from "@/lib/format";
+import { Estrelas } from "@/components/estrelas";
 
 /**
  * A estante da autora.
@@ -49,6 +50,17 @@ export function EstanteAutora() {
               <p className="mt-3 text-[0.85rem] tabular-nums text-khaki-ink">
                 {formatBRL(book.priceCents)}
               </p>
+
+              {/* a nota na vitrine é o que faz escolher entre um título e o
+                  vizinho, antes mesmo de abrir a página */}
+              {book.avaliacao && (
+                <p className="mt-3 flex items-center gap-2">
+                  <Estrelas nota={book.avaliacao.media} size={13} />
+                  <span className="text-[0.8rem] tabular-nums text-ink/40">
+                    {book.avaliacao.total}
+                  </span>
+                </p>
+              )}
             </div>
           </Link>
         </motion.li>

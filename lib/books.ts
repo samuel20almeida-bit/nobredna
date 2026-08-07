@@ -44,9 +44,34 @@ type LivroBase = {
   };
 };
 
+/**
+ * O que uma leitora achou, e quantas disseram o mesmo.
+ *
+ * Os dois campos são opcionais de propósito. Um livro recém-lançado não tem
+ * avaliação, e a página precisa saber ficar em silêncio nesse caso — nota
+ * inventada ou "5,0 (0 avaliações)" custa mais confiança do que compra.
+ * `media` é de 0 a 5 e só aparece com `total` maior que zero.
+ */
+export type AvaliacaoLeitoras = {
+  media: number;
+  total: number;
+};
+
+export type DepoimentoLeitora = {
+  texto: string;
+  nome: string;
+  cidade?: string;
+  /** nota que esta leitora deu, quando ela deu */
+  nota?: number;
+};
+
 /** Livro da autora da casa — vai para a loja. */
 export type LivroDaAutora = LivroBase & {
   origem: "autora";
+  /** só existe depois que leitoras avaliaram de verdade */
+  avaliacao?: AvaliacaoLeitoras;
+  /** o que leitoras escreveram sobre este título */
+  depoimentos?: DepoimentoLeitora[];
   /** série devocional a que pertence, quando houver */
   serie?: string;
   /**
@@ -73,6 +98,12 @@ export type LivroDaAssessoria = LivroBase & {
 
 export type Book = LivroDaAutora | LivroDaAssessoria;
 
+/* ATENÇÃO — as avaliações e os depoimentos abaixo são INVENTADOS, assim como
+   os títulos e o nome da autora. Servem para desenhar e conferir a página, e
+   precisam ser substituídos pelos reais antes de o site receber visita de
+   verdade. Depoimento fabricado com nome e cidade de pessoa que não existe é
+   propaganda enganosa, não placeholder inofensivo. */
+
 const parcel = {
   weightKg: 0.48,
   widthCm: 16,
@@ -88,6 +119,23 @@ export const books: Book[] = [
      O nome sai de lib/autora.ts, então basta editar num lugar só. */
   {
     slug: "manhas-com-ele",
+    avaliacao: { media: 4.8, total: 63 },
+    depoimentos: [
+      {
+        texto:
+          "Comprei achando que ia render uma semana e abandonar, como os outros. Estou no dia cinquenta e dois.",
+        nome: "Priscila Andrade",
+        cidade: "Goiânia",
+        nota: 5,
+      },
+      {
+        texto:
+          "É curto de verdade. Isso parece pouco, mas foi exatamente o que fez eu conseguir manter.",
+        nome: "Denise Rocha",
+        cidade: "Santo André",
+        nota: 5,
+      },
+    ],
     origem: "autora",
     title: "Manhãs com Ele",
     subtitle: "Devocional de sessenta dias",
@@ -119,6 +167,23 @@ export const books: Book[] = [
   },
   {
     slug: "o-deserto-tambem-floresce",
+    avaliacao: { media: 4.9, total: 41 },
+    depoimentos: [
+      {
+        texto:
+          "Perdi meu pai em março. Este foi o único livro que não tentou me consolar rápido demais.",
+        nome: "Marta Queiroz",
+        cidade: "Recife",
+        nota: 5,
+      },
+      {
+        texto:
+          "Dei para três amigas e comprei outro para mim, porque o meu ficou todo grifado.",
+        nome: "Cleide Nogueira",
+        cidade: "Belo Horizonte",
+        nota: 5,
+      },
+    ],
     origem: "autora",
     title: "O Deserto Também Floresce",
     subtitle: "Devocional para tempos de espera",
@@ -149,6 +214,23 @@ export const books: Book[] = [
   },
   {
     slug: "cartas-para-dias-dificeis",
+    avaliacao: { media: 4.6, total: 28 },
+    depoimentos: [
+      {
+        texto:
+          "Cada carta cabe num intervalo de almoço. Levo na bolsa desde novembro.",
+        nome: "Simone Vilela",
+        cidade: "Curitiba",
+        nota: 5,
+      },
+      {
+        texto:
+          "Esperava algo mais devocional e é mais literário do que imaginei. Gostei, mas vale saber antes.",
+        nome: "Rosana Teixeira",
+        cidade: "Sorocaba",
+        nota: 4,
+      },
+    ],
     origem: "autora",
     title: "Cartas para Dias Difíceis",
     subtitle: "Trinta cartas de fé",

@@ -6,6 +6,9 @@ import { BookPurchase } from "@/components/book-purchase";
 import { HelixRail } from "@/components/helix-rail";
 import { Anotacao } from "@/components/anotacao";
 import { DivisorPerola } from "@/components/perola";
+import { NotaLeitoras } from "@/components/estrelas";
+import { Garantias } from "@/components/garantias";
+import { DepoimentosLeitoras } from "@/components/depoimentos-leitoras";
 import { ArrowLeft, Route } from "@/components/icons";
 import { books, getBook, relatedBooks } from "@/lib/books";
 import { formatBRL } from "@/lib/format";
@@ -96,7 +99,16 @@ export default async function BookPage({ params }: Params) {
                 {book.author}
               </p>
 
+              {/* a nota vem antes do preço de propósito: quem decide comprar
+                  quer saber o que acharam antes de saber quanto custa */}
+              {book.origem === "autora" && book.avaliacao && (
+                <NotaLeitoras avaliacao={book.avaliacao} className="mt-7" />
+              )}
+
               <BookPurchase book={book} />
+
+              {/* as garantias ficam coladas no botão, onde nasce a dúvida */}
+              <Garantias className="mt-12 max-w-[34rem]" />
 
               <div className="mt-14 max-w-[38rem] space-y-6">
                 {book.synopsis.map((paragraph) => (
@@ -166,6 +178,13 @@ export default async function BookPage({ params }: Params) {
                   </div>
                 ))}
               </dl>
+
+              {book.origem === "autora" && (
+                <DepoimentosLeitoras
+                  depoimentos={book.depoimentos}
+                  className="mt-20 max-w-[46rem]"
+                />
+              )}
 
               {/* o portfólio da casa vive aqui: o que foi feito neste título.
                   Só existe do lado da assessoria — na estante da autora não há

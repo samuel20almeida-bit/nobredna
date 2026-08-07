@@ -71,6 +71,38 @@ export function Lapis(props: IconProps) {
   );
 }
 
+/** Estrela — avaliação. `preenchida` a pinta em vez de só contorná-la. */
+export function Estrela({
+  preenchida = false,
+  ...props
+}: IconProps & { preenchida?: boolean }) {
+  return (
+    <Icon fill={preenchida ? "currentColor" : "none"} {...props}>
+      <path d="M12 3.6l2.5 5.2 5.6.8-4.1 4 1 5.6-5-2.7-5 2.7 1-5.6-4.1-4 5.6-.8z" />
+    </Icon>
+  );
+}
+
+/** Escudo — garantia, compra protegida */
+export function Escudo(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 3l7 2.6v5.6c0 4.2-2.9 7.6-7 9.2-4.1-1.6-7-5-7-9.2V5.6z" />
+      <path d="M9 12.2l2.1 2.1 4.1-4.2" />
+    </Icon>
+  );
+}
+
+/** Seta em volta — troca, devolução */
+export function Retorno(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 11a8 8 0 1 1 2.3 5.7" />
+      <path d="M3.5 6.5V11H8" />
+    </Icon>
+  );
+}
+
 /** Lombadas na estante — acervo */
 export function Spines(props: IconProps) {
   return (
