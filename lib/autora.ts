@@ -1,17 +1,24 @@
 /**
  * A autora da casa.
  *
- * PROVISÓRIO: nome, biografia e números abaixo são de exemplo. Estão reunidos
- * num arquivo só justamente para que a troca pelos dados reais seja uma edição
- * de texto, e não uma caçada por componentes.
+ * O nome e a cidade são reais. Biografia, princípios e os textos dos livros
+ * ainda são de exemplo — estão reunidos num arquivo só justamente para que a
+ * troca pelos dados reais seja uma edição de texto, e não uma caçada por
+ * componentes.
  *
- * O nome também é usado como `author` dos livros dela em lib/books.ts.
+ * `AUTORA_NOME` é usado como `author` dos livros em lib/books.ts, e
+ * `AUTORA_CIDADE` assina o rodapé, o selo do convite, o manuscrito do hero e
+ * a origem da expedição na página do livro. Antes essas quatro estavam
+ * escritas à mão como "São Paulo", que era o exemplo — e é exatamente o tipo
+ * de dado que se corrige num lugar e continua errado em três.
  */
 
-export const AUTORA_NOME = "Nome da Autora";
+export const AUTORA_NOME = "Fernanda";
+export const AUTORA_CIDADE = "Curitiba";
 
 export const autora = {
   nome: AUTORA_NOME,
+  cidade: AUTORA_CIDADE,
   /** como ela se apresenta em uma linha */
   linha: "Escritora de devocionais cristãos",
   /** a frase que abre a página Sobre */

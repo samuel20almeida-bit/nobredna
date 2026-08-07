@@ -30,8 +30,11 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/50">
+              {/* o logradouro que estava aqui era inventado, e endereço de rua
+                  fictício é pior que cidade fictícia: pode ser o de alguém.
+                  Fica só a cidade até haver um endereço real para publicar. */}
               Os devocionais de {autora.nome} e a assessoria editorial que
-              nasceu deles. Rua Bela Cintra, 1200 — Consolação, São Paulo.
+              nasceu deles. {autora.cidade}.
             </p>
           </div>
 

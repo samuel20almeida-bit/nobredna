@@ -11,6 +11,7 @@ import { Garantias } from "@/components/garantias";
 import { DepoimentosLeitoras } from "@/components/depoimentos-leitoras";
 import { ArrowLeft, Route } from "@/components/icons";
 import { books, getBook, relatedBooks } from "@/lib/books";
+import { AUTORA_CIDADE } from "@/lib/autora";
 import { formatBRL } from "@/lib/format";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -214,7 +215,7 @@ export default async function BookPage({ params }: Params) {
                 <span className="mt-0.5 shrink-0 text-lavender-ink">
                   <Route size={18} />
                 </span>
-                Expedição em até 2 dias úteis a partir de São Paulo. O frete é
+                Expedição em até 2 dias úteis a partir de {AUTORA_CIDADE}. O frete é
                 calculado pelo CEP no checkout, com as transportadoras do Melhor
                 Envio.
               </p>

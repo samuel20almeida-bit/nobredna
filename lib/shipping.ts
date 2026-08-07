@@ -89,8 +89,15 @@ export function isValidCEP(cep: string): boolean {
  */
 function simulate(cart: NormalizedCart, cep: string): ShippingQuote {
   const region = Number(cep[0]);
-  // faixa 0–1 = Sudeste (origem), faixas altas = Norte/Nordeste
-  const distanceFactor = [1, 1.1, 1.25, 1.3, 1.35, 1.5, 1.65, 1.6, 1.45, 1.2][
+  /* Fator por faixa de CEP do destino, medido a partir de Curitiba — a casa
+     despacha do Paraná, não do Sudeste. A tabela anterior dava fator 1 à
+     faixa 0 (capital paulista) porque a origem de exemplo era São Paulo; com
+     a mudança, ela cobrava o frete mais barato justamente para o destino mais
+     distante e o mais caro para a cidade vizinha.
+
+       0 SP capital  1 SP interior  2 RJ/ES  3 MG  4 BA/SE
+       5 PE/PB/RN/AL 6 Norte/CE/PI  7 Centro-Oeste  8 PR/SC (origem)  9 RS */
+  const distanceFactor = [1.25, 1.3, 1.35, 1.4, 1.6, 1.7, 1.85, 1.55, 1, 1.15][
     Number.isNaN(region) ? 5 : region
   ];
   const weightCents = Math.ceil(cart.totalWeightKg * 1400);
@@ -145,7 +152,8 @@ export async function quoteShipping(
   cep: string,
 ): Promise<ShippingQuote> {
   const token = process.env.MELHOR_ENVIO_TOKEN;
-  const origin = (process.env.ORIGEM_CEP ?? "01310100").replace(/\D/g, "");
+  // o padrão é o Centro de Curitiba, de onde a casa despacha
+  const origin = (process.env.ORIGEM_CEP ?? "80010000").replace(/\D/g, "");
 
   if (!token) return simulate(cart, cep);
 

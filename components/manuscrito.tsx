@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap } from "gsap";
+import { AUTORA_CIDADE } from "@/lib/autora";
 import { useGSAP } from "@gsap/react";
 import { DivisorPerola } from "@/components/perola";
 
@@ -239,7 +240,7 @@ export function Manuscrito({ className = "" }: { className?: string }) {
               className="ms-limpo-item"
             />
             <span className="ms-limpo-item font-serif text-[0.85rem] text-ink/45 italic">
-              desde 2011, em São Paulo
+              desde 2011, em {AUTORA_CIDADE}
             </span>
           </div>
         </div>

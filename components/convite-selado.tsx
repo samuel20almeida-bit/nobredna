@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Opening } from "@/components/opening";
 import { Crown, HelixMark } from "@/components/icons";
+import { AUTORA_CIDADE } from "@/lib/autora";
 
 /** Metade do cartão lacrado — o selo fica exatamente sobre a dobradiça. */
 function CardHalf({ side }: { side: "left" | "right" }) {
@@ -93,7 +94,7 @@ function Carta() {
           className="mt-5 text-[0.55rem] text-ink/45"
           style={{ fontStyle: "italic" }}
         >
-          Conselho editorial · São Paulo
+          Conselho editorial · {AUTORA_CIDADE}
         </p>
       </div>
     </div>
