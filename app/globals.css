@@ -2,30 +2,30 @@
 
 /* NobreDNA — identidade inspirada no selo de cera da Casa.
    Os nomes dos tokens existentes são mantidos por compatibilidade entre
-   páginas; lavender agora é bronze, ink é café e vinho é o borgonha da marca. */
+   páginas; lavender é champanhe, ink é vinho quase preto. */
 @theme {
-  --color-ink: #38201b;
-  --color-ink-soft: #542e26;
-  --color-almond: #f3e7d5;
-  --color-almond-lift: #fff9ed;
-  --color-almond-deep: #e4cdb2;
-  --color-khaki: #d4aa70;
-  --color-khaki-ink: #805027;
-  --color-lavender: #c6a06c;
-  --color-lavender-ink: #8a3e2b;
+  --color-ink: #241015;
+  --color-ink-soft: #3b1b25;
+  --color-almond: #faf6ef;
+  --color-almond-lift: #fffdf9;
+  --color-almond-deep: #eee5df;
+  --color-khaki: #c5a46d;
+  --color-khaki-ink: #79603a;
+  --color-lavender: #c5a46d;
+  --color-lavender-ink: #631a25;
   --color-vinho: #631a25;
-  --color-vinho-soft: #782a32;
+  --color-vinho-soft: #792b3c;
 
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-inter), "Manrope", system-ui, sans-serif;
 
   /* Sombras: sobre fundo claro, sombra pesada denuncia o objeto colado.
      Aqui elas quase não existem — o que separa os planos é o tom. */
-  --shadow-lift: 0 1px 2px rgb(56 32 27 / 0.04), 0 8px 20px -14px rgb(56 32 27 / 0.16);
-  --shadow-book: 6px 10px 28px -16px rgb(56 32 27 / 0.32),
-    1px 2px 5px -3px rgb(56 32 27 / 0.16);
-  --shadow-panel: 0 20px 60px -40px rgb(56 32 27 / 0.5);
-  --shadow-seal: 0 8px 20px -14px rgb(122 95 66 / 0.5);
+  --shadow-lift: 0 1px 2px rgb(36 16 21 / 0.04), 0 8px 20px -14px rgb(36 16 21 / 0.16);
+  --shadow-book: 6px 10px 28px -16px rgb(36 16 21 / 0.32),
+    1px 2px 5px -3px rgb(36 16 21 / 0.16);
+  --shadow-panel: 0 20px 60px -40px rgb(36 16 21 / 0.5);
+  --shadow-seal: 0 8px 20px -14px rgb(36 16 21 / 0.5);
 
   --ease-vellum: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -56,7 +56,7 @@
   }
 
   ::selection {
-    background: rgb(198 160 108 / 0.30);
+    background: rgb(197 164 109 / 0.30);
     color: var(--color-ink);
   }
 
@@ -102,11 +102,11 @@
 
   /* Fio: mais claro que uma borda, para dividir sem cortar. */
   .hairline {
-    border-color: rgb(56 32 27 / 0.14);
+    border-color: rgb(36 16 21 / 0.14);
   }
 
   .hairline-on-dark {
-    border-color: rgb(243 231 213 / 0.16);
+    border-color: rgb(250 246 239 / 0.16);
   }
 
   /* Grão: quase imperceptível, só tira o achatado do fundo chapado. */
@@ -128,8 +128,8 @@
   .glow-lavender {
     background: radial-gradient(
       60% 55% at 50% 45%,
-      rgb(198 160 108 / 0.22) 0%,
-      rgb(198 160 108 / 0.07) 48%,
+      rgb(197 164 109 / 0.15) 0%,
+      rgb(197 164 109 / 0.05) 48%,
       transparent 74%
     );
   }
@@ -139,8 +139,8 @@
   .glow-khaki {
     background: radial-gradient(
       60% 55% at 50% 45%,
-      rgb(198 172 143 / 0.16) 0%,
-      rgb(198 172 143 / 0.05) 48%,
+      rgb(197 164 109 / 0.16) 0%,
+      rgb(197 164 109 / 0.05) 48%,
       transparent 74%
     );
   }
@@ -174,7 +174,7 @@
   position: absolute;
   inset-block: 0;
   width: 50.2%; /* meio ponto de sobreposição: sem fresta na dobra */
-  background: linear-gradient(155deg, #782a32 0%, #631a25 52%, #35151a 100%);
+  background: linear-gradient(155deg, #792b3c 0%, #631a25 52%, #241015 100%);
   backface-visibility: hidden;
 }
 
@@ -268,15 +268,15 @@
 }
 .brand-paper {
   background:
-    radial-gradient(ellipse at 20% 15%, #fff8e9 0%, transparent 55%),
-    linear-gradient(145deg, #efdcc2, #f5e9d6 50%, #ddc09b);
+    radial-gradient(ellipse at 20% 15%, #fffdf9 0%, transparent 55%),
+    linear-gradient(145deg, #faf6ef, #fffdf9 50%, #eee5df);
 }
 .brand-plate {
-  background: radial-gradient(ellipse at 50% 24%, #893b40, #631a25 48%, #35151a 100%);
-  box-shadow: 0 28px 65px -30px rgb(75 25 26 / 0.70), inset 0 0 80px rgb(46 12 16 / 0.30);
+  background: radial-gradient(ellipse at 50% 24%, #792b3c, #631a25 48%, #241015 100%);
+  box-shadow: 0 28px 65px -30px rgb(36 16 21 / 0.55), inset 0 0 80px rgb(36 16 21 / 0.30);
 }
 .editorial-display {
-  background: radial-gradient(ellipse at 20% 10%, #fff9ed, transparent 65%), linear-gradient(135deg, #ead5b9, #c9aa83);
+  background: radial-gradient(ellipse at 20% 10%, #fffdf9, transparent 65%), linear-gradient(135deg, #faf6ef, #e7dadd);
   perspective: 850px;
 }
 .editorial-book {
@@ -285,7 +285,7 @@
   overflow: hidden;
   border-radius: 2px 6px 6px 2px;
   transform: rotateY(-13deg) rotateZ(-5deg);
-  box-shadow: 5px 2px 0 #cbb89d, 8px 4px 0 #f3e8d6, 10px 5px 0 #92704e, 20px 24px 25px rgb(56 32 27 / .28), inset 5px 0 7px rgb(32 16 11 / .35);
+  box-shadow: 5px 2px 0 #d9c9c6, 8px 4px 0 #faf6ef, 10px 5px 0 #a48990, 20px 24px 25px rgb(36 16 21 / .28), inset 5px 0 7px rgb(36 16 21 / .35);
   transition: transform .45s ease, box-shadow .45s ease;
   background: #631a25;
 }

@@ -29,7 +29,7 @@ export function SiteFooter() {
                 NobreDNA
               </span>
             </Link>
-            <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/50">
+            <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/80">
               {/* o logradouro que estava aqui era inventado, e endereço de rua
                   fictício é pior que cidade fictícia: pode ser o de alguém.
                   Fica só a cidade até haver um endereço real para publicar. */}
@@ -47,7 +47,7 @@ export function SiteFooter() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
+                    className="text-sm text-almond/80 transition-colors duration-500 hover:text-almond"
                   >
                     {item.label}
                   </Link>
@@ -65,7 +65,7 @@ export function SiteFooter() {
                 <li key={c.name}>
                   <Link
                     href={c.href}
-                    className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
+                    className="text-sm text-almond/80 transition-colors duration-500 hover:text-almond"
                   >
                     {c.name}
                   </Link>
@@ -83,7 +83,7 @@ export function SiteFooter() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
+                    className="text-sm text-almond/80 transition-colors duration-500 hover:text-almond"
                   >
                     {item.label}
                   </Link>
@@ -96,7 +96,7 @@ export function SiteFooter() {
         {/* o ornamento da base do logo, no lugar onde ele nasceu */}
         <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.7rem] text-almond/35 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.8rem] text-almond/70 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} NobreDNA Editorial · Curitiba</p>
           <p>Versão de apresentação · catálogo e pagamentos em validação</p>
         </div>
