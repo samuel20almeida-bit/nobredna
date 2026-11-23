@@ -101,8 +101,7 @@ export function SacolaDrawer() {
                 Ainda vazia.
               </p>
               <p className="max-w-[24ch] text-[0.88rem] leading-relaxed text-almond/40">
-                O catálogo tem oito títulos, e cada um responde a uma pergunta
-                diferente.
+                Conheça os projetos publicados pela Casa. O catálogo comercial está em validação.
               </p>
               <Link
                 href="/#acervo"

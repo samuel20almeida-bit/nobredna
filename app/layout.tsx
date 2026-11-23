@@ -53,7 +53,8 @@ export default function RootLayout({
         <Abertura />
         <CartProvider>
           <SiteNav />
-          <main>{children}</main>
+          <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[70] focus:bg-almond focus:px-5 focus:py-3 focus:text-ink">Ir para o conteúdo</a>
+          <main id="conteudo">{children}</main>
           <SiteFooter />
           <SacolaDrawer />
         </CartProvider>

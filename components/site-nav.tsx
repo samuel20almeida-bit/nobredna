@@ -60,7 +60,7 @@ export function SiteNav() {
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-700 ${
         scrolled
           ? "hairline border-b bg-almond/85 backdrop-blur-md"
-          : "border-b border-transparent"
+          : invertida ? "border-b border-almond/15 bg-vinho" : "border-b border-ink/10 bg-almond/95"
       }`}
     >
       <nav className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between px-6 lg:px-10">
@@ -76,7 +76,7 @@ export function SiteNav() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="hidden items-center gap-5 md:flex lg:gap-9">
           {links.map((link) => {
             const ativo = pathname.startsWith(link.href);
             return (
@@ -107,6 +107,7 @@ export function SiteNav() {
         </div>
 
         <div className="flex items-center gap-5">
+          <Link href="/publique" className={`hidden min-h-11 items-center px-4 text-sm font-medium lg:inline-flex ${invertida ? "bg-almond text-vinho" : "bg-vinho text-almond"}`}>Quero publicar</Link>
           <Link
             href="/checkout"
             aria-label="Conhecer a experiência de compra demonstrativa"
@@ -127,6 +128,7 @@ export function SiteNav() {
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
             className={`tap md:hidden ${invertida ? "text-khaki" : "text-lavender-ink"}`}
           >
             {menuOpen ? <Close size={22} /> : <Menu size={22} />}
@@ -137,6 +139,7 @@ export function SiteNav() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -153,6 +156,7 @@ export function SiteNav() {
                   {link.label}
                 </Link>
               ))}
+              <Link href="/publique" className="mt-4 min-h-12 bg-vinho px-5 py-3 text-center text-almond">Quero publicar minha história</Link>
             </div>
           </motion.div>
         )}

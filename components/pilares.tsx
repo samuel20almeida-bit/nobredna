@@ -102,7 +102,7 @@ export function Pilares() {
               <p className="mt-4 font-serif text-[1.18rem] leading-relaxed text-lavender italic">
                 {pilar.linha}
               </p>
-              <p className="mt-3 text-[0.95rem] leading-[1.85] text-almond/55">
+              <p className="mt-3 text-base leading-[1.85] text-almond/80">
                 {pilar.texto}
               </p>
             </li>
