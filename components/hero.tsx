@@ -9,12 +9,12 @@ export function Hero() {
   const initial = reduced ? false : { opacity: 0, y: 18 };
   return (
     <section className="brand-paper grain relative isolate flex items-center overflow-hidden pt-24 pb-8 md:min-h-[min(840px,100svh)] md:pt-28 md:pb-16 lg:pt-32 lg:pb-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-4 inset-y-5 border border-khaki-ink/12 sm:inset-x-6 lg:inset-x-12" />
+      <div aria-hidden="true" className="hero-frame pointer-events-none absolute inset-x-4 inset-y-5 rounded-[24px] border border-khaki-ink/25 sm:inset-x-6 lg:inset-x-12" />
       <div className="relative mx-auto grid w-full max-w-[1240px] items-center gap-4 px-7 sm:gap-12 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20 lg:px-14">
         <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.15 }} className="max-w-[38rem]">
           <div className="flex items-center gap-3">
             <span className="h-px w-10 bg-khaki-ink/45" aria-hidden="true" />
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.23em] text-khaki-ink">Casa de Legados</p>
+            <p className="text-[0.75rem] font-medium uppercase tracking-[0.2em] text-khaki-ink">Casa de Legados</p>
           </div>
           <h1 className="mt-4 text-[clamp(2.65rem,10vw,3.5rem)] leading-[0.98] text-ink md:mt-6 md:text-[clamp(3rem,7.1vw,5.5rem)]">
             Toda história merece deixar <em className="block text-vinho">um legado.</em>
@@ -35,7 +35,7 @@ export function Hero() {
         </motion.div>
 
         <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.25 }} className="mx-auto w-full max-w-[190px] sm:max-w-[300px] md:max-w-[410px] lg:max-w-none">
-          <figure className="relative mx-auto aspect-[4/5] w-full max-w-[480px]">
+          <figure className="hero-book relative mx-auto aspect-[4/5] w-full max-w-[480px]">
             <Image src="/brand/hero-livro-isolado.webp" alt="Livro antigo de capa dura bordô com o selo dourado da NobreDNA" fill priority sizes="(max-width: 639px) 190px, (max-width: 767px) 300px, (max-width: 1023px) 410px, (max-width: 1240px) 42vw, 480px" className="object-contain object-center" />
           </figure>
           <p className="mt-2 text-center font-serif text-base italic text-khaki-ink md:mt-4">O primeiro capítulo começa com uma conversa.</p>
