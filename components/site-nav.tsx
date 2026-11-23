@@ -31,6 +31,7 @@ const topoEscuro = ["/livros"];
 const links = [
   { href: "/livros", label: "Livros", fio: "bg-khaki-ink" },
   { href: "/publique", label: "Publicar", fio: "bg-lavender-ink" },
+  { href: "/coautorias", label: "Coautorias", fio: "bg-lavender-ink" },
   { href: "/sobre", label: "Sobre", fio: "bg-ink/40" },
 ];
 
@@ -38,7 +39,7 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { count, ready, setDrawerOpen } = useCart();
+  const { count, ready } = useCart();
 
   // no topo de uma rota de hero escuro, a nav transparente precisa de tinta clara
   const invertida =
@@ -105,10 +106,9 @@ export function SiteNav() {
         </div>
 
         <div className="flex items-center gap-5">
-          <button
-            type="button"
-            onClick={() => setDrawerOpen(true)}
-            aria-label={`Abrir a sacola${ready && count ? ` — ${count} item(ns)` : ""}`}
+          <Link
+            href="/checkout"
+            aria-label="Conhecer a experiência de compra demonstrativa"
             className={`tap relative flex items-center gap-2 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
           >
             <Bag size={20} />
@@ -119,7 +119,7 @@ export function SiteNav() {
                 {count}
               </span>
             )}
-          </button>
+          </Link>
 
           <button
             type="button"

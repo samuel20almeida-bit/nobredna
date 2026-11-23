@@ -31,6 +31,7 @@ export default function TrocasPage() {
           <h1 className="mt-12 max-w-[16ch] text-[clamp(2.4rem,5vw,3.6rem)] leading-[1.04] font-light text-balance text-ink">
             {politicaTroca.titulo}
           </h1>
+          <p className="mt-5 border border-ink/20 bg-almond-lift p-4 text-ink/75">Modelo de política para revisão pela Casa antes da ativação da loja. Nenhum pedido é realizado nesta versão demonstrativa.</p>
 
           <p className="mt-8 max-w-[38rem] text-[1.05rem] leading-[1.85] text-ink/65">
             {politicaTroca.chamada}

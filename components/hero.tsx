@@ -65,11 +65,11 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.35, ease }}
           >
-            {autora.linha.toLowerCase()}
+            NobreDNA · Casa de Legados
           </motion.p>
 
           <h1 className="mt-6 text-[clamp(2.9rem,7vw,5.2rem)] leading-[0.98] font-light text-ink">
-            {["Escrevo livros.", "E ajudo outros", "a escrever."].map(
+            {["Toda história", "merece deixar", "um legado."].map(
               (line, i) => (
                 <motion.span
                   key={line}
@@ -94,10 +94,8 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.3, delay: 1.55, ease }}
           >
-            Sou {autora.nome}, escritora de devocionais. Depois de publicar os
-            meus livros aprendendo cada etapa do ofício, abri esta casa para
-            fazer o mesmo trabalho de mesa por outros autores — sem nunca tomar
-            deles o que é seu.
+            Histórias reais em livros memoráveis. A Casa de {autora.nome} acolhe
+            autoras, coautorias e projetos editoriais — da primeira conversa à publicação.
           </motion.p>
 
           <motion.div
@@ -107,17 +105,16 @@ export function Hero() {
             transition={{ duration: 1.2, delay: 1.95, ease }}
           >
             <Link
-              href="/livros"
-              className="group font-serif text-[1.2rem] text-ink transition-colors duration-500 hover:text-lavender-ink"
+              href="/publique"
+              className="inline-flex rounded-full bg-ink px-7 py-4 font-serif text-[1.2rem] text-almond transition-colors hover:bg-ink-soft"
             >
-              Ver meus livros
-              <span className="mt-1.5 block h-px w-full origin-left scale-x-100 bg-ink/25 transition-colors duration-500 group-hover:bg-lavender-ink" />
+              Quero publicar minha história
             </Link>
             <Link
-              href="/publique"
-              className="font-serif text-[1.2rem] text-ink/45 italic transition-colors duration-500 hover:text-ink/80"
+              href="/livros"
+              className="font-serif text-[1.2rem] text-ink/75 italic transition-colors duration-500 hover:text-ink"
             >
-              quero publicar o meu
+              conhecer os livros da Casa
             </Link>
           </motion.div>
         </motion.div>

@@ -21,12 +21,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nobredna.vercel.app";
 
 export const metadata: Metadata = {
+  robots: { index: false, follow: true },
   metadataBase: new URL(siteUrl),
   title: {
-    default: "NobreDNA — Casa editorial",
+    default: "NobreDNA — Casa de Legados",
     template: "%s · NobreDNA",
   },
   description:
@@ -35,9 +36,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "NobreDNA",
-    title: "NobreDNA — Casa editorial",
+    title: "NobreDNA — Casa de Legados",
     description:
-      "O livro é seu. O trabalho de mesa é nosso. Diagnóstico gratuito do seu original.",
+      "Histórias reais em livros memoráveis. Autorais, coautorias e projetos editoriais.",
   },
 };
 

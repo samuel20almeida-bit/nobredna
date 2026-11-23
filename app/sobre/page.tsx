@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { EstanteAutora } from "@/components/estante-autora";
+import { ProjetosReais } from "@/components/projetos-reais";
 import { HelixRail } from "@/components/helix-rail";
 import { Anotacao } from "@/components/anotacao";
 import { DivisorPerola } from "@/components/perola";
@@ -66,16 +66,7 @@ export default function SobrePage() {
         </section>
 
         {/* 2 — os livros dela, aqui como obra e não como vitrine */}
-        <section className="bg-almond pb-24 lg:pb-32">
-          <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
-            <h2 className="max-w-[20ch] text-[clamp(1.8rem,3.6vw,2.6rem)] leading-[1.08] font-light text-ink">
-              O que escrevi até aqui.
-            </h2>
-            <div className="mt-12">
-              <EstanteAutora />
-            </div>
-          </div>
-        </section>
+        <ProjetosReais />
 
         {/* 3 — os pilares e o manifesto, direto do livro de marca dela */}
         <Pilares />

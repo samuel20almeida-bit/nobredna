@@ -1,19 +1,19 @@
 import Link from "next/link";
 import { HelixMark } from "@/components/icons";
 import { DivisorPerola } from "@/components/perola";
-import { collections } from "@/lib/books";
 import { autora } from "@/lib/autora";
 
 const leitura = [
   { href: "/livros", label: "Todos os livros" },
   { href: "/sobre", label: "Sobre a autora" },
-  { href: "/trocas", label: "Troca e devolução" },
-  { href: "/#assine", label: "Carta mensal" },
+  { href: "/checkout", label: "Prévia da loja" },
+  { href: "/#assine", label: "Acompanhe a Casa" },
 ];
 
 const assessoria = [
   { href: "/publique", label: "Envie seu original" },
-  { href: "/#servicos", label: "O que a casa faz" },
+  { href: "/coautorias", label: "Coautorias" },
+  { href: "/links", label: "Links da Casa" },
   { href: "/#acervo", label: "Livros feitos aqui" },
 ];
 
@@ -33,9 +33,9 @@ export function SiteFooter() {
               {/* o logradouro que estava aqui era inventado, e endereço de rua
                   fictício é pior que cidade fictícia: pode ser o de alguém.
                   Fica só a cidade até haver um endereço real para publicar. */}
-              Os devocionais de {autora.nome} e a Casa editorial que
-              nasceu deles. {autora.cidade}.
+              NobreDNA · Casa de Legados. Histórias reais em livros memoráveis. {autora.cidade}.
             </p>
+            <a href="https://www.instagram.com/nobre_dna/" target="_blank" rel="noreferrer" className="mt-5 inline-block text-khaki underline">@nobre_dna</a>
           </div>
 
           <nav aria-label="Para ler">
@@ -56,15 +56,15 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="Coleções">
+          <nav aria-label="Projetos">
             <h4 className="font-serif text-[1rem] italic text-lavender">
-              Linhas
+              Projetos
             </h4>
             <ul className="mt-5 space-y-3">
-              {collections.map((c) => (
+              {[{name:"Obras autorais",href:"/livros"},{name:"Coautorias",href:"/coautorias"},{name:"Projetos editoriais",href:"/publique"}].map((c) => (
                 <li key={c.name}>
                   <Link
-                    href="/#colecoes"
+                    href={c.href}
                     className="text-sm text-almond/55 transition-colors duration-500 hover:text-almond"
                   >
                     {c.name}
@@ -97,8 +97,8 @@ export function SiteFooter() {
         <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
 
         <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.7rem] text-almond/35 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} NobreDNA Editorial · CNPJ 00.000.000/0001-00</p>
-          <p>Os livros à venda são de suas autoras · Pagamentos por Mercado Pago</p>
+          <p>© {new Date().getFullYear()} NobreDNA Editorial · Curitiba</p>
+          <p>Versão de apresentação · catálogo e pagamentos em validação</p>
         </div>
       </div>
     </footer>

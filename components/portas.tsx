@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Bookmark, Quill } from "@/components/icons";
-import { livrosDaAutora } from "@/lib/books";
 
 /**
  * As duas portas da casa.
@@ -21,7 +20,7 @@ const portas = [
     etiqueta: "para ler",
     titulo: "Os livros",
     texto:
-      "Devocionais curtos, para caber numa manhã de verdade. Cada título tem um dia inteiro para ler antes de decidir.",
+      "Conheça obras, lançamentos e histórias que a Casa ajudou a preservar.",
     acao: "ver os livros",
     // vinho: o chão da leitora, repetido em toda a /livros
     fundo: "bg-vinho hover:bg-vinho-soft",
@@ -34,8 +33,8 @@ const portas = [
     etiqueta: "para publicar",
     titulo: "A Casa",
     texto:
-      "Leitura, preparação, revisão, projeto gráfico e registro do seu original. O diagnóstico é gratuito, e o livro continua seu.",
-    acao: "enviar meu original",
+      "Da ideia ao projeto autoral ou coletivo. O primeiro passo é uma conversa.",
+    acao: "começar minha história",
     // azul-tinta: o chão da autora atendida, repetido em toda a /publique
     fundo: "bg-ink hover:bg-ink-soft",
     acento: "text-lavender",
@@ -93,8 +92,7 @@ export function Portas() {
         </ul>
 
         <p className="mt-8 text-center font-serif text-[1.05rem] text-ink/40 italic">
-          {livrosDaAutora.length} títulos publicados · a Casa aberta o ano
-          inteiro
+          Autorais · Coautorias · Projetos editoriais
         </p>
       </div>
     </section>

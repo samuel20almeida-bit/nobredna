@@ -65,6 +65,9 @@ function referencia(): string {
 }
 
 export async function POST(request: Request) {
+  if (process.env.ENABLE_LIVE_CHECKOUT !== "true") {
+    return NextResponse.json({ erro: "A loja está em demonstração. Nenhuma cobrança pode ser realizada." }, { status: 503 });
+  }
   let body: { itens?: unknown; comprador?: unknown; freteId?: unknown };
   try {
     body = await request.json();

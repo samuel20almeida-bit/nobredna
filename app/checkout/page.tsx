@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CheckoutClient } from "@/components/checkout-client";
+import { CheckoutDemo } from "@/components/checkout-demo";
 import { HelixRail } from "@/components/helix-rail";
 
 export const metadata: Metadata = {
@@ -16,13 +16,13 @@ export default function CheckoutPage() {
 
       <div className="relative z-10 bg-almond pt-32 pb-24">
         <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
-          <p className="label">Finalizar pedido</p>
+          <p className="label">Prévia da loja · demonstração</p>
           <h1 className="mt-5 max-w-[20ch] text-[clamp(2rem,4.4vw,3rem)] leading-[1.1] text-ink">
-            Um exemplar sai daqui em até dois dias úteis.
+            Seu próximo livro, em poucos passos.
           </h1>
 
           <div className="mt-14">
-            <CheckoutClient />
+            <CheckoutDemo />
           </div>
         </div>
       </div>
