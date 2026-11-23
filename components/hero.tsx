@@ -40,7 +40,7 @@ export function Hero() {
             <div className="pointer-events-none absolute inset-5 border border-khaki/25" aria-hidden="true" />
             <div className="relative flex flex-col items-center">
               <span className="mb-6 text-khaki text-xl" aria-hidden="true">✦</span>
-              <BrandSeal size={132} className="ring-1 ring-khaki/25" />
+              <BrandSeal size={174} />
               <p className="mt-7 font-serif text-[clamp(2.35rem,5vw,3.4rem)] leading-none tracking-[0.06em]">NobreDNA</p>
               <p className="mt-3 text-[0.70rem] font-medium uppercase tracking-[0.22em] text-khaki">Casa de Legados</p>
               <div className="mt-7 flex w-full max-w-[230px] items-center justify-center gap-3" aria-hidden="true"><span className="h-px flex-1 bg-khaki/45"/><span className="text-khaki">✧</span><span className="h-px flex-1 bg-khaki/45"/></div>

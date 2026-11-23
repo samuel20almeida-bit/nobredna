@@ -68,7 +68,7 @@ export function SiteNav() {
           href="/"
           className={`flex items-center gap-3 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
         >
-          <BrandSeal size={43} />
+          <BrandSeal size={49} />
           <span
             className={`font-serif text-[1.15rem] transition-colors duration-500 ${invertida ? "text-almond" : "text-ink"}`}
           >

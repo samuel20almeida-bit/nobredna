@@ -253,25 +253,18 @@
   color: var(--color-khaki);
 }
 
-/* A referência enviada contém o selo dentro de uma fotografia. O recorte
-   abaixo preserva o desenho original sem redesenhá-lo nem inventar letras. */
+/* Selo transparente, preservando o contorno orgânico da cera. */
 .brand-seal {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #631a25;
-  box-shadow: 0 3px 12px rgb(56 32 27 / 0.22);
+  background: transparent;
+  filter: drop-shadow(0 3px 5px rgb(40 10 12 / 0.25));
 }
 .brand-seal img {
-  position: absolute;
-  width: 173.15%;
-  max-width: none;
+  display: block;
+  width: 100%;
   height: auto;
-  left: -28.7%;
-  top: -4.6%;
 }
 .brand-paper {
   background:
@@ -287,19 +280,16 @@
   perspective: 850px;
 }
 .editorial-book {
-  width: min(65%, 160px);
-  aspect-ratio: 0.7;
-  padding: 9px 8px 9px 14px;
+  width: min(72%, 205px);
+  aspect-ratio: 2/3;
+  overflow: hidden;
   border-radius: 2px 6px 6px 2px;
   transform: rotateY(-13deg) rotateZ(-5deg);
   box-shadow: 5px 2px 0 #cbb89d, 8px 4px 0 #f3e8d6, 10px 5px 0 #92704e, 20px 24px 25px rgb(56 32 27 / .28), inset 5px 0 7px rgb(32 16 11 / .35);
   transition: transform .45s ease, box-shadow .45s ease;
-  color: #f3e7d5;
-  background: linear-gradient(135deg,#782a32,#451018);
+  background: #631a25;
 }
-.editorial-book.book-ivory { color: #631a25; background: linear-gradient(135deg,#f7e7cb,#d8bb91); }
-.editorial-book.book-brown { background: linear-gradient(135deg,#694737,#38201b); }
-.editorial-book-frame { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px solid currentColor; padding: 12px 6px; text-align: center; }
+.editorial-book img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .journey-chapter { animation: journey-enter .28s ease-out both; }
 @keyframes journey-enter { from { opacity: .35; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .journey-chapter { animation: none; } }
@@ -308,7 +298,7 @@
 }
 @media (max-width: 767px) {
   .abertura { display: none; }
-  .editorial-book { width: min(55%, 150px); }
+  .editorial-book { width: min(65%, 190px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

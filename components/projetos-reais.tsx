@@ -1,9 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const projetos = [
- {titulo:"Ave Mulher",tipo:"Devocional",detalhe:"Liderança feminina à luz da Bíblia. Um lançamento celebrado pela Casa.",href:"https://instagram.com/p/DRULXj2jnX6",estilo:"book-wine"},
- {titulo:"Noiva Apaixonada",tipo:"Lançamento editorial",detalhe:"Uma ideia que se tornou livro. Conheça o registro desse lançamento.",href:"https://instagram.com/p/Dd4MhDqtZJV",estilo:"book-ivory"},
- {titulo:"Nos bastidores da Casa",tipo:"Processo editorial",detalhe:"Acompanhe o ensaio com Auxiliadora Nobre e o cuidado por trás da produção.",href:"https://instagram.com/p/DXY_p6ADucG",estilo:"book-brown"}
+ {titulo:"Ave Mulher",tipo:"Devocional",detalhe:"Liderança feminina à luz da Bíblia. Um lançamento celebrado pela Casa.",href:"https://instagram.com/p/DRULXj2jnX6",imagem:"/brand/ave-mulher.webp",livro:true},
+ {titulo:"Noiva Apaixonada",tipo:"Lançamento editorial",detalhe:"Uma ideia que se tornou livro. Conheça o registro desse lançamento.",href:"https://instagram.com/p/Dd4MhDqtZJV",imagem:"/brand/noiva-apaixonada.webp",livro:true},
+ {titulo:"Nos bastidores da Casa",tipo:"Processo editorial",detalhe:"Acompanhe o ensaio com Auxiliadora Nobre e o cuidado por trás da produção.",href:"https://instagram.com/p/DXY_p6ADucG",imagem:"/brand/bastidores.webp",livro:false}
 ];
 
 export function ProjetosReais() {
@@ -12,8 +13,8 @@ export function ProjetosReais() {
    <div className="flex flex-wrap items-end justify-between gap-5"><div><p className="label">a estante da Casa</p><h2 className="mt-4 max-w-[22ch] text-[clamp(2.4rem,5vw,3.75rem)] leading-none">Histórias que se tornaram <em className="text-vinho">legado.</em></h2></div><a href="https://www.instagram.com/nobre_dna/" target="_blank" rel="noreferrer" className="inline-block border-b border-vinho pb-1 font-serif text-xl text-vinho">Ver mais no Instagram</a></div>
    <div className="mt-9 grid gap-6 md:grid-cols-3">
     {projetos.map((p,i)=><article key={p.titulo} className="group flex flex-col border border-khaki-ink/20 bg-almond-lift">
-       <a href={p.href} target="_blank" rel="noreferrer" aria-label={"Conhecer "+p.titulo+" no Instagram"} className="editorial-display relative grid min-h-[280px] place-items-center overflow-hidden bg-almond-deep p-8">
-        <div className={"editorial-book "+p.estilo} aria-hidden="true"><div className="editorial-book-frame"><span className="font-serif text-sm italic">NobreDNA</span><span className="text-xl">✦</span><span className="font-serif text-[1.8rem] leading-none">{p.titulo}</span><span className="mt-auto text-[0.65rem] tracking-widest uppercase">Casa de Legados</span></div></div>
+       <a href={p.href} target="_blank" rel="noreferrer" aria-label={"Conhecer "+p.titulo+" no Instagram"} className={`editorial-display relative grid min-h-[345px] place-items-center overflow-hidden bg-almond-deep ${p.livro?"p-8":""}`}>
+        {p.livro ? <div className="editorial-book"><Image src={p.imagem} alt={`Capa conceitual de ${p.titulo}`} width={640} height={960} unoptimized /></div> : <Image src={p.imagem} alt="Composição editorial ilustrativa com livros e manuscritos" fill unoptimized sizes="(max-width: 767px) 100vw, 33vw" className="object-cover object-center" />}
         <span className="absolute bottom-3 right-3 bg-almond-lift/95 px-2 py-1 text-xs text-ink/80">{i===2?"Composição ilustrativa":"Capa conceitual"}</span>
        </a>
        <div className="flex flex-1 flex-col p-6"><p className="label">{p.tipo}</p><h3 className="mt-2 text-3xl text-vinho">{p.titulo}</h3><p className="mt-3 flex-1 text-base leading-relaxed text-ink/75">{p.detalhe}</p><a href={p.href} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-12 items-center justify-center border border-vinho px-5 py-2 text-base text-vinho transition-colors hover:bg-vinho hover:text-almond">Conhecer projeto</a></div>
