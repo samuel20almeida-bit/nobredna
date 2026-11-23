@@ -35,9 +35,8 @@ export function Hero() {
         </motion.div>
 
         <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.25 }} className="mx-auto w-full max-w-[410px] lg:max-w-none">
-          <figure className="relative aspect-[4/5] overflow-hidden border border-khaki/50 bg-almond-deep shadow-book">
-            <Image src="/brand/hero-livro-nobredna.webp" alt="Livro de capa dura bordô com o selo dourado NobreDNA sobre uma mesa de escrita vintage" fill priority sizes="(max-width: 1023px) 410px, (max-width: 1240px) 42vw, 520px" className="object-cover object-center" />
-            <div className="pointer-events-none absolute inset-3 border border-almond/45" aria-hidden="true" />
+          <figure className="relative mx-auto aspect-[4/5] w-full max-w-[480px]">
+            <Image src="/brand/hero-livro-isolado.webp" alt="Livro antigo de capa dura bordô com o selo dourado da NobreDNA" fill priority unoptimized sizes="(max-width: 1023px) 410px, (max-width: 1240px) 42vw, 480px" className="object-contain object-center" />
           </figure>
           <p className="mt-4 text-center font-serif text-base italic text-khaki-ink">O primeiro capítulo começa com uma conversa.</p>
         </motion.div>
