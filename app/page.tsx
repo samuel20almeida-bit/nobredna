@@ -1,7 +1,7 @@
 import { Hero } from "@/components/hero";
 import { ProjetosReais } from "@/components/projetos-reais";
 import { JornadaLegado } from "@/components/jornada-legado";
-import { BrandSeal } from "@/components/brand-seal";
+import Image from "next/image";
 import { autora } from "@/lib/autora";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export default function HomePage() {
   <ProjetosReais/>
   <section className="bg-almond-lift py-16 lg:py-24">
    <div className="mx-auto grid max-w-[1180px] gap-10 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-10">
-    <div className="brand-plate relative grid min-h-64 place-items-center overflow-hidden p-8 text-center text-almond lg:min-h-96"><div className="absolute inset-3 border border-khaki/45"/><div className="relative"><BrandSeal size={110}/><p className="mt-6 font-serif text-2xl italic">Uma Casa, não apenas uma editora.</p><p className="mt-3 text-sm uppercase tracking-wide text-khaki">NobreDNA</p></div></div>
+    <figure className="relative mx-auto aspect-[4/5] w-full max-w-[420px] border border-khaki/60 bg-almond shadow-book"><Image src="/brand/nanda-almeida.webp" alt="Nanda Almeida, escritora e fundadora da Casa de Legados" fill sizes="(max-width: 1023px) 90vw, 420px" className="object-cover p-2"/></figure>
     <div><p className="label">uma carta da fundadora</p><h2 className="mt-4 text-[clamp(2.4rem,5vw,3.75rem)] leading-none">Antes de existir um livro, <em className="text-vinho">existe uma vida.</em></h2><p className="mt-6 text-lg leading-relaxed text-ink/80">{autora.bio[0]}</p><p className="mt-5 font-serif text-2xl italic text-vinho">{autora.nome}</p><p className="text-sm text-ink/65">Fundadora da NobreDNA</p><Link href="/sobre" className="mt-6 inline-block border-b border-vinho pb-1 font-serif text-xl text-vinho">Conheça nossa história</Link></div>
    </div>
   </section>

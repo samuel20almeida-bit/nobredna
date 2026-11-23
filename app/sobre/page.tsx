@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ProjetosReais } from "@/components/projetos-reais";
 import { HelixRail } from "@/components/helix-rail";
 import { Anotacao } from "@/components/anotacao";
@@ -9,7 +10,7 @@ import { ArrowRight } from "@/components/icons";
 import { autora } from "@/lib/autora";
 
 export const metadata: Metadata = {
-  title: "Sobre",
+  title: "Nanda Almeida | Escritora e Fundadora",
   description: `${autora.nome} — ${autora.linha.toLowerCase()}. A fundadora da NobreDNA, a Casa editorial por trás dos livros.`,
 };
 
@@ -24,13 +25,26 @@ export default function SobrePage() {
           <div className="glow-lavender pointer-events-none absolute inset-x-0 top-0 h-[65%]" />
 
           <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-            <p className="label">a autora</p>
-            <h1 className="mt-6 max-w-[18ch] text-[clamp(2.4rem,5.2vw,3.8rem)] leading-[1.05] font-light text-balance text-ink">
-              {autora.chamada}
-            </h1>
+            <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+              <figure className="mx-auto w-full max-w-[440px]">
+                <div className="relative aspect-[4/5] border border-khaki/60 bg-almond-lift p-2 shadow-book">
+                  <Image src="/brand/nanda-almeida.webp" alt="Nanda Almeida, escritora e fundadora da NobreDNA, segurando um livro" fill priority sizes="(max-width: 1023px) 90vw, 440px" className="object-cover object-center p-2" />
+                </div>
+                <figcaption className="mt-4 text-center font-serif text-lg italic text-khaki-ink">Nanda Almeida · Fundadora da Casa</figcaption>
+              </figure>
+              <div>
+                <p className="label">a mulher por trás da Casa</p>
+                <h1 className="mt-5 text-[clamp(3rem,6vw,5.4rem)] leading-none text-vinho">Nanda Almeida</h1>
+                <p className="mt-3 text-sm font-medium uppercase tracking-[0.18em] text-khaki-ink">Escritora · Fundadora da NobreDNA</p>
+                <p className="mt-7 max-w-[38rem] text-lg leading-relaxed text-ink/80">Escritora e fundadora da Casa de Legados, Nanda acredita que toda história carrega um propósito. Sua missão é acolher vozes, preservar testemunhos e ajudar outras autoras a transformar suas experiências em livros que atravessam gerações.</p>
+                <blockquote className="mt-8 border-l border-khaki pl-5 font-serif text-2xl italic leading-snug text-vinho">“{autora.chamada}”</blockquote>
+                <a href="https://www.instagram.com/escritoranandaalmeida/" target="_blank" rel="noreferrer" className="mt-8 inline-flex min-h-12 items-center border border-vinho px-6 py-3 text-vinho transition-colors hover:bg-vinho hover:text-almond">Acompanhe @escritoranandaalmeida</a>
+              </div>
+            </div>
 
             <div className="mt-14 grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
               <div className="max-w-[38rem] space-y-6">
+                <p className="label">carta da fundadora</p>
                 {autora.bio.map((paragrafo) => (
                   <p
                     key={paragrafo.slice(0, 24)}
