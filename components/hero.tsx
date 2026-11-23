@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { HeroBook } from "@/components/literary-interactions";
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -24,7 +24,7 @@ export function Hero() {
             coautorias e projetos editoriais — da primeira conversa à publicação.
           </p>
           <div className="mt-5 flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 md:mt-7 md:gap-4">
-            <Link href="/publique" className="inline-flex min-h-14 w-full items-center justify-center bg-vinho px-5 py-4 text-center font-serif text-[1.2rem] text-almond transition-colors hover:bg-vinho-soft rounded-sm shadow-lift sm:w-auto sm:px-7">
+            <Link href="/publique" className="gold-shimmer inline-flex min-h-14 w-full items-center justify-center bg-vinho px-5 py-4 text-center font-serif text-[1.2rem] text-almond transition-colors hover:bg-vinho-soft rounded-sm shadow-lift sm:w-auto sm:px-7">
               Quero publicar minha história
             </Link>
             <Link href="/livros" className="inline-flex min-h-11 items-center font-serif text-[1.2rem] italic text-vinho underline decoration-khaki-ink/45 underline-offset-4 hover:text-ink">
@@ -35,10 +35,7 @@ export function Hero() {
         </motion.div>
 
         <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.25 }} className="mx-auto w-full max-w-[190px] sm:max-w-[300px] md:max-w-[410px] lg:max-w-none">
-          <figure className="hero-book relative mx-auto aspect-[4/5] w-full max-w-[480px]">
-            <Image src="/brand/hero-livro-isolado.webp" alt="Livro antigo de capa dura bordô com o selo dourado da NobreDNA" fill priority sizes="(max-width: 639px) 190px, (max-width: 767px) 300px, (max-width: 1023px) 410px, (max-width: 1240px) 42vw, 480px" className="object-contain object-center" />
-          </figure>
-          <p className="mt-2 text-center font-serif text-base italic text-khaki-ink md:mt-4">O primeiro capítulo começa com uma conversa.</p>
+          <HeroBook/>
         </motion.div>
       </div>
     </section>
