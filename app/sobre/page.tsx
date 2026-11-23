@@ -27,8 +27,8 @@ export default function SobrePage() {
           <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
             <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
               <figure className="mx-auto w-full max-w-[440px]">
-                <div className="relative aspect-[4/5] border border-khaki/60 bg-almond-lift p-2 shadow-book">
-                  <Image src="/brand/nanda-almeida.webp" alt="Nanda Almeida, escritora e fundadora da NobreDNA, segurando um livro" fill priority sizes="(max-width: 1023px) 90vw, 440px" className="object-cover object-center p-2" />
+                <div className="relative aspect-square rounded-full border border-khaki/60 bg-almond-lift p-2 shadow-book">
+                  <div className="relative h-full w-full overflow-hidden rounded-full"><Image src="/brand/nanda-retrato-sobre.webp" alt="Nanda Almeida, escritora e fundadora da NobreDNA" fill priority sizes="(max-width: 1023px) 90vw, 440px" className="object-cover object-center" /></div>
                 </div>
                 <figcaption className="mt-4 text-center font-serif text-lg italic text-khaki-ink">Nanda Almeida · Fundadora da Casa</figcaption>
               </figure>
