@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HelixMark } from "@/components/icons";
+import { BrandSeal } from "@/components/brand-seal";
 import { DivisorPerola } from "@/components/perola";
 import { autora } from "@/lib/autora";
 
@@ -24,7 +24,7 @@ export function SiteFooter() {
         <div className="grid gap-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="flex items-center gap-3 text-lavender">
-              <HelixMark size={24} />
+              <BrandSeal size={54} />
               <span className="font-serif text-[1.2rem] text-almond">
                 NobreDNA
               </span>

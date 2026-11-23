@@ -64,7 +64,7 @@ export function Helix({
         <path
           d={geo.back}
           fill="none"
-          stroke="#7f8cb5"
+          stroke="#b98958"
           strokeOpacity={0.3 * intensity}
           strokeWidth={strokeWidth * 0.8}
           strokeLinecap="round"
@@ -99,7 +99,7 @@ export function Helix({
         <path
           d={geo.front}
           fill="none"
-          stroke="#7f8cb5"
+          stroke="#b98958"
           strokeOpacity={0.7 * intensity}
           strokeWidth={strokeWidth}
           strokeLinecap="round"

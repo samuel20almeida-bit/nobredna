@@ -36,7 +36,7 @@ export function DivisorPerola({
   const fio =
     tone === "dark"
       ? "linear-gradient(to right,transparent,rgb(198 172 143 / .8))"
-      : "linear-gradient(to right,transparent,rgb(1 22 56 / .22))";
+      : "linear-gradient(to right,transparent,rgb(56 32 27 / .22))";
 
   return (
     <div

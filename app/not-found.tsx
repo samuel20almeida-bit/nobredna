@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { ArrowRight, HelixMark } from "@/components/icons";
+import { ArrowRight } from "@/components/icons";
+import { BrandSeal } from "@/components/brand-seal";
 
 export default function NotFound() {
   return (
     <div className="relative z-10 flex min-h-[80vh] items-center bg-almond">
       <div className="mx-auto max-w-[640px] px-6 text-center">
         <span className="mx-auto block w-fit text-lavender-ink">
-          <HelixMark size={30} />
+          <BrandSeal size={52} />
         </span>
         <h1 className="mt-8 text-[clamp(1.9rem,4vw,2.8rem)] leading-tight text-ink">
           Esta página não está no catálogo.

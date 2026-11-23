@@ -1,4 +1,4 @@
-import { HelixMark } from "@/components/icons";
+import { BrandSeal } from "@/components/brand-seal";
 
 /**
  * A capa que se abre quando o site carrega.
@@ -16,13 +16,13 @@ export function Abertura() {
       <div className="abertura-face abertura-esq" />
       <div className="abertura-face abertura-dir" />
       <span className="abertura-marca">
-        <HelixMark size={34} />
+        <BrandSeal size={92} />
         <span className="abertura-nome">
           Nobre
           <br />
           DNA
         </span>
-        <span className="abertura-linha">Casa editorial</span>
+        <span className="abertura-linha">Casa de Legados</span>
       </span>
     </div>
   );

@@ -46,11 +46,11 @@ export function Portas() {
   return (
     <section className="relative bg-almond-deep/35 py-20 lg:py-28">
       <div className="mx-auto max-w-[1180px] px-6 lg:px-10">
-        <ul className="grid gap-px overflow-hidden bg-almond-deep md:grid-cols-2">
+        <ul className="grid gap-4 md:grid-cols-2">
           {portas.map((porta, i) => (
             <motion.li
               key={porta.href}
-              className={porta.fundo}
+              className={`${porta.fundo} flex`}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -62,7 +62,7 @@ export function Portas() {
             >
               <Link
                 href={porta.href}
-                className="group flex h-full flex-col px-8 py-11 transition-colors duration-500 sm:px-11 sm:py-14"
+                className="group m-2 flex flex-1 flex-col border border-khaki/35 px-8 py-11 transition-colors duration-500 sm:px-11 sm:py-14"
               >
                 <p className={`label ${porta.rotulo} flex items-center gap-3`}>
                   <porta.Icon size={17} />

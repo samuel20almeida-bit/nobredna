@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bag, Close, HelixMark, Menu } from "@/components/icons";
+import { Bag, Close, Menu } from "@/components/icons";
+import { BrandSeal } from "@/components/brand-seal";
 import { useCart } from "@/lib/cart";
 
 /* Uma entrada por porta, mais a página que costura as duas. A ordem é a da
@@ -67,11 +68,11 @@ export function SiteNav() {
           href="/"
           className={`flex items-center gap-3 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
         >
-          <HelixMark size={22} />
+          <BrandSeal size={43} />
           <span
             className={`font-serif text-[1.15rem] transition-colors duration-500 ${invertida ? "text-almond" : "text-ink"}`}
           >
-            NobreDNA
+            NobreDNA<span className={`block font-sans text-[0.58rem] uppercase tracking-[0.16em] ${invertida ? "text-khaki" : "text-khaki-ink"}`}>Casa de Legados</span>
           </span>
         </Link>
 
