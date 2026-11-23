@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import { CartProvider } from "@/lib/cart";
+import { ConsultationProvider } from "@/lib/consultation-cart";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { SacolaDrawer } from "@/components/sacola-drawer";
@@ -53,12 +54,14 @@ export default function RootLayout({
       <body className="min-h-screen antialiased">
         <Abertura />
         <CartProvider>
+          <ConsultationProvider>
           <SiteNav />
           <EditorialMotion />
           <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[70] focus:bg-almond focus:px-5 focus:py-3 focus:text-ink">Ir para o conteúdo</a>
           <main id="conteudo">{children}</main>
           <SiteFooter />
           <SacolaDrawer />
+          </ConsultationProvider>
         </CartProvider>
       </body>
     </html>

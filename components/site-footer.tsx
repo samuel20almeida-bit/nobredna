@@ -6,7 +6,7 @@ import { autora } from "@/lib/autora";
 const leitura = [
   { href: "/livros", label: "Todos os livros" },
   { href: "/sobre", label: "Sobre a autora" },
-  { href: "/checkout", label: "Prévia da loja" },
+  { href: "/checkout", label: "Minha sacola" },
   { href: "/#assine", label: "Acompanhe a Casa" },
 ];
 

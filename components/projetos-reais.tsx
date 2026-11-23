@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 const projetos = [
- {titulo:"Ave Mulher",tipo:"Devocional",detalhe:"Liderança feminina à luz da Bíblia. Um lançamento celebrado pela Casa.",href:"https://instagram.com/p/DRULXj2jnX6",imagem:"/brand/ave-mulher.webp",livro:true},
- {titulo:"Noiva Apaixonada",tipo:"Lançamento editorial",detalhe:"Uma ideia que se tornou livro. Conheça o registro desse lançamento.",href:"https://instagram.com/p/Dd4MhDqtZJV",imagem:"/brand/noiva-apaixonada.webp",livro:true},
+ {titulo:"Ave Mulher",tipo:"Devocional",detalhe:"Liderança feminina à luz da Bíblia. Um lançamento celebrado pela Casa.",href:"https://instagram.com/p/DRULXj2jnX6",imagem:"/brand/ave-mulher.webp",livro:true,slug:"ave-mulher"},
+ {titulo:"Noiva Apaixonada",tipo:"Lançamento editorial",detalhe:"Uma ideia que se tornou livro. Conheça o registro desse lançamento.",href:"https://instagram.com/p/Dd4MhDqtZJV",imagem:"/brand/noiva-apaixonada.webp",livro:true,slug:"noiva-apaixonada"},
  {titulo:"Nos bastidores da Casa",tipo:"Processo editorial",detalhe:"Acompanhe o ensaio com Auxiliadora Nobre e o cuidado por trás da produção.",href:"https://instagram.com/p/DXY_p6ADucG",imagem:"/brand/bastidores.webp",livro:false}
 ];
 
@@ -18,7 +18,7 @@ export function ProjetosReais() {
         {p.livro ? <div className="editorial-book"><Image src={p.imagem} alt={`Capa conceitual de ${p.titulo}`} width={640} height={960} unoptimized /></div> : <Image src={p.imagem} alt="Composição editorial ilustrativa com livros e manuscritos" fill unoptimized sizes="(max-width: 767px) 100vw, 33vw" className="object-cover object-center" />}
         <span className="absolute bottom-3 right-3 bg-almond-lift/95 px-2 py-1 text-xs text-ink/80">{i===2?"Composição ilustrativa":"Capa conceitual"}</span>
        </a>
-       <div className="flex flex-1 flex-col p-6"><p className="label">{p.tipo}</p><h3 className="mt-2 text-3xl text-vinho">{p.titulo}</h3><p className="mt-3 flex-1 text-base leading-relaxed text-ink/75">{p.detalhe}</p><a href={p.href} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-12 items-center justify-center border border-vinho px-5 py-2 text-base text-vinho transition-colors hover:bg-vinho hover:text-almond">Conhecer projeto</a></div>
+       <div className="flex flex-1 flex-col p-6"><p className="label">{p.tipo}</p><h3 className="mt-2 text-3xl text-vinho">{p.titulo}</h3><p className="mt-3 flex-1 text-base leading-relaxed text-ink/75">{p.detalhe}</p>{p.slug?<Link href={`/livros/${p.slug}`} className="mt-5 inline-flex min-h-12 items-center justify-center border border-vinho px-5 py-2 text-base text-vinho transition-colors hover:bg-vinho hover:text-almond">Conhecer livro</Link>:<a href={p.href} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-12 items-center justify-center border border-vinho px-5 py-2 text-base text-vinho transition-colors hover:bg-vinho hover:text-almond">Conhecer projeto</a>}</div>
     </article>)}
    </div>
    <p className="mt-5 text-sm text-ink/65">Projetos apresentados no perfil da Casa. As imagens acima são composições conceituais, não capas oficiais.</p>

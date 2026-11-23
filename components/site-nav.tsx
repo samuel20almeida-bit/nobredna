@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Bag, Close, Menu } from "@/components/icons";
 import { BrandSeal } from "@/components/brand-seal";
 import { useCart } from "@/lib/cart";
+import { useConsultationCart } from "@/lib/consultation-cart";
 
 /* Uma entrada por porta, mais a página que costura as duas. A ordem é a da
    home: primeiro o que se compra, depois o que se contrata. */
@@ -58,6 +59,7 @@ export function SiteNav() {
   const pathname = usePathname();
   const reduced = useReducedMotion();
   const { count, ready } = useCart();
+  const consultation = useConsultationCart();
 
   // no topo de uma rota de hero escuro, a nav transparente precisa de tinta clara
   const invertida =
@@ -132,15 +134,15 @@ export function SiteNav() {
           <Link href="/publique" className={`hidden min-h-11 items-center px-4 text-sm font-medium lg:inline-flex ${invertida ? "bg-almond text-vinho" : "bg-vinho text-almond"}`}>Quero publicar</Link>
           <Link
             href="/checkout"
-            aria-label="Conhecer a experiência de compra demonstrativa"
+            aria-label={`Sua sacola, ${consultation.count+count} exemplares`}
             className={`relative flex min-h-11 min-w-11 items-center justify-center gap-1 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
           >
             <Bag size={20} />
-            {ready && count > 0 && (
+            {ready && consultation.ready && consultation.count+count > 0 && (
               <span
                 className={`font-serif text-[0.95rem] tabular-nums ${invertida ? "text-almond/80" : "text-ink/70"}`}
               >
-                {count}
+                {consultation.count+count}
               </span>
             )}
           </Link>
