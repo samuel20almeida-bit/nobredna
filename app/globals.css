@@ -219,11 +219,10 @@
 @keyframes abertura-fim { 0%, 97% { visibility: visible; } 100% { visibility: hidden; } }
 
 @media (max-width: 767px) {
-  body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
-  html { scroll-padding-top: 76px; scroll-padding-bottom: 86px; }
-  .mobile-dock { padding-bottom: env(safe-area-inset-bottom, 0px); }
-  .checkout-dock { bottom: calc(65px + env(safe-area-inset-bottom, 0px)); }
-  body:has(.checkout-dock) { padding-bottom: calc(144px + env(safe-area-inset-bottom, 0px)); }
+  body { padding-bottom: calc(94px + env(safe-area-inset-bottom, 0px)); }
+  html { scroll-padding-top: 76px; scroll-padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
+  .checkout-dock { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+  body:has(.checkout-dock) { padding-bottom: calc(175px + env(safe-area-inset-bottom, 0px)); }
   .mobile-projects { scroll-padding-inline: 24px; scrollbar-width: thin; scrollbar-color: #c5a46d #eee5df; }
   .abertura { animation-duration: 1.35s; perspective: 1000px; }
   .abertura-capa { animation-duration: .51s; animation-delay: .60s; }
@@ -389,5 +388,64 @@ header .brand-seal { filter: drop-shadow(0 3px 5px #24101530) drop-shadow(0 0 10
 @media (max-width: 767px) {
   :root { --editorial-radius: 17px; }
   .editorial-letter, .editorial-welcome { border-radius: 20px; }
-  .mobile-dock > a { border-radius: 12px 12px 0 0; }
+  .mobile-dock {
+    left: max(12px, env(safe-area-inset-left, 0px));
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    max-width: 460px;
+    margin-inline: auto;
+    padding: 5px;
+    gap: 3px;
+    border: 1px solid #c5a46d60;
+    border-radius: 24px;
+    background: rgb(255 253 249 / .97);
+    box-shadow: 0 10px 32px -10px #24101540, 0 2px 6px #24101512;
+    backdrop-filter: blur(18px);
+  }
+  .mobile-dock-tab {
+    min-width: 0;
+    min-height: 58px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #6b4d54;
+    border-radius: 18px;
+    font-size: .75rem;
+    font-weight: 500;
+    line-height: 1.1;
+    transition: background-color .2s, color .2s, transform .2s;
+  }
+  .mobile-dock-tab[data-active=true] {
+    color: #fffdf9;
+    background: linear-gradient(145deg,#792b3c,#631a25);
+    box-shadow: 0 3px 8px #631a2529;
+  }
+  .mobile-dock-icon { display: grid; place-items: center; }
+  .mobile-dock-tab:active { transform: scale(.96); }
+  .mobile-dock-tab:focus-visible { outline: 2px solid #c5a46d; outline-offset: -3px; }
+  .mobile-menu-sheet { border-radius: 0 0 24px 24px; box-shadow: 0 16px 32px -20px #24101565; }
+  .mobile-menu-sheet > div { max-height: calc(100dvh - 78px); overflow-y: auto; }
+}
+
+/* Linha do tempo e FAQ editorial. */
+.timeline-icon { position:relative; display:grid; width:56px; height:56px; flex-shrink:0; place-items:center; border-radius:50%; border:1px solid #c5a46d; background:#fff9ed; color:#631a25; box-shadow:0 5px 16px -10px #24101550; }
+.timeline-track { position:absolute; inset:28px 12% auto 7px; height:2px; background:#c5a46d55; }
+.timeline-horizontal { position:absolute; inset:0; background:#79603a; transform-origin:left; }
+.timeline-vertical { display:none; }
+.editorial-faq summary { list-style:none; }
+.editorial-faq:hover { transform:none; }
+.editorial-faq summary::-webkit-details-marker { display:none; }
+.faq-plus { display:grid; place-items:center; width:34px; height:34px; flex-shrink:0; border:1px solid #c5a46d80; border-radius:50%; transition:transform .25s; }
+.editorial-faq[open] .faq-plus { transform:rotate(45deg); background:#f0e4d6; }
+.editorial-faq[open] > div { animation:editorial-reveal .28s ease-out; }
+@media (max-width:767px) {
+  .timeline-track { inset:12px auto 25px 27px; height:auto; width:2px; }
+  .timeline-horizontal { display:none; }
+  .timeline-vertical { display:block; position:absolute; inset:0; background:#79603a; transform-origin:top; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .mobile-dock-tab,.faq-plus { transition:none; }
+  .editorial-faq[open] > div { animation:none; }
 }

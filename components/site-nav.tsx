@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import { Bag, Close, Menu, Spines, Quill, Seal } from "@/components/icons";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Bag, Close, Menu } from "@/components/icons";
 import { BrandSeal } from "@/components/brand-seal";
 import { useCart } from "@/lib/cart";
 
@@ -36,10 +36,27 @@ const links = [
   { href: "/sobre", label: "Sobre", fio: "bg-ink/40" },
 ];
 
+function DockIcon({kind}:{kind:"home"|"books"|"publish"|"about"}) {
+  return <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+    {kind==="home" && <><path d="M3 10.8 12 3l9 7.8"/><path d="M5.5 9.8v10.4h4.2v-6h4.6v6h4.2V9.8"/></>}
+    {kind==="books" && <><path d="M12 6.5C9 4.5 5.7 4.5 3 5.3v13c3.4-1 6.6-.6 9 1.2 2.4-1.8 5.6-2.2 9-1.2v-13c-2.7-.8-6-.8-9 1.2Z"/><path d="M12 7v12.5"/></>}
+    {kind==="publish" && <><path d="M5 19.5l2.1-6.7L17 3a2.3 2.3 0 0 1 3.2 3.2l-9.9 9.9L5 19.5Z"/><path d="m15.5 4.5 4 4M4 21h16"/></>}
+    {kind==="about" && <><circle cx="12" cy="8" r="3.7"/><path d="M4.5 20v-1.1a7.5 7.5 0 0 1 15 0V20"/></>}
+  </svg>;
+}
+
+const mobileTabs = [
+  {href:"/",label:"Início",kind:"home",matches:["/"]},
+  {href:"/livros",label:"Livros",kind:"books",matches:["/livros","/livro","/checkout","/trocas"]},
+  {href:"/publique",label:"Publicar",kind:"publish",matches:["/publique","/coautorias"]},
+  {href:"/sobre",label:"Sobre",kind:"about",matches:["/sobre"]},
+] as const;
+
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const reduced = useReducedMotion();
   const { count, ready } = useCart();
 
   // no topo de uma rota de hero escuro, a nav transparente precisa de tinta clara
@@ -134,7 +151,7 @@ export function SiteNav() {
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className={`grid min-h-11 min-w-11 place-items-center md:hidden ${invertida ? "text-khaki" : "text-lavender-ink"}`}
+            className={`grid min-h-11 min-w-11 place-items-center rounded-xl border md:hidden ${invertida ? "border-almond/25 text-almond" : "border-khaki-ink/20 bg-almond-lift/60 text-vinho"}`}
           >
             {menuOpen ? <Close size={22} /> : <Menu size={22} />}
           </button>
@@ -148,36 +165,34 @@ export function SiteNav() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="hairline overflow-hidden border-t bg-almond/95 backdrop-blur-md md:hidden"
+            transition={{ duration: reduced?0:0.26, ease: [0.16, 1, 0.3, 1] }}
+            className="mobile-menu-sheet overflow-hidden border-t border-khaki-ink/20 bg-almond md:hidden"
           >
-            <div className="flex flex-col px-6 py-4">
-              {links.map((link) => (
+            <div className="px-5 py-5">
+              <p className="label mb-3">Explore a Casa</p>
+              <div className="grid grid-cols-2 gap-2.5">
+              {[{href:"/",label:"Início",detail:"Conheça a Casa"},{href:"/livros",label:"Livros",detail:"Explore o acervo"},{href:"/publique",label:"Publicar",detail:"Conte sua história"},{href:"/coautorias",label:"Coautorias",detail:"Escreva em conjunto"},{href:"/sobre",label:"Sobre",detail:"Conheça a Nanda"},{href:"/links",label:"Links da Casa",detail:"Encontre nossos canais"}].map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="hairline border-b py-4 font-serif text-[1.15rem] text-ink/70 last:border-none"
+                  aria-current={pathname===link.href?"page":undefined}
+                  className={`flex min-h-[74px] flex-col justify-center rounded-xl border px-4 py-3 ${pathname===link.href?"border-vinho/30 bg-vinho/5":"border-khaki-ink/20 bg-almond-lift"}`}
                 >
-                  {link.label}
+                  <span className="font-serif text-xl leading-tight text-vinho">{link.label}</span><span className="mt-1 text-xs leading-snug text-ink/70">{link.detail}</span>
                 </Link>
               ))}
-              <Link href="/publique" onClick={() => setMenuOpen(false)} className="mt-4 min-h-12 bg-vinho px-5 py-3 text-center text-almond">Quero publicar minha história</Link>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
-    <nav aria-label="Navegação rápida" className="mobile-dock fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-khaki-ink/25 bg-almond/95 backdrop-blur-md md:hidden">
-      {[
-        { href: "/", label: "Início", icon: <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10"/></svg> },
-        { href: "/livros", label: "Livros", icon: <Spines size={24}/> },
-        { href: "/publique", label: "Publicar", icon: <Quill size={24}/> },
-        { href: "/sobre", label: "Sobre", icon: <Seal size={24}/> },
-      ].map(item => {
-        const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-        return <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} aria-current={active ? "page" : undefined} className={`relative flex min-h-16 flex-col items-center justify-center gap-1 text-xs font-medium ${active ? "bg-vinho/5 text-vinho" : "text-ink/70"}`}>
-          {active && <span aria-hidden="true" className="absolute top-0 h-0.5 w-8 bg-vinho"/>}{item.icon}{item.label}
+    <nav aria-label="Navegação rápida" className="mobile-dock fixed z-40 grid grid-cols-4 md:hidden">
+      {mobileTabs.map(item => {
+        const active = item.matches.some(route => route==="/"?pathname==="/":pathname===route||pathname.startsWith(route+"/"));
+        return <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} aria-current={active ? (pathname===item.href?"page":"location") : undefined} data-active={active} className="mobile-dock-tab">
+          <span className="mobile-dock-icon"><DockIcon kind={item.kind}/></span><span>{item.label}</span>
         </Link>;
       })}
     </nav></>
