@@ -152,106 +152,71 @@
   }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   Abertura: o site começa fechado como um livro.
-
-   É CSS puro de propósito. Uma cortina que depende de JS para sair
-   do caminho é uma cortina que pode ficar presa — aqui a animação
-   roda sem hidratação, sem framework, e termina em `visibility:
-   hidden` mesmo que o JS nunca chegue. Como vive no layout, ela
-   toca na primeira entrada e não se repete na navegação interna.
-   ───────────────────────────────────────────────────────────── */
+/* Entrada editorial: uma capa única gira pela lombada, revelando o miolo. */
 .abertura {
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  perspective: 2200px;
-  animation: abertura-fim 1.68s linear forwards;
+  perspective: 1600px;
+  isolation: isolate;
+  animation: abertura-fim 2s linear both;
 }
-
-.abertura-face {
+.abertura-capa, .abertura-pagina {
   position: absolute;
-  inset-block: 0;
-  width: 50.2%; /* meio ponto de sobreposição: sem fresta na dobra */
-  background: linear-gradient(155deg, #792b3c 0%, #631a25 52%, #241015 100%);
+  inset: 0;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
-
-.abertura-esq {
-  left: 0;
+.abertura-capa {
+  overflow: hidden;
   transform-origin: left center;
-  animation: abertura-esq 1.15s cubic-bezier(0.5, 0, 0.25, 1) 0.5s forwards;
+  background: radial-gradient(ellipse at 45% 30%, #792b3c, #631a25 52%, #241015);
+  box-shadow: inset 22px 0 34px #24101599, inset -6px 0 9px #24101580;
+  animation: abertura-capa 0.72s cubic-bezier(.57,.05,.22,1) 1.05s both;
 }
-
-.abertura-dir {
-  right: 0;
-  transform-origin: right center;
-  animation: abertura-dir 1.15s cubic-bezier(0.5, 0, 0.25, 1) 0.58s forwards;
-}
-
-/* A marca vive fora das faces de propósito: presa a elas, ela seria partida
-   ao meio na abertura — que é exatamente o defeito do livro que saiu do hero.
-   Aqui ela apaga antes de a capa começar a girar. */
-.abertura-marca {
+.abertura-capa::before, .abertura-pagina::before {
+  content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .16;
+  mix-blend-mode: multiply;
+}
+.abertura-moldura {
+  position: absolute;
+  inset: clamp(18px, 3vw, 44px);
+  border: 1px solid #c5a46d99;
+  box-shadow: inset 0 0 1px #faf6ef66;
+}
+.abertura-moldura-interna { inset: clamp(25px, 3.7vw, 54px); border-color: #c5a46d55; }
+.abertura-marca, .abertura-pagina-miolo {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.15rem;
-  color: var(--color-lavender);
-  animation: abertura-marca 0.34s ease-out 0.34s forwards;
-}
-
-@keyframes abertura-esq {
-  to {
-    transform: rotateY(-108deg);
-    opacity: 0.15;
-  }
-}
-
-@keyframes abertura-dir {
-  to {
-    transform: rotateY(108deg);
-    opacity: 0.15;
-  }
-}
-
-@keyframes abertura-marca {
-  to {
-    opacity: 0;
-    scale: 0.9;
-  }
-}
-
-@keyframes abertura-fim {
-  0%,
-  99% {
-    visibility: visible;
-  }
-  100% {
-    visibility: hidden;
-  }
-}
-
-.abertura-nome {
-  font-family: var(--font-serif);
-  font-weight: 300;
-  font-size: 1.6rem;
-  line-height: 1.1;
+  justify-content: center;
+  gap: 14px;
   text-align: center;
-  color: var(--color-almond);
 }
-
-.abertura-linha {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--color-khaki);
-}
+.abertura-marca { color: #c5a46d; animation: abertura-gravura .6s ease-out both; }
+.abertura-marca .brand-seal { filter: drop-shadow(0 5px 9px #241015aa); animation: abertura-selo .45s cubic-bezier(.2,.75,.25,1) .08s both; }
+.abertura-nome { font-family: var(--font-serif); font-size: clamp(2.8rem,6vw,5rem); line-height: .95; color: #faf6ef; letter-spacing: .045em; text-shadow: 0 1px 1px #241015; }
+.abertura-linha { font-size: .85rem; text-transform: uppercase; letter-spacing: .25em; color: #c5a46d; }
+.abertura-ornamento { color: #c5a46d; font-size: 1.2rem; }
+.abertura-fio { width: min(170px, 40vw); height: 1px; background: linear-gradient(90deg,transparent,#c5a46d,transparent); }
+.abertura-reflexo { position: absolute; inset: 0; background: linear-gradient(115deg,transparent 40%,#faf6ef18 49%,transparent 58%); transform: translateX(-100%); animation: abertura-reflexo .65s ease-out .25s both; }
+.abertura-pagina { background: linear-gradient(90deg,#e9ded3,#faf6ef 12%,#fffdf9 85%,#e9ded3); color: #631a25; transform-origin: right center; animation: abertura-pagina 0.53s cubic-bezier(.55,.08,.25,1) 1.45s both; }
+.abertura-capitulo { font-family: var(--font-serif); font-style: italic; font-size: clamp(2rem,4vw,3rem); }
+@keyframes abertura-gravura { from { opacity: .1; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes abertura-selo { from { scale: .88; opacity: .25; } to { scale: 1; opacity: 1; } }
+@keyframes abertura-reflexo { to { transform: translateX(100%); } }
+@keyframes abertura-capa { from { transform: rotateY(0); } to { transform: rotateY(-105deg); opacity: 0; } }
+@keyframes abertura-pagina { from { transform: rotateY(0); opacity: 1; } to { transform: rotateY(90deg); opacity: 0; } }
+@keyframes abertura-fim { 0%, 97% { visibility: visible; } 100% { visibility: hidden; } }
 
 /* Selo transparente, preservando o contorno orgânico da cera. */
 .brand-seal {
@@ -297,7 +262,7 @@
   .group:hover .editorial-book { transform: rotateY(-5deg) rotateZ(-1deg) translateY(-7px); }
 }
 @media (max-width: 767px) {
-  .abertura { display: none; }
+  .abertura-marca .brand-seal { max-width: 116px; }
   .editorial-book { width: min(65%, 190px); }
 }
 
