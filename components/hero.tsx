@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { BrandSeal } from "@/components/brand-seal";
 
 export function Hero() {
   const reduced = useReducedMotion();
@@ -35,18 +35,10 @@ export function Hero() {
         </motion.div>
 
         <motion.div initial={initial} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, delay: 0.25 }} className="mx-auto w-full max-w-[410px] lg:max-w-none">
-          <div className="brand-plate grain grain-on-dark relative isolate overflow-hidden px-8 py-8 text-center text-almond sm:px-12 sm:py-16 lg:min-h-[490px] lg:flex lg:flex-col lg:justify-center">
-            <div className="pointer-events-none absolute inset-3 border border-khaki/60" aria-hidden="true" />
-            <div className="pointer-events-none absolute inset-5 border border-khaki/25" aria-hidden="true" />
-            <div className="relative flex flex-col items-center">
-              <span className="mb-6 text-khaki text-xl" aria-hidden="true">✦</span>
-              <BrandSeal size={174} />
-              <p className="mt-7 font-serif text-[clamp(2.35rem,5vw,3.4rem)] leading-none tracking-[0.06em]">NobreDNA</p>
-              <p className="mt-3 text-[0.70rem] font-medium uppercase tracking-[0.22em] text-khaki">Casa de Legados</p>
-              <div className="mt-7 flex w-full max-w-[230px] items-center justify-center gap-3" aria-hidden="true"><span className="h-px flex-1 bg-khaki/45"/><span className="text-khaki">✧</span><span className="h-px flex-1 bg-khaki/45"/></div>
-              <p className="mt-5 max-w-[18rem] font-serif text-xl italic leading-relaxed text-almond/80">Palavras que preservam memórias.<br/>Histórias que atravessam gerações.</p>
-            </div>
-          </div>
+          <figure className="relative aspect-[4/5] overflow-hidden border border-khaki/50 bg-almond-deep shadow-book">
+            <Image src="/brand/hero-livro-nobredna.webp" alt="Livro de capa dura bordô com o selo dourado NobreDNA sobre uma mesa de escrita vintage" fill priority sizes="(max-width: 1023px) 410px, (max-width: 1240px) 42vw, 520px" className="object-cover object-center" />
+            <div className="pointer-events-none absolute inset-3 border border-almond/45" aria-hidden="true" />
+          </figure>
           <p className="mt-4 text-center font-serif text-base italic text-khaki-ink">O primeiro capítulo começa com uma conversa.</p>
         </motion.div>
       </div>
