@@ -360,6 +360,11 @@ main section.bg-ink, footer.bg-ink { background-image: var(--editorial-paper-noi
 .editorial-rule { display: flex; width: min(180px, 100%); align-items: center; gap: 10px; color: #79603a; font-size: .85rem; }
 .editorial-rule::before, .editorial-rule::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #c5a46d); }
 .editorial-rule::after { transform: rotate(180deg); }
+.pearl-divider { max-width: 100%; pointer-events: none; user-select: none; }
+.pearl-divider img { object-fit: contain; }
+.pearl-divider-dark img { filter: drop-shadow(0 1px 3px #c5a46d35); }
+.pearl-divider-band { display: grid; place-items: center; padding: 4px 0; background: var(--color-almond); }
+@media (max-width:767px) { .pearl-divider-band { padding: 2px 0; } }
 main :where(section, article, aside, div, details)[class~="border"][class*="bg-almond-lift"]:not(.rounded-full) {
   border-radius: var(--editorial-radius);
   box-shadow: 0 10px 28px -24px #24101555;
