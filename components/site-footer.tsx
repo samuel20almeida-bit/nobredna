@@ -17,11 +17,17 @@ const assessoria = [
   { href: "/#acervo", label: "Livros feitos aqui" },
 ];
 
+const grupos = [
+  { titulo: "Para ler", items: leitura },
+  { titulo: "Projetos", items: [{label:"Obras autorais",href:"/livros"},{label:"Coautorias",href:"/coautorias"},{label:"Projetos editoriais",href:"/publique"}] },
+  { titulo: "Para publicar", items: assessoria },
+];
+
 export function SiteFooter() {
   return (
     <footer className="relative border-t border-almond/15 bg-ink">
-      <div className="mx-auto max-w-[1240px] px-6 py-20 lg:px-10">
-        <div className="grid gap-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="mx-auto max-w-[1240px] px-6 py-12 md:py-20 lg:px-10">
+        <div className="grid gap-6 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-14">
           <div>
             <Link href="/" className="flex items-center gap-3 text-lavender">
               <BrandSeal size={54} />
@@ -38,7 +44,13 @@ export function SiteFooter() {
             <a href="https://www.instagram.com/nobre_dna/" target="_blank" rel="noreferrer" className="mt-5 inline-block text-khaki underline">@nobre_dna</a>
           </div>
 
-          <nav aria-label="Para ler">
+          <div className="md:hidden">
+            {grupos.map(grupo => <details key={grupo.titulo} className="group border-t border-almond/20">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between font-serif text-xl italic text-khaki [&::-webkit-details-marker]:hidden">{grupo.titulo}<span aria-hidden="true" className="text-xl not-italic group-open:rotate-45">+</span></summary>
+              <ul className="pb-3">{grupo.items.map(item => <li key={item.label}><Link href={item.href} className="flex min-h-11 items-center text-sm text-almond/85">{item.label}</Link></li>)}</ul>
+            </details>)}
+          </div>
+          <nav aria-label="Para ler" className="hidden md:block">
             <h4 className="font-serif text-[1rem] italic text-lavender">
               Para ler
             </h4>
@@ -56,7 +68,7 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="Projetos">
+          <nav aria-label="Projetos" className="hidden md:block">
             <h4 className="font-serif text-[1rem] italic text-lavender">
               Projetos
             </h4>
@@ -74,7 +86,7 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <nav aria-label="Para publicar">
+          <nav aria-label="Para publicar" className="hidden md:block">
             <h4 className="font-serif text-[1rem] italic text-lavender">
               Para publicar
             </h4>
@@ -94,7 +106,7 @@ export function SiteFooter() {
         </div>
 
         {/* o ornamento da base do logo, no lugar onde ele nasceu */}
-        <DivisorPerola tone="dark" className="mt-16" width="min(18rem,50%)" />
+        <DivisorPerola tone="dark" className="mt-8 md:mt-16" width="min(18rem,50%)" />
 
         <div className="mt-10 flex flex-col gap-4 border-t border-almond/12 pt-8 text-[0.8rem] text-almond/70 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} NobreDNA Editorial · Curitiba</p>

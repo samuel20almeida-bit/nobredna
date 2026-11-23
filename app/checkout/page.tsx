@@ -14,14 +14,14 @@ export default function CheckoutPage() {
       {/* mesmo fio, em volume mínimo: o checkout não é lugar de ornamento */}
       <HelixRail side="left" width={26} fadeIn={0.04} from={0.6} />
 
-      <div className="relative z-10 bg-almond pt-32 pb-24">
+      <div className="relative z-10 bg-almond pt-24 pb-14 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
           <p className="label">Prévia da loja · demonstração</p>
           <h1 className="mt-5 max-w-[20ch] text-[clamp(2rem,4.4vw,3rem)] leading-[1.1] text-ink">
             Seu próximo livro, em poucos passos.
           </h1>
 
-          <div className="mt-14">
+          <div className="mt-8 md:mt-14">
             <CheckoutDemo />
           </div>
         </div>

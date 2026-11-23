@@ -21,14 +21,14 @@ export default function SobrePage() {
 
       <div className="relative z-10">
         {/* 1 — quem é ela */}
-        <section className="grain relative overflow-hidden bg-almond pt-36 pb-24 lg:pt-44">
+        <section className="grain relative overflow-hidden bg-almond pt-24 pb-14 md:pt-36 md:pb-24 lg:pt-44">
           <div className="glow-lavender pointer-events-none absolute inset-x-0 top-0 h-[65%]" />
 
           <div className="relative mx-auto max-w-[1240px] px-6 lg:px-10">
-            <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-              <figure className="mx-auto w-full max-w-[440px]">
+            <div className="grid items-center gap-6 md:gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+              <figure className="mx-auto w-full max-w-[240px] md:max-w-[440px]">
                 <div className="relative aspect-square rounded-full border border-khaki/60 bg-almond-lift p-2 shadow-book">
-                  <div className="relative h-full w-full overflow-hidden rounded-full"><Image src="/brand/nanda-retrato-sobre.webp" alt="Nanda Almeida, escritora e fundadora da NobreDNA" fill priority sizes="(max-width: 1023px) 90vw, 440px" className="object-cover object-center" /></div>
+                  <div className="relative h-full w-full overflow-hidden rounded-full"><Image src="/brand/nanda-retrato-sobre.webp" alt="Nanda Almeida, escritora e fundadora da NobreDNA" fill priority sizes="(max-width: 767px) 240px, 440px" className="object-cover object-center" /></div>
                 </div>
                 <figcaption className="mt-4 text-center font-serif text-lg italic text-khaki-ink">Nanda Almeida · Fundadora da Casa</figcaption>
               </figure>

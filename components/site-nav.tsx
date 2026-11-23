@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bag, Close, Menu } from "@/components/icons";
+import { Bag, Close, Menu, Spines, Quill, Seal } from "@/components/icons";
 import { BrandSeal } from "@/components/brand-seal";
 import { useCart } from "@/lib/cart";
 
@@ -54,21 +54,26 @@ export function SiteNav() {
   }, []);
 
   useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, []);
 
   return (
-    <header
+    <><header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,border-color] duration-700 ${
         scrolled
           ? "hairline border-b bg-almond/85 backdrop-blur-md"
           : invertida ? "border-b border-almond/15 bg-vinho" : "border-b border-ink/10 bg-almond/95"
       }`}
     >
-      <nav className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between px-6 lg:px-10">
+      <nav className="mx-auto flex h-16 max-w-[1240px] items-center justify-between px-5 md:h-[72px] md:px-6 lg:px-10">
         <Link
           href="/"
           className={`flex items-center gap-3 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
         >
-          <BrandSeal size={49} />
+          <BrandSeal size={44} />
           <span
             className={`font-serif text-[1.15rem] transition-colors duration-500 ${invertida ? "text-almond" : "text-ink"}`}
           >
@@ -106,12 +111,12 @@ export function SiteNav() {
           })}
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-1 md:gap-5">
           <Link href="/publique" className={`hidden min-h-11 items-center px-4 text-sm font-medium lg:inline-flex ${invertida ? "bg-almond text-vinho" : "bg-vinho text-almond"}`}>Quero publicar</Link>
           <Link
             href="/checkout"
             aria-label="Conhecer a experiência de compra demonstrativa"
-            className={`tap relative flex items-center gap-2 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
+            className={`relative flex min-h-11 min-w-11 items-center justify-center gap-1 transition-opacity duration-500 hover:opacity-70 ${invertida ? "text-khaki" : "text-lavender-ink"}`}
           >
             <Bag size={20} />
             {ready && count > 0 && (
@@ -129,7 +134,7 @@ export function SiteNav() {
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className={`tap md:hidden ${invertida ? "text-khaki" : "text-lavender-ink"}`}
+            className={`grid min-h-11 min-w-11 place-items-center md:hidden ${invertida ? "text-khaki" : "text-lavender-ink"}`}
           >
             {menuOpen ? <Close size={22} /> : <Menu size={22} />}
           </button>
@@ -151,16 +156,30 @@ export function SiteNav() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={() => setMenuOpen(false)}
                   className="hairline border-b py-4 font-serif text-[1.15rem] text-ink/70 last:border-none"
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link href="/publique" className="mt-4 min-h-12 bg-vinho px-5 py-3 text-center text-almond">Quero publicar minha história</Link>
+              <Link href="/publique" onClick={() => setMenuOpen(false)} className="mt-4 min-h-12 bg-vinho px-5 py-3 text-center text-almond">Quero publicar minha história</Link>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
+    <nav aria-label="Navegação rápida" className="mobile-dock fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-khaki-ink/25 bg-almond/95 backdrop-blur-md md:hidden">
+      {[
+        { href: "/", label: "Início", icon: <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10"/></svg> },
+        { href: "/livros", label: "Livros", icon: <Spines size={24}/> },
+        { href: "/publique", label: "Publicar", icon: <Quill size={24}/> },
+        { href: "/sobre", label: "Sobre", icon: <Seal size={24}/> },
+      ].map(item => {
+        const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        return <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} aria-current={active ? "page" : undefined} className={`relative flex min-h-16 flex-col items-center justify-center gap-1 text-xs font-medium ${active ? "bg-vinho/5 text-vinho" : "text-ink/70"}`}>
+          {active && <span aria-hidden="true" className="absolute top-0 h-0.5 w-8 bg-vinho"/>}{item.icon}{item.label}
+        </Link>;
+      })}
+    </nav></>
   );
 }

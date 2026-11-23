@@ -16,7 +16,7 @@ export function JornadaLegado({ coautoria = false }: { coautoria?: boolean }) {
  const concluido=respostas.length===perguntas.length;
  const passo=perguntas[respostas.length];
  const mensagem="Olá, NobreDNA! Gostaria de conversar sobre "+(coautoria?"coautoria":"meu projeto editorial")+".\n"+perguntas.map((q,i)=>q.titulo+" "+(respostas[i]||"")).join("\n");
- useEffect(()=>{if(interagiu.current)focus.current?.focus({preventScroll:true});},[respostas.length]);
+ useEffect(()=>{if(interagiu.current){focus.current?.focus({preventScroll:true});if(window.matchMedia("(max-width: 767px)").matches && focus.current){const r=focus.current.getBoundingClientRect();if(r.top<76 || r.bottom>window.innerHeight-90)focus.current.scrollIntoView({block:"center",behavior:"instant"});}}},[respostas.length]);
  async function copiar(){try{await navigator.clipboard.writeText(mensagem);setCopiado(true);setErro(false)}catch{setErro(true)}}
  return <div className="border border-khaki/60 bg-almond-lift p-5 text-ink shadow-lift sm:p-8">
    <div className="flex flex-wrap items-center justify-between gap-3"><p className="font-serif text-xl italic text-vinho">{concluido?"Seu primeiro passo":"Capítulo "+(respostas.length+1)+" de "+perguntas.length}</p><span className="text-sm text-ink/65">{concluido?"Concluído":"Sem compromisso"}</span></div>
