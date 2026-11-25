@@ -35,7 +35,7 @@ const questions = [
   ["Como funciona uma coautoria?","Uma obra coletiva reúne diferentes vozes em torno de um propósito. A equipe apresenta os temas, condições e oportunidades de cada projeto."],
   ["Quais etapas a NobreDNA acompanha?","O percurso pode incluir escuta, organização, preparação, revisão, identidade visual e planejamento da publicação, conforme as necessidades do projeto."],
   ["Quanto custa publicar um livro?","O investimento depende do formato e das necessidades da obra. Converse com a Casa para conhecer as possibilidades e receber orientação."],
-  ["Como começo a minha jornada?","Você pode responder ao questionário editorial e enviar suas respostas diretamente à equipe pelo WhatsApp para iniciar uma conversa."],
+  ["Como começo a minha jornada?","Responda ao questionário editorial e registre seu contato diretamente no site. A equipe da Casa receberá sua solicitação para dar continuidade ao atendimento."],
 ];
 
 export function EditorialFaq({href="/publique#jornada"}:{href?:string}) {

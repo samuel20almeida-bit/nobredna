@@ -6,4 +6,3 @@ export const catalogoConsulta = [
 ] as const;
 export type ObraConsulta = (typeof catalogoConsulta)[number];
 export function getObra(slug:string){return catalogoConsulta.find(obra=>obra.slug===slug)}
-export const whatsappCasa = "554188335400";

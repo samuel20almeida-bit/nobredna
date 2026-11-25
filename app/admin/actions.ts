@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { getStoreAccess, storeClient } from "@/lib/store-admin";
 import { sendOrderNotifications } from "@/lib/store-notifications";
 import { releaseExpiredReservations } from "@/lib/store-commerce";
+import { leadStatuses, type LeadStatus } from "@/lib/editorial-leads";
 
 function back(message: string): never { redirect(`/admin?mensagem=${encodeURIComponent(message)}`); }
 
@@ -17,6 +18,36 @@ export async function signIn(form: FormData) {
   const { error } = await client.auth.signInWithPassword({ email, password });
   if (error) back("login-error");
   redirect("/admin");
+}
+
+export async function requestEmailAccess(form:FormData){
+  const client=await storeClient();
+  if(!client)back("not-configured");
+  const email=String(form.get("email")??"").trim().toLowerCase();
+  if(!process.env.NOBREDNA_ADMIN_EMAIL||email!==process.env.NOBREDNA_ADMIN_EMAIL.trim().toLowerCase())back("email-access-error");
+  const {error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:"https://nobredna.vercel.app/auth/callback"}});
+  if(error)back("email-access-error");
+  back("email-sent");
+}
+
+export async function verifyEmailAccess(form:FormData){
+  const client=await storeClient();
+  if(!client)back("not-configured");
+  const email=String(form.get("email")??"").trim().toLowerCase(),token=String(form.get("token")??"").trim();
+  if(email!==process.env.NOBREDNA_ADMIN_EMAIL?.trim().toLowerCase()||!/^\d{6}$/.test(token))back("email-access-error");
+  const {error}=await client.auth.verifyOtp({email,token,type:"email"});
+  if(error)back("email-access-error");
+  redirect("/admin");
+}
+
+export async function updateEditorialLead(form:FormData){
+  const access=await getStoreAccess();
+  if(access.state!=="admin")back("denied");
+  const id=field(form,"id",36),status=field(form,"status",20);
+  if(!/^[0-9a-f-]{36}$/i.test(id)||!leadStatuses.includes(status as LeadStatus))back("lead-error");
+  const result=await access.client.from("editorial_leads").update({status,updated_at:new Date().toISOString()}).eq("id",id).select("id").maybeSingle();
+  if(result.error||!result.data)back("lead-error");
+  revalidatePath("/admin");redirect("/admin?mensagem=lead-saved#captacoes");
 }
 
 export async function signOut() {

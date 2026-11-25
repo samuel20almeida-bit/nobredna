@@ -13,7 +13,7 @@ for (const [path,expected] of pages) {
   assert.ok((await response.text()).includes(expected),path+" should render expected status");
   console.log("PASS",path);
 }
-for (const path of ["/api/checkout/preferencia","/api/frete/cotacao","/api/checkout/webhook"]) {
+for (const path of ["/api/checkout/preferencia","/api/frete/cotacao","/api/checkout/webhook","/api/contato"]) {
   const response=await fetch(base+path,{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});
   assert.equal(response.status,503,path+" must stay closed in a preview");
   console.log("PASS",path,"blocked (503)");

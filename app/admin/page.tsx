@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getStoreAccess } from "@/lib/store-admin";
-import { saveProduct, signIn, signOut, updateFulfillment, retryNotifications, reviewExpiredReservations } from "./actions";
+import { saveProduct, signIn, signOut, updateFulfillment, retryNotifications, reviewExpiredReservations, requestEmailAccess, verifyEmailAccess } from "./actions";
+import { AdminLeads } from "@/components/admin-leads";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Painel da Casa", robots: { index: false, follow: false } };
@@ -18,6 +19,10 @@ const button = "rounded-full bg-vinho px-5 py-3 text-sm font-medium text-white h
 const card = "rounded-3xl border border-ink/10 bg-almond-lift p-5 shadow-lift sm:p-7";
 const messages: Record<string, string> = {
   "login-error": "Não foi possível entrar. Confira seu e-mail e senha.",
+  "email-sent":"Link de acesso solicitado. Confira sua caixa de entrada e abra o link no mesmo navegador.",
+  "email-access-error":"Não foi possível solicitar ou confirmar o acesso. Confira o e-mail autorizado e tente novamente.",
+  "lead-saved":"Situação da solicitação atualizada.",
+  "lead-error":"Não foi possível atualizar a solicitação.",
   "not-configured": "O acesso ainda está em configuração.",
   denied: "Acesso não autorizado.",
   "invalid-product": "Confira os campos e os formatos informados.",
@@ -65,9 +70,9 @@ function ProductForm({ product }: { product?: Product }) {
   </form>;
 }
 
-export default async function AdminPage({ searchParams }: { searchParams: Promise<{ mensagem?: string; liberadas?: string; revisao?: string }> }) {
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ mensagem?: string; liberadas?: string; revisao?: string; origem?: string; status?: string }> }) {
   const access = await getStoreAccess();
-  const { mensagem, liberadas, revisao } = await searchParams;
+  const { mensagem, liberadas, revisao, origem, status } = await searchParams;
   const notice = mensagem && Object.hasOwn(messages, mensagem) ? messages[mensagem] : null;
 
   if (access.state !== "admin") return <section className="mx-auto min-h-[74vh] max-w-xl px-5 pb-24 pt-32">
@@ -77,7 +82,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
       <p className="mt-3 leading-relaxed text-ink/70">Área reservada para administrar os livros e os pedidos da Casa.</p>
       {notice && <p role="status" className="mt-4 rounded-xl bg-almond-deep p-3 text-sm">{notice}</p>}
       {access.state === "unconfigured" ? <div className="mt-6 rounded-2xl border border-khaki/40 bg-almond p-4"><p className="font-medium">Configuração em andamento</p><p className="mt-2 text-sm leading-relaxed text-ink/70">A área administrativa será liberada após a conexão segura com o banco de dados da editora. A loja pública continua em modo de consulta.</p></div>
-        : access.state === "signed-out" ? <form action={signIn} className="mt-6 space-y-4"><label className="block text-sm font-medium">E-mail<input type="email" name="email" autoComplete="username" required className={inputClass} /></label><label className="block text-sm font-medium">Senha<input type="password" name="password" autoComplete="current-password" required className={inputClass} /></label><button className={`${button} w-full`}>Entrar no painel</button></form>
+        : access.state === "signed-out" ? <div className="mt-6 space-y-5"><form action={requestEmailAccess} className="space-y-4"><label className="block text-sm font-medium">E-mail autorizado<input type="email" name="email" autoComplete="email" required className={inputClass}/></label><button className={`${button} w-full`}>Receber link de acesso</button><p className="text-xs text-ink/65">Acesso privado: apenas usuários autorizados podem ver solicitações.</p></form><details className="border-t border-ink/15 pt-4"><summary className="cursor-pointer text-sm text-vinho">Recebi um código por e-mail</summary><form action={verifyEmailAccess} className="mt-4 space-y-4"><label className="block text-sm">E-mail<input name="email" type="email" required className={inputClass}/></label><label className="block text-sm">Código<input name="token" inputMode="numeric" maxLength={6} required className={inputClass}/></label><button className={button}>Confirmar código</button></form></details><details className="border-t border-ink/15 pt-4"><summary className="cursor-pointer text-sm text-vinho">Já tenho senha</summary><form action={signIn} className="mt-4 space-y-4"><label className="block text-sm font-medium">E-mail<input type="email" name="email" autoComplete="username" required className={inputClass} /></label><label className="block text-sm font-medium">Senha<input type="password" name="password" autoComplete="current-password" required className={inputClass} /></label><button className={`${button} w-full`}>Entrar no painel</button></form></details></div>
         : <div className="mt-6 space-y-4"><p role="alert">{access.state === "denied" ? "Seu usuário não tem permissão para acessar a gestão da Casa." : "Não foi possível verificar seu acesso neste momento."}</p><form action={signOut}><button className={button}>Sair</button></form></div>}
       <Link href="/" className="mt-6 inline-block text-sm text-vinho underline underline-offset-4">Voltar ao site</Link>
     </div>
@@ -93,10 +98,11 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     <div className="mt-6 rounded-2xl border border-khaki/40 bg-almond-lift p-4 text-sm leading-relaxed"><strong>Preparação da loja:</strong> o catálogo é interno. Frete, cobranças e notificações ainda precisam ser integrados e validados antes de liberar compras.</div>
     {notice && <div role="status" className="mt-4 rounded-xl bg-almond-deep p-4">{notice}{mensagem==="maintenance-saved" && /^\d{1,6}$/.test(liberadas??"") && /^\d{1,6}$/.test(revisao??"") && <p className="mt-1">Reservas liberadas: {liberadas} · Aguardam conciliação: {revisao}.</p>}</div>}
     <div className="mt-4 rounded-2xl border border-ink/15 bg-almond-lift p-4 text-sm"><strong>Manutenção de estoque</strong><p className="mt-1 text-ink/70">Libera somente reservas expiradas que nunca chegaram ao provedor. Pagamentos iniciados ficam aguardando conciliação.</p><form action={reviewExpiredReservations} className="mt-3"><button className={button}>Verificar reservas expiradas</button></form></div>
-    <nav aria-label="Seções do painel" className="my-6 flex gap-3 text-sm"><a className="rounded-full bg-vinho/10 px-4 py-3 font-medium text-vinho" href="#catalogo">Catálogo</a><a className="rounded-full bg-vinho/10 px-4 py-3 font-medium text-vinho" href="#pedidos">Pedidos</a></nav>
+    <nav aria-label="Seções do painel" className="my-6 flex flex-wrap gap-3 text-sm"><a className="rounded-full bg-vinho/10 px-4 py-3 font-medium text-vinho" href="#captacoes">Solicitações</a><a className="rounded-full bg-vinho/10 px-4 py-3 font-medium text-vinho" href="#catalogo">Catálogo</a><a className="rounded-full bg-vinho/10 px-4 py-3 font-medium text-vinho" href="#pedidos">Pedidos</a></nav>
     <div className="grid gap-4 sm:grid-cols-3">
       {[{label:"Livros no cadastro",value:catalog.error ? "—" : `${products.length}${products.length === 100 ? "+" : ""}`},{label:"Rascunhos na lista",value:catalog.error ? "—" : products.filter(p => p.status === "draft").length},{label:"Pedidos recentes",value:orders.error ? "—" : `${orders.data?.length ?? 0}${orders.data?.length === 100 ? "+" : ""}`}].map(item => <div key={item.label} className={card}><p className="text-sm text-ink/70">{item.label}</p><p className="mt-2 text-3xl font-medium text-vinho">{item.value}</p></div>)}
     </div>
+    <AdminLeads client={access.client} source={origem} status={status}/>
     <section id="catalogo" className="mt-10 scroll-mt-28"><h2 className="text-3xl text-vinho">Catálogo e estoque</h2><p className="mt-2 text-sm text-ink/70">Cadastre apenas títulos cuja venda foi autorizada pela Casa.</p>
       {catalog.error ? <p role="alert" className="mt-4">Não foi possível carregar o catálogo.</p> : <><details className={`${card} mt-5`}><summary className="cursor-pointer font-medium text-vinho">Cadastrar novo livro</summary><ProductForm /></details>
       {products.length === 0 && <p className="mt-5 text-sm text-ink/70">Nenhum livro comercial cadastrado. Comece pelo primeiro título com dados oficiais.</p>}

@@ -34,6 +34,10 @@ export async function getStoreAccess() {
   if (!user || error) return { state: "signed-out" } as const;
   const membership = await client.from("store_admins").select("user_id").eq("user_id", user.id).maybeSingle();
   if (membership.error) return { state: "unavailable" } as const;
-  if (!membership.data) return { state: "denied" } as const;
+  if (!membership.data) {
+    // Database policy verifies the preauthorized email and email-OTP session.
+    const claimed = await client.from("store_admins").insert({user_id:user.id}).select("user_id").maybeSingle();
+    if(claimed.error||!claimed.data)return {state:"denied"} as const;
+  }
   return { state: "admin", client, user } as const;
 }

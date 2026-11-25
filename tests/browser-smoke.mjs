@@ -17,7 +17,7 @@ try {
     await add.click();
     await page.getByRole("link",{name:/Revisar pedido/}).click();
     await page.getByRole("heading",{name:"Livros na sacola"}).waitFor();
-    await page.getByRole("button",{name:"Enviar pedido pelo WhatsApp"}).waitFor();
+    await page.getByRole("button",{name:"Registrar consulta"}).waitFor();
     assert.ok(await page.getByText("Nenhum pagamento é efetuado agora.",{exact:false}).isVisible());
     await page.goto(base + "/checkout/demonstracao");
     await page.getByRole("button",{name:"Aumentar quantidade"}).click();

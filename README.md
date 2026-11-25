@@ -13,8 +13,8 @@ cp .env.example .env.local   # opcional — o site roda sem credencial
 npm run dev
 ```
 
-O ambiente padrão é consulta: a livraria e a sacola encaminham o cliente
-ao WhatsApp. A demonstração em `/checkout/demonstracao` utiliza dados ilustrativos;
+O ambiente padrão é consulta: a livraria, sacola e triagem registram solicitações
+diretamente no painel administrativo, sem encaminhamento externo. A demonstração em `/checkout/demonstracao` utiliza dados ilustrativos;
 não envia pedidos, não cobra e não depende das credenciais comerciais.
 Os endpoints comerciais rejeitam compras fora da Vercel de produção e enquanto
 `ENABLE_LIVE_CHECKOUT` não estiver ativo e configurado integralmente.
@@ -41,6 +41,8 @@ npm run build
 | `STORE_RATE_LIMIT_SECRET` | Segredo para pseudonimizar buckets de limitação de requisições. |
 | `RESEND_API_KEY`, `STORE_EMAIL_FROM`, `STORE_EMAIL_REPLY_TO` | E-mail transacional com remetente verificado. |
 | `ENABLE_LIVE_CHECKOUT` | Padrão `false`: só modificar após aprovação e checklist. |
+| `NOBREDNA_CAPTURE_TOKEN` | Segredo de escopo restrito, conferido por RLS; nunca uma chave service role. |
+| `NOBREDNA_ADMIN_EMAIL` | E-mail autorizado para solicitar primeiro acesso; confirmar a autorização no banco. |
 
 O modo de testes locais não faz chamadas externas. Credenciais de sandbox
 devem ser usadas num ambiente isolado, nunca compartilhado com o banco real.
@@ -90,6 +92,7 @@ Nenhuma é aplicada duas vezes em papéis diferentes.
   na API oficial, reconcilia valor, moeda e referência sem confiar no retorno do
   navegador. O banco mantém o histórico de eventos e evita processamento duplicado.
 - `/admin` — catálogo, publicação, estoque, pedidos, expedição e fila de e-mails.
+- `POST /api/contato` — captação de triagem, coautoria e consulta de livros com protocolo; a área administrativa exibe detalhes e situação.
 - `POST /api/carta` e `POST /api/proposta` — validam e registram; o ponto de
   integração com provedor de e-mail/CRM está marcado no código.
 
