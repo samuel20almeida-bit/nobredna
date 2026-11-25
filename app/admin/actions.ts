@@ -8,6 +8,7 @@ import { releaseExpiredReservations } from "@/lib/store-commerce";
 import { leadStatuses, type LeadStatus } from "@/lib/editorial-leads";
 import { isAllowedAdminEmail } from "@/lib/admin-email";
 import { editorialEmailConfigured,sendEditorialNotifications } from "@/lib/editorial-notifications";
+import {normalizeWhatsApp,validFollowUp,leadIdPattern} from "@/lib/editorial-workspace";
 
 function back(message: string, tab?:string): never {
   const page=tab??(["invalid-product","incomplete-product","duplicate-product","save-error","stale-product","saved"].includes(message)?"livros":["shipping-error","invalid-shipping","shipping-saved","notification-attempt"].includes(message)?"pedidos":message.startsWith("maintenance-")?"configuracoes":"");
@@ -49,19 +50,26 @@ export async function updateEditorialLead(form:FormData){
   const access=await getStoreAccess();
   if(access.state!=="admin")back("denied");
   const id=field(form,"id",36),status=field(form,"status",20),version=field(form,"version",80);
-  const tab=form.get("aba")==="coautorias"?"coautorias":"interessados";
-  const notes=form.get("notes");
-  if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)||!leadStatuses.includes(status as LeadStatus)||!Number.isFinite(Date.parse(version))||typeof notes!=="string"||notes.length>4000)back("lead-error",tab);
-  const result=await access.client.from("editorial_leads").update({status,internal_notes:notes.trim(),updated_at:new Date().toISOString()}).eq("id",id).eq("updated_at",version).select("id").maybeSingle();
+  const tab="interessados";
+  const notes=form.get("notes"),next=form.get("next_action"),follow=form.get("follow_up_on");
+  if(!leadIdPattern.test(id)||!leadStatuses.includes(status as LeadStatus)||!Number.isFinite(Date.parse(version))||typeof notes!=="string"||notes.length>4000||typeof next!=="string"||next.length>240||typeof follow!=="string"||(follow!==""&&!validFollowUp(follow)))back("lead-error",tab);
+  const closed=["closed","lost"].includes(status);
+  const result=await access.client.from("editorial_leads").update({status,internal_notes:notes.trim(),next_action:closed?"":next.trim(),follow_up_on:closed?null:follow||null,updated_at:new Date().toISOString()}).eq("id",id).eq("updated_at",version).select("id").maybeSingle();
   if(result.error||!result.data)back(result.error?"lead-error":"stale-lead",tab);
   revalidatePath("/admin");
-  const params=new URLSearchParams({aba:tab,mensagem:"lead-saved"});
-  const source=field(form,"origem",20),filter=field(form,"filtro_status",20),search=field(form,"busca",80),page=field(form,"pagina",8);
-  if(source)params.set("origem",source);
-  if(filter)params.set("status",filter);
-  if(search)params.set("busca",search);
-  if(/^\d+$/.test(page))params.set("pagina",page);
+  const params=new URLSearchParams({aba:tab,mensagem:"lead-saved",ficha:id});
   redirect("/admin?"+params.toString());
+}
+
+export async function updateSupportNumber(form:FormData){
+ const access=await getStoreAccess();if(access.state!=="admin")back("denied");
+ const raw=form.get("editorial_whatsapp");
+ if(typeof raw!=="string"||raw.length>40)back("support-invalid","configuracoes");
+ const number=raw.trim()?normalizeWhatsApp(raw):null;
+ if(raw.trim()&&!number)back("support-invalid","configuracoes");
+ const result=await access.client.from("editorial_support_settings").update({editorial_whatsapp:number}).eq("singleton",true).select("singleton").maybeSingle();
+ if(result.error||!result.data)back("support-error","configuracoes");
+ revalidatePath("/api/suporte");revalidatePath("/admin");back("support-saved","configuracoes");
 }
 
 export async function retryEditorialEmails(form:FormData){

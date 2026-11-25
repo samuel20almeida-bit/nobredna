@@ -1,7 +1,7 @@
 # Fundação comercial — NobreDNA
 
 1. Criar um projeto Supabase exclusivo da editora na organização confirmada pelo responsável.
-2. Revisar e testar `setup.sql`, `checkout.sql`, `commerce.sql`, `fulfillment.sql`, `maintenance.sql`, `editorial-leads.sql`, `editorial-crm.sql` e `editorial-experience.sql`, nessa ordem, antes de aplicar ao projeto dedicado. Não executar em projetos de outras marcas.
+2. Revisar e testar `setup.sql`, `checkout.sql`, `commerce.sql`, `fulfillment.sql`, `maintenance.sql`, `editorial-leads.sql`, `editorial-crm.sql`, `editorial-experience.sql` e `editorial-workspace.sql`, nessa ordem, antes de aplicar ao projeto dedicado. Não executar em projetos de outras marcas.
 3. Configurar `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` na Vercel. Não usar chave secreta ou `service_role` no navegador.
 4. Desabilitar cadastros públicos no Auth, convidar a administradora com o e-mail confirmado e conceder acesso a seu UUID na tabela `store_admins` usando o painel administrativo do Supabase. Nunca cadastrar uma senha no código.
 5. Testar login autorizado, usuário sem permissão, logout, cadastro, edição e restrições do banco. Conferir os avisos de segurança do Supabase. Não liberar compras até concluir essa validação.
@@ -14,6 +14,8 @@ O painel `/admin` está disponível após a conexão. Sem configuração, apenas
 - A extensão CRM mantém as solicitações antigas e amplia o funil com proposta, negociação e encerramento sem avanço; anotações internas só podem ser acessadas por administradores autorizados.
 - Em Configurações, o administrador autenticado pode estabelecer sua própria senha; o login também mantém a alternativa por link/código. Para a entrega definitiva, configurar SMTP dedicado e testar recuperação de acesso.
 - Os formulários públicos registram pedidos de contato e fornecem protocolo, sem redirecionar para WhatsApp. A consulta de livros não efetua pagamento.
+- O painel unifica atendimentos, mostra prioridades e retornos do dia, registra histórico de alterações e permite escolher a data de retorno. As notificações são pendências dentro do painel, não mensagens push.
+- O botão de suporte público é opcional e lê apenas o número editorial publicado em Configurações. O canal técnico da AURA é separado e só aparece aos administradores. Sem números confirmados, não há links para destinos desconhecidos.
 - Novas solicitações reais geram trabalhos de confirmação ao cliente (se houver e-mail) e de aviso à editora. Nenhum e-mail é enviado se faltarem credenciais/remetente. Configurar `SUPABASE_SECRET_KEY`, `RESEND_API_KEY`, `STORE_EMAIL_FROM`, `STORE_EMAIL_REPLY_TO` e `NOBREDNA_NOTIFICATION_TO` no ambiente de produção; verificar o domínio de envio e configurar SMTP do Supabase separadamente para autenticação. Não inserir chaves no código.
 - A fila é registrada na mesma transação da captação; processamento assíncrono imediatamente após a resposta e tentativa manual pela ficha do interessado. Falhas transitórias respeitam backoff e janela de idempotência; entrega não é confirmada apenas pelo aceite do provedor. Registros anteriores não disparam mensagens retroativas. Antes de automatizar novas tentativas, validar credenciais, remetente e monitoramento.
 

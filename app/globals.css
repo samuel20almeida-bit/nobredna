@@ -268,6 +268,14 @@
 .admin-shell button:active:not(:disabled), .admin-shell .admin-nav-link:active { opacity: .75; }
 .admin-nav-link { transition: background-color .12s, color .12s; }
 .admin-nav-link:has([role="status"]) { background: #631a25; color: #fff; }
+.editorial-support { bottom: 24px; right: 24px; }
+.editorial-support button { touch-action: manipulation; }
+.admin-dock { padding-bottom: max(5px, env(safe-area-inset-bottom, 0px)); }
+@media (max-width: 767px) {
+  .editorial-support { right: 12px; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+  body:has(.checkout-dock) .editorial-support { bottom: calc(165px + env(safe-area-inset-bottom, 0px)); }
+  .editorial-support > section { max-height: calc(100svh - 165px); overflow-y: auto; }
+}
 
 /* Selo transparente, preservando o contorno orgânico da cera. */
 .brand-seal {

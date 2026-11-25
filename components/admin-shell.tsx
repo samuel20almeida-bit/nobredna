@@ -5,14 +5,13 @@ import { signOut } from "@/app/admin/actions";
 import { AdminNavLink,AdminSubmit } from "./admin-feedback";
 
 export const adminTabs = [
-  {id:"visao",label:"Visão geral",icon:"grid"},
-  {id:"interessados",label:"Interessados",icon:"people"},
-  {id:"coautorias",label:"Coautorias",icon:"feather"},
-  {id:"livros",label:"Livros e estoque",icon:"book"},
-  {id:"pedidos",label:"Pedidos e entregas",icon:"bag"},
+  {id:"visao",label:"Início",icon:"grid"},
+  {id:"interessados",label:"Atendimentos",icon:"people"},
+  {id:"livros",label:"Livraria",icon:"book"},
+  {id:"pedidos",label:"Pedidos",icon:"bag"},
   {id:"configuracoes",label:"Configurações",icon:"settings"},
 ] as const;
-export type AdminTab=typeof adminTabs[number]["id"];
+export type AdminTab=typeof adminTabs[number]["id"]|"notificacoes";
 
 export function AdminIcon({kind,size=20}:{kind:string;size?:number}){
   const paths:Record<string,ReactNode>={
@@ -26,19 +25,20 @@ export function AdminIcon({kind,size=20}:{kind:string;size?:number}){
     logout:<><path d="M13 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8m2-13 5 5-5 5m-8-5h13"/></>,
     clock:<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 3"/></>,
     check:<path d="m5 12 4 4L19 6"/>,
+    bell:<><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9m-8 12a2 2 0 0 0 4 0"/></>,
     search:<><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></>,
   };
   return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">{paths[kind]??paths.grid}</svg>;
 }
 
-export function AdminShell({tab,email,children}:{tab:AdminTab;email:string;children:ReactNode}){
-  return <div className="admin-shell min-h-screen bg-[#f5f2ee] text-ink lg:grid lg:grid-cols-[252px_minmax(0,1fr)]">
+export function AdminShell({tab,email,children,help}:{tab:AdminTab;email:string;children:ReactNode;help?:ReactNode}){
+  return <div className="admin-shell min-h-screen bg-[#f5f2ee] pb-24 text-ink lg:pb-0 lg:grid lg:grid-cols-[252px_minmax(0,1fr)]">
     <aside className="border-b border-ink/10 bg-[#fffdf9] lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:border-b-0 lg:border-r">
       <div className="flex items-center gap-3 px-5 py-5 lg:px-6 lg:py-8"><BrandSeal size={42}/><div><span className="font-serif text-2xl leading-none text-vinho">NobreDNA</span><p className="mt-1 text-[10px] font-semibold uppercase tracking-[.14em] text-khaki-ink">Área da editora</p></div><Link href="/" className="ml-auto flex min-h-11 items-center gap-1 text-xs text-vinho lg:hidden"><AdminIcon kind="arrow" size={15}/>Site</Link></div>
-      <nav aria-label="Módulos administrativos" className="flex gap-1 overflow-x-auto px-3 pb-3 lg:mt-5 lg:flex-col lg:overflow-visible lg:px-4 lg:pb-0"><p className="mb-2 hidden px-3 text-[10px] font-semibold uppercase tracking-[.15em] text-ink/45 lg:block">Workspace</p>{adminTabs.map(item=><AdminNavLink key={item.id} href={item.id==="visao"?"/admin":"/admin?aba="+item.id} active={tab===item.id}><AdminIcon kind={item.icon}/>{item.label}</AdminNavLink>)}</nav>
+      <nav aria-label="Módulos administrativos" className="admin-dock fixed inset-x-0 bottom-0 z-[55] grid grid-cols-5 gap-1 border-t border-ink/10 bg-[#fffdf9] px-1 pt-1 lg:static lg:mt-5 lg:flex lg:flex-col lg:border-0 lg:bg-transparent lg:px-4 lg:pb-0"><p className="mb-2 hidden px-3 text-[10px] font-semibold uppercase tracking-[.15em] text-ink/45 lg:block">Menu principal</p>{adminTabs.map(item=><AdminNavLink key={item.id} href={item.id==="visao"?"/admin":"/admin?aba="+item.id} active={tab===item.id} dock><AdminIcon kind={item.icon}/><span className="max-lg:hidden">{item.label}</span><span className="lg:hidden">{item.id==="interessados"?"Atender":item.id==="configuracoes"?"Ajustes":item.label}</span></AdminNavLink>)}</nav>
       <div className="mt-auto hidden border-t border-ink/10 p-5 lg:block"><div className="mb-4 flex items-center gap-3"><div className="grid size-9 shrink-0 place-items-center rounded-full bg-vinho/10 font-semibold text-vinho">{email.charAt(0).toUpperCase()}</div><div className="min-w-0"><p className="text-sm font-semibold">Administradora</p><p className="truncate text-xs text-ink/60" title={email}>{email}</p></div></div><Link href="/" className="flex min-h-11 items-center justify-between rounded-lg border border-ink/10 px-3 text-sm text-vinho">Abrir site público <AdminIcon kind="arrow" size={16}/></Link><form action={signOut}><button className="mt-2 flex min-h-11 w-full items-center gap-2 px-3 text-sm text-ink/65"><AdminIcon kind="logout" size={18}/> Sair da conta</button></form></div>
     </aside>
-    <div className="min-w-0"><header className="flex min-h-16 items-center justify-between gap-4 border-b border-ink/10 bg-[#fffdf9] px-5 lg:px-9"><p className="text-xs text-ink/60"><span className="hidden sm:inline">Painel da Casa / </span><span className="font-semibold text-vinho">{adminTabs.find(item=>item.id===tab)?.label}</span></p><form action={signOut} className="lg:hidden"><button className="flex min-h-11 items-center gap-2 text-sm text-vinho"><AdminIcon kind="logout" size={17}/>Sair</button></form><span className="hidden items-center gap-2 text-xs text-ink/60 lg:flex"><span className="size-2 rounded-full bg-emerald-600"/> Área privada</span></header><div className="mx-auto max-w-[1500px] px-4 py-7 sm:px-7 lg:px-9 lg:py-9">{children}</div></div>
+    <div className="min-w-0"><header className="flex min-h-16 items-center justify-between gap-4 border-b border-ink/10 bg-[#fffdf9] px-5 lg:px-9"><p className="text-xs text-ink/60"><span className="hidden sm:inline">Painel da Casa / </span><span className="font-semibold text-vinho">{tab==="notificacoes"?"Notificações":adminTabs.find(item=>item.id===tab)?.label}</span></p><div className="flex shrink-0 items-center gap-2"><Link href="/admin?aba=notificacoes" aria-label="Central de notificações" aria-current={tab==="notificacoes"?"page":undefined} className={"flex min-h-11 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold "+(tab==="notificacoes"?"bg-vinho text-white":"border border-vinho/20 text-vinho")}><AdminIcon kind="bell" size={18}/><span className="hidden sm:inline">Notificações</span></Link>{help}<form action={signOut} className="lg:hidden"><AdminSubmit className="admin-secondary px-2" pendingText="Saindo…"><AdminIcon kind="logout" size={17}/><span className="sr-only">Sair</span></AdminSubmit></form></div></header><div className="mx-auto max-w-[1500px] px-4 py-7 sm:px-7 lg:px-9 lg:py-9">{children}</div></div>
   </div>;
 }
 
