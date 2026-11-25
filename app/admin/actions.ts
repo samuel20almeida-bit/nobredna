@@ -8,10 +8,10 @@ import { releaseExpiredReservations } from "@/lib/store-commerce";
 import { leadStatuses, type LeadStatus } from "@/lib/editorial-leads";
 import { isAllowedAdminEmail } from "@/lib/admin-email";
 import { editorialEmailConfigured,sendEditorialNotifications } from "@/lib/editorial-notifications";
-import {normalizeWhatsApp,validFollowUp,leadIdPattern} from "@/lib/editorial-workspace";
+import {normalizeWhatsApp,validFollowUp,leadIdPattern,leadAdminHref} from "@/lib/editorial-workspace";
 
 function back(message: string, tab?:string): never {
-  const page=tab??(["invalid-product","incomplete-product","duplicate-product","save-error","stale-product","saved"].includes(message)?"livros":["shipping-error","invalid-shipping","shipping-saved","notification-attempt"].includes(message)?"pedidos":message.startsWith("maintenance-")?"configuracoes":"");
+  const page=tab??(["invalid-product","incomplete-product","duplicate-product","save-error","stale-product","saved"].includes(message)?"livros":["shipping-error","invalid-shipping","shipping-saved","notification-attempt"].includes(message)?"pedidos&modo=online":message.startsWith("maintenance-")?"configuracoes":"");
   redirect(`/admin?mensagem=${encodeURIComponent(message)}${page?"&aba="+page:""}`);
 }
 
@@ -50,15 +50,14 @@ export async function updateEditorialLead(form:FormData){
   const access=await getStoreAccess();
   if(access.state!=="admin")back("denied");
   const id=field(form,"id",36),status=field(form,"status",20),version=field(form,"version",80);
-  const tab="interessados";
+  const tab=form.get("aba")==="pedidos"?"pedidos&modo=solicitacoes":"interessados";
   const notes=form.get("notes"),next=form.get("next_action"),follow=form.get("follow_up_on");
   if(!leadIdPattern.test(id)||!leadStatuses.includes(status as LeadStatus)||!Number.isFinite(Date.parse(version))||typeof notes!=="string"||notes.length>4000||typeof next!=="string"||next.length>240||typeof follow!=="string"||(follow!==""&&!validFollowUp(follow)))back("lead-error",tab);
   const closed=["closed","lost"].includes(status);
-  const result=await access.client.from("editorial_leads").update({status,internal_notes:notes.trim(),next_action:closed?"":next.trim(),follow_up_on:closed?null:follow||null,updated_at:new Date().toISOString()}).eq("id",id).eq("updated_at",version).select("id").maybeSingle();
+  const result=await access.client.from("editorial_leads").update({status,internal_notes:notes.trim(),next_action:closed?"":next.trim(),follow_up_on:closed?null:follow||null,updated_at:new Date().toISOString()}).eq("id",id).eq("updated_at",version).select("id,source").maybeSingle();
   if(result.error||!result.data)back(result.error?"lead-error":"stale-lead",tab);
   revalidatePath("/admin");
-  const params=new URLSearchParams({aba:tab,mensagem:"lead-saved",ficha:id});
-  redirect("/admin?"+params.toString());
+  redirect(leadAdminHref(result.data.source,id)+"&mensagem=lead-saved");
 }
 
 export async function updateSupportNumber(form:FormData){
@@ -75,14 +74,14 @@ export async function updateSupportNumber(form:FormData){
 export async function retryEditorialEmails(form:FormData){
  const access=await getStoreAccess();
  if(access.state!=="admin")back("denied");
- const id=field(form,"id",36),tab=form.get("aba")==="coautorias"?"coautorias":"interessados";
+ const id=field(form,"id",36),tab=form.get("aba")==="pedidos"?"pedidos&modo=solicitacoes":"interessados";
  if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id))back("lead-error",tab);
  if(!editorialEmailConfigured())back("email-not-configured",tab);
- const lead=await access.client.from("editorial_leads").select("id").eq("id",id).maybeSingle();
+ const lead=await access.client.from("editorial_leads").select("id,source").eq("id",id).maybeSingle();
  if(!lead.data||lead.error)back("lead-error",tab);
  await sendEditorialNotifications(id).catch(()=>console.warn("editorial_email_retry_failed"));
  revalidatePath("/admin");
- back("editorial-email-attempt",tab);
+ redirect(leadAdminHref(lead.data.source,id)+"&mensagem=editorial-email-attempt");
 }
 
 export async function updateAdminPassword(form:FormData){

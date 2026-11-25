@@ -24,12 +24,12 @@ export default async function CheckoutPage() {
       <div className="relative z-10 bg-almond pt-24 pb-14 md:pt-32 md:pb-24">
         <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
           <Link href="/livros#catalogo" className="inline-flex min-h-11 items-center text-vinho underline underline-offset-4">Voltar à livraria</Link>
-          <p className="label mt-4">Sua sacola · consulta de compra</p>
+          <p className="label mt-4">Sua sacola · solicitação de compra</p>
           <h1 className="mt-5 max-w-[20ch] text-[clamp(2rem,4.4vw,3rem)] leading-[1.1] text-ink">
             Sua próxima leitura, quase em casa.
           </h1>
 
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/70">Revise os livros, informe como podemos entrar em contato e envie sua consulta. Sem pagamento nesta etapa.</p>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/70">Revise os livros, informe como podemos entrar em contato e envie sua solicitação de compra. Sem pagamento nesta etapa.</p>
           <div className="mt-8 md:mt-10">
             <ConsultaCheckout />
           </div>

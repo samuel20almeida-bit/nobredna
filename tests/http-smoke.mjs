@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 const base=process.env.BASE_URL??"http://127.0.0.1:3017";
 const pages=[
   ["/livros","consulte seus exemplares"],
-  ["/checkout","consulta de compra"],
+  ["/checkout","solicitação de compra"],
   ["/checkout/demonstracao","Simular finalização"],
   ["/checkout/retorno?status=aprovado&pedido=NDNA-"+"A".repeat(32),"Aguardando confirmação."],
   ["/admin","Configuração em andamento"]

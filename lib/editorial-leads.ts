@@ -11,7 +11,7 @@ export function journeyQuestions(coautoria=false) {
 
 export const leadSources = ["editorial","coautoria","livros"] as const;
 export type LeadSource = typeof leadSources[number];
-export const leadSourceLabels: Record<LeadSource,string> = {editorial:"Projeto editorial",coautoria:"Coautoria",livros:"Consulta de livros"};
+export const leadSourceLabels: Record<LeadSource,string> = {editorial:"Projeto editorial",coautoria:"Coautoria",livros:"Solicitação de compra"};
 export const leadStatuses = ["new","contacted","proposal_sent","negotiating","closed","lost"] as const;
 export type LeadStatus = typeof leadStatuses[number];
 export const leadStatusLabels: Record<LeadStatus,string> = {new:"Novo",contacted:"Em atendimento",proposal_sent:"Proposta enviada",negotiating:"Em negociação",closed:"Concluído",lost:"Encerrado sem avanço"};

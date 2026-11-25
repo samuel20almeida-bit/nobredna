@@ -7,11 +7,14 @@ test("Book consultation receipt explains next steps without promising payment or
  const result=editorialEmailMessage(input);
  assert.match(result.text,/Nenhum pagamento foi realizado/);
  assert.ok(result.text.includes(input.protocol));
+ assert.match(result.text,/solicitação de compra/);
 });
 test("Admin alert links to the private panel and omits personal lead details",()=>{
  const result=editorialEmailMessage({kind:"admin_alert",source:"coautoria",name:"Dado privado",protocol:"ND-"+"B".repeat(32)});
  assert.ok(!result.text.includes("Dado privado"));
  assert.match(result.text,/nobredna\.vercel\.app\/admin/);
+ const purchase=editorialEmailMessage({kind:"admin_alert",source:"livros",name:"Teste",protocol:"ND-"+"B".repeat(32)});
+ assert.match(purchase.text,/aba=pedidos&modo=solicitacoes/);
 });
 test("Email retry stays within the provider idempotency window and attempt budget",()=>{
  const now=Date.now();

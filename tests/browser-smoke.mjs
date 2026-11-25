@@ -20,19 +20,19 @@ try {
     assert.ok(await page.getByText("Você não paga agora.",{exact:true}).isVisible());
     await page.getByRole("button",{name:"Continuar para contato"}).click();
     await page.getByLabel("Nome completo").fill("QA Fluxo");
-    await page.getByRole("button",{name:"Revisar consulta"}).click();
+    await page.getByRole("button",{name:"Revisar solicitação"}).click();
     await page.getByRole("alert").waitFor();
     await page.getByLabel("E-mail",{exact:true}).fill("qa@example.invalid");
-    await page.getByRole("button",{name:"Revisar consulta"}).click();
-    await page.getByRole("heading",{name:"Revise sua consulta"}).waitFor();
+    await page.getByRole("button",{name:"Revisar solicitação"}).click();
+    await page.getByRole("heading",{name:"Revise sua solicitação de compra"}).waitFor();
     await page.getByRole("checkbox").check();
     // Simulated API in local-only browser test: never contacts production.
     await page.route("**/api/contato", route=>route.fulfill({status:201,contentType:"application/json",body:JSON.stringify({ok:true,protocolo:"ND-"+"A".repeat(32)})}));
-    await page.getByRole("button",{name:"Confirmar e enviar consulta"}).click();
-    await page.getByRole("heading",{name:"Consulta registrada!"}).waitFor();
+    await page.getByRole("button",{name:"Solicitar compra"}).click();
+    await page.getByRole("heading",{name:"Solicitação de compra recebida!"}).waitFor();
     assert.ok(await page.getByRole("heading",{name:"O que acontece agora?"}).isVisible());
     await page.reload();
-    await page.getByRole("heading",{name:"Consulta registrada!"}).waitFor();
+    await page.getByRole("heading",{name:"Solicitação de compra recebida!"}).waitFor();
     await page.goto(base + "/checkout/demonstracao");
     await page.getByRole("button",{name:"Aumentar quantidade"}).click();
     await page.getByLabel(/Expresso/).check();

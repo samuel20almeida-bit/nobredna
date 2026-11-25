@@ -1,4 +1,4 @@
-import type { LeadStatus } from "./editorial-leads.ts";
+import type { LeadSource, LeadStatus } from "./editorial-leads.ts";
 
 export const openLeadStatuses=["new","contacted","proposal_sent","negotiating"] as const;
 export const leadNextAction:Record<LeadStatus,string>={
@@ -9,6 +9,22 @@ export const leadNextAction:Record<LeadStatus,string>={
  closed:"O atendimento foi concluído.",
  lost:"Atendimento encerrado sem avanço; reabra se necessário.",
 };
+export const purchaseStatusLabels:Record<LeadStatus,string>={
+ new:"Nova solicitação",contacted:"Em atendimento",proposal_sent:"Valores enviados",negotiating:"Aguardando confirmação",closed:"Atendimento concluído",lost:"Encerrada sem compra",
+};
+export const purchaseNextAction:Record<LeadStatus,string>={
+ new:"Confira os livros, disponibilidade e frete para informar os valores ao cliente.",
+ contacted:"Confirme o pedido e informe os valores e condições de entrega.",
+ proposal_sent:"Aguarde a confirmação dos valores pelo cliente e combine o próximo passo.",
+ negotiating:"Confirme o pagamento e a entrega por um canal acordado com o cliente. O painel não confirma pagamentos nesta etapa.",
+ closed:"Atendimento concluído. Este registro não equivale a um pagamento confirmado.",
+ lost:"Solicitação encerrada sem compra. Reabra se necessário.",
+};
+export const purchaseInbox="/admin?aba=pedidos&modo=solicitacoes";
+export const editorialInbox="/admin?aba=interessados";
+export function leadAdminHref(source:LeadSource,id?:string){
+ return (source==="livros"?purchaseInbox:editorialInbox)+(id?"&ficha="+encodeURIComponent(id):"");
+}
 export function saoPauloToday(now=new Date()){
  const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Sao_Paulo",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(now);
  const read=(key:string)=>parts.find(p=>p.type===key)?.value;
