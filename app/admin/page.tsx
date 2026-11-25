@@ -21,6 +21,7 @@ const messages: Record<string, string> = {
   "login-error": "Não foi possível entrar. Confira seu e-mail e senha.",
   "email-sent":"Link de acesso solicitado. Confira sua caixa de entrada e abra o link no mesmo navegador.",
   "email-access-error":"Não foi possível solicitar ou confirmar o acesso. Confira o e-mail autorizado e tente novamente.",
+  "email-rate-limit":"Aguarde antes de solicitar um novo link. Confira seu e-mail e a caixa de spam: uma solicitação anterior pode já ter sido enviada.",
   "lead-saved":"Situação da solicitação atualizada.",
   "lead-error":"Não foi possível atualizar a solicitação.",
   "not-configured": "O acesso ainda está em configuração.",

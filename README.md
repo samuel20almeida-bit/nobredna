@@ -43,6 +43,7 @@ npm run build
 | `ENABLE_LIVE_CHECKOUT` | Padrão `false`: só modificar após aprovação e checklist. |
 | `NOBREDNA_CAPTURE_TOKEN` | Segredo de escopo restrito, conferido por RLS; nunca uma chave service role. |
 | `NOBREDNA_ADMIN_EMAIL` | E-mail autorizado para solicitar primeiro acesso; confirmar a autorização no banco. |
+| `NOBREDNA_ADMIN_EMAILS` | E-mails adicionais autorizados, separados por vírgula; cada um necessita também de autorização no banco. |
 
 O modo de testes locais não faz chamadas externas. Credenciais de sandbox
 devem ser usadas num ambiente isolado, nunca compartilhado com o banco real.

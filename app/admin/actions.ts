@@ -6,6 +6,7 @@ import { getStoreAccess, storeClient } from "@/lib/store-admin";
 import { sendOrderNotifications } from "@/lib/store-notifications";
 import { releaseExpiredReservations } from "@/lib/store-commerce";
 import { leadStatuses, type LeadStatus } from "@/lib/editorial-leads";
+import { isAllowedAdminEmail } from "@/lib/admin-email";
 
 function back(message: string): never { redirect(`/admin?mensagem=${encodeURIComponent(message)}`); }
 
@@ -24,9 +25,9 @@ export async function requestEmailAccess(form:FormData){
   const client=await storeClient();
   if(!client)back("not-configured");
   const email=String(form.get("email")??"").trim().toLowerCase();
-  if(!process.env.NOBREDNA_ADMIN_EMAIL||email!==process.env.NOBREDNA_ADMIN_EMAIL.trim().toLowerCase())back("email-access-error");
+  if(!isAllowedAdminEmail(email,process.env))back("email-access-error");
   const {error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:"https://nobredna.vercel.app/auth/callback"}});
-  if(error)back("email-access-error");
+  if(error)back(error.status===429?"email-rate-limit":"email-access-error");
   back("email-sent");
 }
 
@@ -34,7 +35,7 @@ export async function verifyEmailAccess(form:FormData){
   const client=await storeClient();
   if(!client)back("not-configured");
   const email=String(form.get("email")??"").trim().toLowerCase(),token=String(form.get("token")??"").trim();
-  if(email!==process.env.NOBREDNA_ADMIN_EMAIL?.trim().toLowerCase()||!/^\d{6}$/.test(token))back("email-access-error");
+  if(!isAllowedAdminEmail(email,process.env)||!/^\d{6}$/.test(token))back("email-access-error");
   const {error}=await client.auth.verifyOtp({email,token,type:"email"});
   if(error)back("email-access-error");
   redirect("/admin");
