@@ -29,10 +29,11 @@ export default async function CheckoutPage() {
             Sua próxima leitura, quase em casa.
           </h1>
 
-          <div className="mt-8 md:mt-14">
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink/70">Revise os livros, informe como podemos entrar em contato e envie sua consulta. Sem pagamento nesta etapa.</p>
+          <div className="mt-8 md:mt-10">
             <ConsultaCheckout />
           </div>
-          <p className="mt-8 text-center text-sm text-ink/65">Sua consulta é registrada diretamente pela Casa. Não é necessário enviar uma mensagem por outro aplicativo.</p>
+          <p className="mt-8 text-center text-sm text-ink/65">Atendimento direto pela editora, sem redirecionamentos para outros aplicativos.</p>
         </div>
       </div>
     </>

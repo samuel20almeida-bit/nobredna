@@ -1,9 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse,after } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { createHmac } from "node:crypto";
 import { isIP } from "node:net";
 import { dedicatedProductionDatabase } from "@/lib/store-guard";
 import { validateEditorialLead, leadProtocol } from "@/lib/editorial-leads";
+import { sendEditorialNotifications,editorialEmailConfigured } from "@/lib/editorial-notifications";
 
 export const runtime="nodejs";
 export async function POST(request:Request){
@@ -23,5 +24,6 @@ export async function POST(request:Request){
     if(result.error.message.includes("capture_rate_limited"))return NextResponse.json({erro:"Muitas solicitações. Aguarde alguns minutos e tente novamente."},{status:429});
     return NextResponse.json({erro:"Não foi possível registrar a solicitação. Tente novamente."},{status:503});
   }
+  if(!result.error&&editorialEmailConfigured())after(()=>sendEditorialNotifications(lead.id).catch(()=>console.warn("editorial_email_processing_failed")));
   return NextResponse.json({ok:true,protocolo:leadProtocol(lead.id)},{status:201,headers:{"Cache-Control":"no-store"}});
 }

@@ -1,0 +1,3 @@
+export default function Loading(){
+ return <div role="status" aria-label="Carregando painel" className="admin-login min-h-screen bg-[#f5f2ee] p-6 lg:p-12"><div className="mx-auto max-w-5xl"><p className="text-xs font-semibold uppercase tracking-widest text-khaki-ink">NobreDNA · Área da editora</p><div className="mt-5 h-9 w-64 max-w-full animate-pulse rounded-lg bg-almond-deep motion-reduce:animate-none"/><p className="mt-5 text-sm text-ink/70">Carregando sua área de gestão…</p><div className="mt-8 grid gap-4 sm:grid-cols-3">{[0,1,2].map(i=><div key={i} className="admin-card h-32 animate-pulse bg-almond motion-reduce:animate-none"/>)}</div></div></div>
+}

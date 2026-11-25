@@ -5,18 +5,15 @@ import { AdminHeading,AdminIcon } from "./admin-shell";
 import { LeadBadge } from "./admin-crm";
 
 export async function AdminOverview({client}:{client:SupabaseClient}){
- const [total,...rest]=await Promise.all([
-   client.from("editorial_leads").select("id",{head:true,count:"exact"}),
-   ...leadStatuses.map(status=>client.from("editorial_leads").select("id",{head:true,count:"exact"}).eq("status",status)),
-   ...leadSources.map(source=>client.from("editorial_leads").select("id",{head:true,count:"exact"}).eq("source",source)),
- ]);
- const [recent,bookCount,orderCount,lowStock]=await Promise.all([
+ const [stats,recent]=await Promise.all([
+   client.rpc("editorial_admin_overview"),
    client.from("editorial_leads").select("id,customer_name,source,status,created_at").order("created_at",{ascending:false}).limit(5),
-   client.from("store_products").select("id",{head:true,count:"exact"}),
-   client.from("store_orders").select("id",{head:true,count:"exact"}).eq("payment_status","paid").in("fulfillment_status",["preparing","shipped"]),
-   client.from("store_products").select("id",{head:true,count:"exact"}).eq("status","active").lte("stock",3),
  ]);
- const states=rest.slice(0,leadStatuses.length),sources=rest.slice(leadStatuses.length);
+ const data=stats.data??{};
+ const error=stats.error||!stats.data;
+ const countResult=(count:number|undefined)=>({error,count:count??0});
+ const total=countResult(data.total),states=leadStatuses.map(s=>countResult(data.states?.[s])),sources=leadSources.map(s=>countResult(data.sources?.[s]));
+ const bookCount=countResult(data.books),orderCount=countResult(data.orders),lowStock=countResult(data.lowStock);
  const active=states.slice(1,4);
  const value=(r:{error:unknown;count:number|null})=>r.error?"—":r.count??0;
  const cards=[

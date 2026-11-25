@@ -264,6 +264,10 @@
 .admin-secondary:hover { background: var(--color-almond); }
 .admin-shell nav { scrollbar-width: thin; scrollbar-color: #c5a46d transparent; }
 .admin-shell h1, .admin-shell h2 { overflow-wrap: anywhere; }
+.admin-shell button, .admin-shell summary, .admin-shell a, .admin-login button { touch-action: manipulation; }
+.admin-shell button:active:not(:disabled), .admin-shell .admin-nav-link:active { opacity: .75; }
+.admin-nav-link { transition: background-color .12s, color .12s; }
+.admin-nav-link:has([role="status"]) { background: #631a25; color: #fff; }
 
 /* Selo transparente, preservando o contorno orgânico da cera. */
 .brand-seal {
