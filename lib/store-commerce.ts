@@ -81,3 +81,10 @@ export async function releaseUnsubmittedOrder(orderId: string): Promise<boolean>
   if (result.error) throw new Error("Não foi possível cancelar a reserva.");
   return result.data === true;
 }
+
+/** Consulta apenas a situação do pedido, sem dados pessoais. */
+export async function getOrderPaymentStatus(reference: string) {
+  if (!/^NDNA-[0-9A-F]{32}$/.test(reference) || !process.env.SUPABASE_SECRET_KEY) return null;
+  const { data, error } = await commerceClient().from("store_orders").select("payment_status,payment_review").eq("reference", reference).maybeSingle();
+  return error ? null : data;
+}

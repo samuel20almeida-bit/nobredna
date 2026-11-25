@@ -27,3 +27,7 @@ O painel `/admin` está disponível após a conexão. Sem configuração, apenas
 - Integrar cotação de frete real, preferência Mercado Pago e confirmação verificada via webhook idempotente. Não confiar no retorno do navegador como confirmação de pagamento.
 - Após pagamento confirmado, preparar pedido, registrar rastreio e enviar notificações. Validar fluxos de falha, cancelamento e reembolso.
 - Validar políticas de privacidade, trocas e retenção de dados com a editora; realizar compra de teste antes de ativar a produção.
+
+## Banco dedicado provisionado
+
+O projeto NobreDNA está criado no Supabase. A migração `commerce.sql` foi aplicada após `setup.sql` e `checkout.sql`: prepara catálogo publicável e conciliação verificada de pagamentos. A loja pública permanece em consulta até integração e testes de produção. Não habilitar `ENABLE_LIVE_CHECKOUT` com a rota antiga.
