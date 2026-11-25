@@ -1,4 +1,4 @@
--- Run in the dedicated test database after editorial-leads.sql; no fixtures remain.
+-- Run in the dedicated test database after editorial-crm.sql; no fixtures remain.
 begin;
 insert into nobredna_private.capture_config(singleton,token_hash)
 values(true,encode(sha256(convert_to('fixture-capture-token','UTF8')),'hex'))
@@ -11,6 +11,8 @@ do $$ begin
  assert not has_table_privilege('anon','public.editorial_leads','SELECT');
  assert not has_column_privilege('anon','public.editorial_leads','status','INSERT');
  assert not has_column_privilege('authenticated','public.editorial_leads','email','UPDATE');
+ assert not has_column_privilege('anon','public.editorial_leads','internal_notes','UPDATE');
+ assert has_column_privilege('authenticated','public.editorial_leads','internal_notes','UPDATE');
 end $$;
 set local role anon;
 do $$ begin
@@ -52,6 +54,8 @@ do $$ begin
  assert (select count(*) from public.editorial_leads where customer_name='Teste de triagem')=1;
  update public.editorial_leads set status='contacted' where id='00000000-0000-4000-8000-000000000083';
  assert (select status from public.editorial_leads where id='00000000-0000-4000-8000-000000000083')='contacted';
+ update public.editorial_leads set status='proposal_sent',internal_notes='Fixture de acompanhamento' where id='00000000-0000-4000-8000-000000000083';
+ assert (select status='proposal_sent' and internal_notes='Fixture de acompanhamento' from public.editorial_leads where id='00000000-0000-4000-8000-000000000083');
 end $$;
 reset role;
 rollback;

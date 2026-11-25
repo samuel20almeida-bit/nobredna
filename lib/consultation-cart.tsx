@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { getObra } from "@/lib/catalogo-consulta";
 
 type Line = {slug:string;qty:number};
-type Cart = {lines:Line[];ready:boolean;count:number;add:(slug:string,qty?:number)=>void;setQty:(slug:string,qty:number)=>void};
+type Cart = {lines:Line[];ready:boolean;count:number;add:(slug:string,qty?:number)=>void;setQty:(slug:string,qty:number)=>void;clear:()=>void};
 const Context=createContext<Cart|null>(null);
 const key="nobredna:consulta-livros-v1";
 function parse(raw:unknown):Line[]{
@@ -19,6 +19,6 @@ export function ConsultationProvider({children}:{children:ReactNode}){
   useEffect(()=>{if(ready)try{localStorage.setItem(key,JSON.stringify(lines))}catch{}},[lines,ready]);
   const add=(slug:string,qty=1)=>{if(!getObra(slug))return;setLines(prev=>parse([...prev,{slug,qty}]))};
   const setQty=(slug:string,qty:number)=>setLines(prev=>prev.flatMap(line=>line.slug!==slug?[line]:qty<=0?[]:[{slug,qty:Math.min(12,Math.floor(qty))}]));
-  return <Context.Provider value={{lines,ready,count:lines.reduce((sum,line)=>sum+line.qty,0),add,setQty}}>{children}</Context.Provider>;
+  return <Context.Provider value={{lines,ready,count:lines.reduce((sum,line)=>sum+line.qty,0),add,setQty,clear:()=>setLines([])}}>{children}</Context.Provider>;
 }
 export function useConsultationCart(){const cart=useContext(Context);if(!cart)throw new Error("Consulta sem provider");return cart}

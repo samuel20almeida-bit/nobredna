@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { validateEditorialLead, journeyQuestions, leadProtocol } from "../lib/editorial-leads.ts";
+import { validateEditorialLead, journeyQuestions, leadProtocol, leadStatuses, leadStatusLabels } from "../lib/editorial-leads.ts";
 const base={requestId:"00000000-0000-4000-8000-000000000099",nome:"  Pessoa Teste  ",email:"TESTE@example.invalid",telefone:"",consentimento:true};
 test("Editorial lead stores normalized contact and canonical answers",()=>{
   const lead=validateEditorialLead({...base,source:"editorial",respostas:journeyQuestions().map(q=>q.opcoes[0])});
@@ -26,4 +26,8 @@ test("Missing consent/contact or invalid responses do not enter the database",()
   assert.equal(validateEditorialLead({...good,respostas:["invalid","invalid","invalid"]}),null);
   assert.equal(validateEditorialLead({...good,source:"livros",itens:[{slug:"fake",qty:1}]}),null);
   assert.equal(validateEditorialLead({...good,source:"livros",itens:[{slug:"ave-mulher",qty:13}]}),null);
+});
+test("CRM supports existing records and all editorial pipeline stages",()=>{
+  assert.deepEqual(leadStatuses,["new","contacted","proposal_sent","negotiating","closed","lost"]);
+  assert.ok(leadStatuses.every(s=>typeof leadStatusLabels[s]==="string"));
 });

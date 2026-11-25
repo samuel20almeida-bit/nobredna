@@ -24,7 +24,7 @@ export function Hero() {
             coautorias e projetos editoriais — da primeira conversa à publicação.
           </p>
           <div className="mt-5 flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 md:mt-7 md:gap-4">
-            <Link href="/publique" className="inline-flex min-h-14 w-full items-center justify-center bg-vinho px-5 py-4 text-center font-serif text-[1.2rem] text-almond transition-colors hover:bg-vinho-soft rounded-sm shadow-lift sm:w-auto sm:px-7">
+            <Link href="/publique" className="inline-flex min-h-14 w-full items-center justify-center bg-vinho px-5 py-4 text-center font-serif text-[1.2rem] text-almond transition-colors hover:bg-vinho-soft rounded-xl shadow-lift sm:w-auto sm:px-7">
               Quero publicar minha história
             </Link>
             <Link href="/livros" className="inline-flex min-h-11 items-center font-serif text-[1.2rem] italic text-vinho underline decoration-khaki-ink/45 underline-offset-4 hover:text-ink">

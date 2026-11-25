@@ -4,11 +4,8 @@ import { CartProvider } from "@/lib/cart";
 import { ConsultationProvider } from "@/lib/consultation-cart";
 import { StoreCartProvider } from "@/lib/store-cart";
 import { liveStoreEnabled } from "@/lib/store-public";
-import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { SacolaDrawer } from "@/components/sacola-drawer";
-import { Abertura } from "@/components/abertura";
-import { EditorialMotion } from "@/components/editorial-motion";
+import { SiteChrome } from "@/components/site-chrome";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -54,16 +51,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased">
-        <Abertura />
         <CartProvider>
           <ConsultationProvider>
           <StoreCartProvider enabled={liveStoreEnabled()}>
-          <SiteNav />
-          <EditorialMotion />
-          <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[70] focus:bg-almond focus:px-5 focus:py-3 focus:text-ink">Ir para o conteúdo</a>
-          <main id="conteudo">{children}</main>
-          <SiteFooter />
-          <SacolaDrawer />
+          <SiteChrome footer={<SiteFooter/>}>{children}</SiteChrome>
           </StoreCartProvider>
           </ConsultationProvider>
         </CartProvider>

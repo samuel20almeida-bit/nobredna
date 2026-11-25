@@ -1,12 +1,19 @@
 # Fundação comercial — NobreDNA
 
 1. Criar um projeto Supabase exclusivo da editora na organização confirmada pelo responsável.
-2. Revisar e testar `setup.sql`, `checkout.sql`, `commerce.sql`, `fulfillment.sql` e `maintenance.sql`, nessa ordem, antes de aplicar ao projeto dedicado. Não executar em projetos de outras marcas.
+2. Revisar e testar `setup.sql`, `checkout.sql`, `commerce.sql`, `fulfillment.sql`, `maintenance.sql`, `editorial-leads.sql` e `editorial-crm.sql`, nessa ordem, antes de aplicar ao projeto dedicado. Não executar em projetos de outras marcas.
 3. Configurar `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` na Vercel. Não usar chave secreta ou `service_role` no navegador.
 4. Desabilitar cadastros públicos no Auth, convidar a administradora com o e-mail confirmado e conceder acesso a seu UUID na tabela `store_admins` usando o painel administrativo do Supabase. Nunca cadastrar uma senha no código.
 5. Testar login autorizado, usuário sem permissão, logout, cadastro, edição e restrições do banco. Conferir os avisos de segurança do Supabase. Não liberar compras até concluir essa validação.
 
 O painel `/admin` está disponível após a conexão. Sem configuração, apenas informa que está em preparação. O catálogo é interno; os pedidos são somente de leitura. Não existe cadastro público, acesso anônimo aos dados ou alteração manual de pagamentos.
+
+## Operação editorial
+
+- O painel possui visão geral, interessados, coautorias, catálogo, pedidos/entregas e configurações. Os indicadores são derivados dos registros reais.
+- A extensão CRM mantém as solicitações antigas e amplia o funil com proposta, negociação e encerramento sem avanço; anotações internas só podem ser acessadas por administradores autorizados.
+- Em Configurações, o administrador autenticado pode estabelecer sua própria senha; o login também mantém a alternativa por link/código. Para a entrega definitiva, configurar SMTP dedicado e testar recuperação de acesso.
+- Os formulários públicos registram pedidos de contato e fornecem protocolo, sem redirecionar para WhatsApp. A consulta de livros não efetua pagamento.
 
 ## Dados necessários para a primeira carga
 

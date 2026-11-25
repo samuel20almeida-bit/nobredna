@@ -220,6 +220,7 @@
 
 @media (max-width: 767px) {
   body { padding-bottom: calc(94px + env(safe-area-inset-bottom, 0px)); }
+  body:has(.admin-shell), body:has(.admin-login) { padding-bottom: 0; }
   html { scroll-padding-top: 76px; scroll-padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
   .checkout-dock { bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
   body:has(.checkout-dock) { padding-bottom: calc(175px + env(safe-area-inset-bottom, 0px)); }
@@ -231,6 +232,38 @@
   .abertura-marca .brand-seal { animation-duration: .32s; animation-delay: .04s; }
   .abertura-reflexo { animation-duration: .42s; animation-delay: .12s; }
 }
+
+/* O escritório é uma aplicação independente; mantém as cores da Casa,
+   mas prioriza leitura, contraste e operação diária. */
+.admin-card {
+  background: #fffdf9;
+  border: 1px solid rgb(36 16 21 / .11);
+  border-radius: 18px;
+  box-shadow: 0 2px 8px -5px rgb(36 16 21 / .12);
+}
+.admin-input {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgb(36 16 21 / .2);
+  border-radius: 9px;
+  background: white;
+  padding-inline: 12px;
+  font-size: .875rem;
+  color: var(--color-ink);
+}
+.admin-input:focus { border-color: var(--color-vinho); outline: 2px solid rgb(99 26 37 / .15); outline-offset: 1px; }
+.admin-input[type="search"] { padding-left: 38px; }
+.admin-primary, .admin-secondary {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 10px 17px; border-radius: 9px;
+  font-size: .875rem; font-weight: 600; transition: background-color .2s, border-color .2s;
+}
+.admin-primary { background: var(--color-vinho); color: white; }
+.admin-primary:hover { background: var(--color-vinho-soft); }
+.admin-secondary { background: white; color: var(--color-vinho); border: 1px solid rgb(99 26 37 / .25); }
+.admin-secondary:hover { background: var(--color-almond); }
+.admin-shell nav { scrollbar-width: thin; scrollbar-color: #c5a46d transparent; }
+.admin-shell h1, .admin-shell h2 { overflow-wrap: anywhere; }
 
 /* Selo transparente, preservando o contorno orgânico da cera. */
 .brand-seal {

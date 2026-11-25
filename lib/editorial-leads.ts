@@ -12,9 +12,9 @@ export function journeyQuestions(coautoria=false) {
 export const leadSources = ["editorial","coautoria","livros"] as const;
 export type LeadSource = typeof leadSources[number];
 export const leadSourceLabels: Record<LeadSource,string> = {editorial:"Projeto editorial",coautoria:"Coautoria",livros:"Consulta de livros"};
-export const leadStatuses = ["new","contacted","closed"] as const;
+export const leadStatuses = ["new","contacted","proposal_sent","negotiating","closed","lost"] as const;
 export type LeadStatus = typeof leadStatuses[number];
-export const leadStatusLabels: Record<LeadStatus,string> = {new:"Novo",contacted:"Em atendimento",closed:"Concluído"};
+export const leadStatusLabels: Record<LeadStatus,string> = {new:"Novo",contacted:"Em atendimento",proposal_sent:"Proposta enviada",negotiating:"Em negociação",closed:"Concluído",lost:"Encerrado sem avanço"};
 export const leadProtocol = (id:string) => "ND-"+id.replace(/-/g,"").toUpperCase();
 const uuidPattern=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const text=(value:unknown,max:number)=>typeof value==="string"&&value.trim().length<=max?value.trim():null;

@@ -116,10 +116,10 @@ export function SiteNav() {
                   invertida
                     ? ativo
                       ? "text-almond hover:text-almond"
-                      : "text-almond/60 hover:text-almond"
+                      : "text-almond/85 hover:text-almond"
                     : ativo
                       ? "text-ink hover:text-ink"
-                      : "text-ink/60 hover:text-ink"
+                      : "text-ink/75 hover:text-ink"
                 }`}
               >
                 {link.label}
@@ -135,7 +135,7 @@ export function SiteNav() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-5">
-          <Link href="/publique" className={`hidden min-h-11 items-center px-4 text-sm font-medium lg:inline-flex ${invertida ? "bg-almond text-vinho" : "bg-vinho text-almond"}`}>Quero publicar</Link>
+          <Link href="/publique" className={`hidden min-h-11 items-center rounded-xl px-4 text-sm font-medium transition-colors lg:inline-flex ${invertida ? "bg-almond text-vinho hover:bg-almond-deep" : "bg-vinho text-almond hover:bg-vinho-soft"}`}>Quero publicar</Link>
           <Link
             href="/checkout"
             aria-label={`Sua sacola, ${cartCount} exemplares`}

@@ -8,7 +8,10 @@ import { releaseExpiredReservations } from "@/lib/store-commerce";
 import { leadStatuses, type LeadStatus } from "@/lib/editorial-leads";
 import { isAllowedAdminEmail } from "@/lib/admin-email";
 
-function back(message: string): never { redirect(`/admin?mensagem=${encodeURIComponent(message)}`); }
+function back(message: string, tab?:string): never {
+  const page=tab??(["invalid-product","incomplete-product","duplicate-product","save-error","stale-product","saved"].includes(message)?"livros":["shipping-error","invalid-shipping","shipping-saved","notification-attempt"].includes(message)?"pedidos":message.startsWith("maintenance-")?"configuracoes":"");
+  redirect(`/admin?mensagem=${encodeURIComponent(message)}${page?"&aba="+page:""}`);
+}
 
 export async function signIn(form: FormData) {
   const client = await storeClient();
@@ -44,11 +47,30 @@ export async function verifyEmailAccess(form:FormData){
 export async function updateEditorialLead(form:FormData){
   const access=await getStoreAccess();
   if(access.state!=="admin")back("denied");
-  const id=field(form,"id",36),status=field(form,"status",20);
-  if(!/^[0-9a-f-]{36}$/i.test(id)||!leadStatuses.includes(status as LeadStatus))back("lead-error");
-  const result=await access.client.from("editorial_leads").update({status,updated_at:new Date().toISOString()}).eq("id",id).select("id").maybeSingle();
-  if(result.error||!result.data)back("lead-error");
-  revalidatePath("/admin");redirect("/admin?mensagem=lead-saved#captacoes");
+  const id=field(form,"id",36),status=field(form,"status",20),version=field(form,"version",80);
+  const tab=form.get("aba")==="coautorias"?"coautorias":"interessados";
+  const notes=form.get("notes");
+  if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)||!leadStatuses.includes(status as LeadStatus)||!Number.isFinite(Date.parse(version))||typeof notes!=="string"||notes.length>4000)back("lead-error",tab);
+  const result=await access.client.from("editorial_leads").update({status,internal_notes:notes.trim(),updated_at:new Date().toISOString()}).eq("id",id).eq("updated_at",version).select("id").maybeSingle();
+  if(result.error||!result.data)back(result.error?"lead-error":"stale-lead",tab);
+  revalidatePath("/admin");
+  const params=new URLSearchParams({aba:tab,mensagem:"lead-saved"});
+  const source=field(form,"origem",20),filter=field(form,"filtro_status",20),search=field(form,"busca",80),page=field(form,"pagina",8);
+  if(source)params.set("origem",source);
+  if(filter)params.set("status",filter);
+  if(search)params.set("busca",search);
+  if(/^\d+$/.test(page))params.set("pagina",page);
+  redirect("/admin?"+params.toString());
+}
+
+export async function updateAdminPassword(form:FormData){
+  const access=await getStoreAccess();
+  if(access.state!=="admin")back("denied");
+  const password=form.get("password"),confirmation=form.get("confirmation");
+  if(typeof password!=="string"||password.length<12||password.length>128||password!==confirmation)back("password-invalid","configuracoes");
+  const {error}=await access.client.auth.updateUser({password});
+  if(error)back("password-error","configuracoes");
+  back("password-saved","configuracoes");
 }
 
 export async function signOut() {
@@ -131,5 +153,5 @@ export async function reviewExpiredReservations() {
   let result: Awaited<ReturnType<typeof releaseExpiredReservations>>;
   try { result = await releaseExpiredReservations(); } catch { back("maintenance-error"); }
   revalidatePath("/admin");
-  redirect(`/admin?mensagem=maintenance-saved&liberadas=${result!.released}&revisao=${result!.awaiting_reconciliation}`);
+  redirect(`/admin?aba=configuracoes&mensagem=maintenance-saved&liberadas=${result!.released}&revisao=${result!.awaiting_reconciliation}`);
 }

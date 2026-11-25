@@ -32,7 +32,7 @@ export default async function CheckoutPage() {
           <div className="mt-8 md:mt-14">
             <ConsultaCheckout />
           </div>
-          <p className="mt-8 text-center text-sm text-ink/65">A loja online está em validação. <Link href="/checkout/demonstracao" className="text-vinho underline">Conhecer a demonstração de pagamento</Link>.</p>
+          <p className="mt-8 text-center text-sm text-ink/65">Sua consulta é registrada diretamente pela Casa. Não é necessário enviar uma mensagem por outro aplicativo.</p>
         </div>
       </div>
     </>
