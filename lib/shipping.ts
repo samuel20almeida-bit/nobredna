@@ -160,6 +160,10 @@ export async function quoteShipping(
   const baseUrl = (
     process.env.MELHOR_ENVIO_BASE_URL ?? "https://sandbox.melhorenvio.com.br"
   ).replace(/\/$/, "");
+  if (!["https://melhorenvio.com.br", "https://sandbox.melhorenvio.com.br"].includes(baseUrl) ||
+      !isValidCEP(origin) || !isValidCEP(cep)) {
+    throw new Error("Configuração de frete inválida");
+  }
 
   const response = await fetch(`${baseUrl}/api/v2/me/shipment/calculate`, {
     method: "POST",
@@ -182,6 +186,7 @@ export async function quoteShipping(
       },
     }),
     cache: "no-store",
+    signal: AbortSignal.timeout(12000),
   });
 
   if (!response.ok) {
@@ -206,7 +211,9 @@ export async function quoteShipping(
         days: days + HANDLING_DAYS,
       };
     })
-    .filter((option) => Number.isFinite(option.priceCents) && option.priceCents > 0)
+    .filter((option) => Number.isSafeInteger(option.priceCents) && option.priceCents > 0 &&
+      Number.isInteger(option.days) && option.days > 0 && option.days <= 365 &&
+      /^[0-9]+$/.test(option.id) && typeof option.service === "string" && option.service.length > 0)
     .sort((a, b) => a.priceCents - b.priceCents);
 
   return { options, simulated: false };

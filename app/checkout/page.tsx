@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ConsultaCheckout } from "@/components/consulta-checkout";
 import { HelixRail } from "@/components/helix-rail";
+import { liveStoreEnabled, publicCatalog } from "@/lib/store-public";
+import { StoreCheckout } from "@/components/store-checkout";
 
 export const metadata: Metadata = {
   title: "Sua sacola",
@@ -9,7 +11,11 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
+  if(liveStoreEnabled()){
+    const books=await publicCatalog().catch(()=>null);
+    return <section className="relative bg-almond pt-24 pb-20 md:pt-32"><div className="mx-auto max-w-[1180px] px-5 lg:px-10"><Link href="/livros#catalogo" className="inline-flex min-h-11 items-center text-vinho underline">Voltar à livraria</Link><p className="label mt-4">Sua sacola · compra online</p><h1 className="mt-3 text-4xl text-vinho md:text-5xl">Sua próxima leitura, quase em casa.</h1><div className="mt-8">{books?<StoreCheckout books={books}/>:<p role="alert" className="editorial-card p-6">Não foi possível carregar a livraria. Atualize a página em instantes.</p>}</div></div></section>;
+  }
   return (
     <>
       {/* mesmo fio, em volume mínimo: o checkout não é lugar de ornamento */}

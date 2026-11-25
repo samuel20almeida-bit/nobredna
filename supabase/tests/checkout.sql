@@ -1,4 +1,4 @@
--- Execute apenas em um banco de teste após setup.sql e checkout.sql.
+-- Execute apenas em um banco de teste após setup.sql, checkout.sql e commerce.sql.
 -- Os dados de teste são revertidos ao final.
 begin;
 
@@ -23,9 +23,9 @@ declare
   repeat_result jsonb;
   v_order_id uuid;
 begin
-  insert into public.store_products(id,slug,title,author,description,cover_url,price_cents,stock,weight_g,width_mm,height_mm,length_mm,status)
-    values (book,'teste-' || book::text,'Livro de teste','Autoria teste','Sinopse de teste','/capa.png',4990,3,300,120,20,180,'active'),
-      (book_b,'teste-' || book_b::text,'Segundo teste','Autoria teste','Sinopse de teste','/capa.png',2990,0,300,120,20,180,'active');
+  insert into public.store_products(id,slug,title,author,description,cover_url,price_cents,stock,weight_g,width_mm,height_mm,length_mm,status,published)
+    values (book,'teste-' || book::text,'Livro de teste','Autoria teste','Sinopse de teste','/capa.png',4990,3,300,120,20,180,'active',true),
+      (book_b,'teste-' || book_b::text,'Segundo teste','Autoria teste','Sinopse de teste','/capa.png',2990,0,300,120,20,180,'active',true);
   items := jsonb_build_array(jsonb_build_object('product_id',book,'quantity',2,'unit_price_cents',4990));
 
   result := public.store_reserve_order(checkout,'Cliente fictício','teste@example.invalid',addr,'Frete de teste',1500,items);

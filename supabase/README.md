@@ -1,7 +1,7 @@
 # Fundação comercial — NobreDNA
 
 1. Criar um projeto Supabase exclusivo da editora na organização confirmada pelo responsável.
-2. Revisar e testar `setup.sql` e depois `checkout.sql` em ambiente de teste antes de aplicar ao projeto dedicado. Não executar em projetos de outras marcas.
+2. Revisar e testar `setup.sql`, `checkout.sql`, `commerce.sql`, `fulfillment.sql` e `maintenance.sql`, nessa ordem, antes de aplicar ao projeto dedicado. Não executar em projetos de outras marcas.
 3. Configurar `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` na Vercel. Não usar chave secreta ou `service_role` no navegador.
 4. Desabilitar cadastros públicos no Auth, convidar a administradora com o e-mail confirmado e conceder acesso a seu UUID na tabela `store_admins` usando o painel administrativo do Supabase. Nunca cadastrar uma senha no código.
 5. Testar login autorizado, usuário sem permissão, logout, cadastro, edição e restrições do banco. Conferir os avisos de segurança do Supabase. Não liberar compras até concluir essa validação.
@@ -20,14 +20,22 @@ O painel `/admin` está disponível após a conexão. Sem configuração, apenas
 
 `checkout.sql` prepara funções transacionais exclusivas do backend para reservar o estoque, registrar itens e preços, controlar tentativas repetidas, e devolver estoque em reservas que nunca foram encaminhadas ao provedor. `lib/store-commerce.ts` prepara a leitura de preços e pesos diretamente do banco. Não conecta ainda à sacola pública nem abre pagamentos. Qualquer liberação de estoque após o início de um pagamento deverá ser conciliada com o provedor; expiração local não implica que o pagamento foi cancelado. A limpeza agendada de reservas expiradas ainda deverá ser configurada.
 
+## Integração comercial
+
+`commerce.sql` restringe o catálogo público a títulos ativos expressamente publicados pela administradora e adiciona conciliação de pagamento exclusiva do backend. A rota de checkout recota frete, reserva estoque, envia o valor verificado ao Mercado Pago; o webhook valida assinatura e consulta o estado na API do provedor. O retorno não confia no status da URL. Nenhuma cobrança fica habilitada sem a configuração de produção e `ENABLE_LIVE_CHECKOUT=true`.
+
+Antes da ativação: configurar chave secreta do Supabase e tokens da editora nos segredos do ambiente de produção; conta Mercado Pago e webhook (evento `payment`), Melhor Envio, endereço e CEP de origem reais. Testar com ambiente de pagamento e banco isolados antes de mudar o flag. O checkout de produção valida o modo `production` e nunca aceita estimativa de frete.
+
 ## Próximas etapas, ainda não implementadas
 
-- Expor uma projeção pública somente de livros ativos; integrar sacola com dados reais.
-- Ligar o checkout à reserva transacional e à cotação de frete real; implementar limpeza de reservas e conciliação com o provedor nas falhas/expirações.
-- Integrar cotação de frete real, preferência Mercado Pago e confirmação verificada via webhook idempotente. Não confiar no retorno do navegador como confirmação de pagamento.
-- Após pagamento confirmado, preparar pedido, registrar rastreio e enviar notificações. Validar fluxos de falha, cancelamento e reembolso.
+- Validar a integração com as credenciais reais/sandbox e catálogo oficial. A limitação de requisições exige `STORE_RATE_LIMIT_SECRET`; só ativar após validação em Vercel.
+- A manutenção do painel libera apenas reservas expiradas sem tentativa de pagamento (via `maintenance.sql`). As reservas encaminhadas ao provedor precisam ser conciliadas antes de liberar estoque. Configurar rotina agendada, alertas e procedimento de conciliação antes de ativar vendas.
+- A expedição já tem registro de rastreio e fila de notificações em `fulfillment.sql`. Configurar remetente/domínio verificado e chave restrita de envio no Resend; validar confirmação, rastreio e recuperação de falhas. A fila permite tentativa manual pelo painel enquanto não houver rotina agendada.
 - Validar políticas de privacidade, trocas e retenção de dados com a editora; realizar compra de teste antes de ativar a produção.
 
-## Banco dedicado provisionado
+## Validação técnica
 
-O projeto NobreDNA está criado no Supabase. A migração `commerce.sql` foi aplicada após `setup.sql` e `checkout.sql`: prepara catálogo publicável e conciliação verificada de pagamentos. A loja pública permanece em consulta até integração e testes de produção. Não habilitar `ENABLE_LIVE_CHECKOUT` com a rota antiga.
+- `npm test` valida bloqueios de produção, dados de entrega, preço e resposta simulada do provedor; `npm run build` verifica compilação e tipagem.
+- Os SQLs de teste em `supabase/tests` usam transações e terminam em rollback. Executar somente em banco dedicado de teste ou vazio e sem vendas habilitadas.
+- Prévias Vercel não permitem checkout real, processamento de pagamentos, envios de e-mail nem acesso ao banco comercial mesmo com valores herdados do ambiente. Não adicionar credenciais comerciais reais em Preview.
+- Antes de publicar a versão comercial, aplicar as migrações ainda pendentes, configurar um acesso backend exclusivo para a editora, validar RLS e confirmar a configuração de produção e os dados oficiais. Só então realizar o teste de ponta a ponta e avaliar mudar `ENABLE_LIVE_CHECKOUT`.

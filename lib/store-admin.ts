@@ -1,8 +1,11 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { dedicatedProductionDatabase } from "./store-guard";
 
 export function storeConfig() {
+  // A preview never uses a live database, even if Vercel inherits credentials.
+  if (!dedicatedProductionDatabase(process.env)) return null;
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   return url && key ? { url, key } : null;

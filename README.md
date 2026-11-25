@@ -13,23 +13,37 @@ cp .env.example .env.local   # opcional — o site roda sem credencial
 npm run dev
 ```
 
-Sem `MELHOR_ENVIO_TOKEN` o checkout usa uma tabela local de estimativa e
-marca a resposta como simulada na interface. Sem `MERCADOPAGO_ACCESS_TOKEN`
-o pedido é montado e conferido no servidor, mas nenhuma cobrança acontece —
-a tela diz isso explicitamente em vez de fingir uma aprovação.
+O ambiente padrão é consulta: a livraria e a sacola encaminham o cliente
+ao WhatsApp. A demonstração em `/checkout/demonstracao` utiliza dados ilustrativos;
+não envia pedidos, não cobra e não depende das credenciais comerciais.
+Os endpoints comerciais rejeitam compras fora da Vercel de produção e enquanto
+`ENABLE_LIVE_CHECKOUT` não estiver ativo e configurado integralmente.
+
+```bash
+npm test
+npm run build
+```
 
 ## Variáveis de ambiente
 
 | Variável | Para quê |
 | --- | --- |
 | `MERCADOPAGO_ACCESS_TOKEN` | Criar a preferência de pagamento (server-side). |
+| `MERCADOPAGO_WEBHOOK_SECRET` | Verificar assinatura da notificação no servidor. |
+| `MERCADOPAGO_MODE` | Deve ser `production` somente depois do teste real isolado. |
 | `MELHOR_ENVIO_TOKEN` | Cotar frete em `/api/v2/me/shipment/calculate`. |
 | `MELHOR_ENVIO_BASE_URL` | `https://sandbox.melhorenvio.com.br` ou produção. |
 | `MELHOR_ENVIO_USER_AGENT` | Exigido pela API — nome e e-mail de contato. |
 | `ORIGEM_CEP` | CEP de expedição da editora. |
 | `NEXT_PUBLIC_SITE_URL` | Base das `back_urls` do Mercado Pago. |
+| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Projeto exclusivo da Casa e acesso sujeito a RLS. |
+| `SUPABASE_SECRET_KEY` | Acesso de backend, nunca no navegador; precisa ser limitado ao projeto dedicado. |
+| `STORE_RATE_LIMIT_SECRET` | Segredo para pseudonimizar buckets de limitação de requisições. |
+| `RESEND_API_KEY`, `STORE_EMAIL_FROM`, `STORE_EMAIL_REPLY_TO` | E-mail transacional com remetente verificado. |
+| `ENABLE_LIVE_CHECKOUT` | Padrão `false`: só modificar após aprovação e checklist. |
 
-Em produção, `checkoutUrl` usa `init_point`; fora dela, `sandbox_init_point`.
+O modo de testes locais não faz chamadas externas. Credenciais de sandbox
+devem ser usadas num ambiente isolado, nunca compartilhado com o banco real.
 
 ## Desenho do sistema visual
 
@@ -71,15 +85,21 @@ Nenhuma é aplicada duas vezes em papéis diferentes.
   peso e dimensões vêm do catálogo no servidor; o navegador só informa o que
   quer comprar.
 - `POST /api/checkout/preferencia` — revalida a sacola, **recota o frete no
-  servidor** (o valor escolhido no cliente nunca é aceito como verdade) e cria
-  a preferência do Mercado Pago com `X-Idempotency-Key`.
+  servidor**, reserva estoque em transação e cria a preferência do Mercado Pago.
+- `POST /api/checkout/webhook` — verifica a assinatura e consulta o pagamento
+  na API oficial, reconcilia valor, moeda e referência sem confiar no retorno do
+  navegador. O banco mantém o histórico de eventos e evita processamento duplicado.
+- `/admin` — catálogo, publicação, estoque, pedidos, expedição e fila de e-mails.
 - `POST /api/carta` e `POST /api/proposta` — validam e registram; o ponto de
   integração com provedor de e-mail/CRM está marcado no código.
 
 ## O que ainda falta para produção
 
-- Webhook do Mercado Pago (`/api/checkout/webhook`) para confirmar pagamento
-  de forma assíncrona — hoje o retorno depende das `back_urls`.
-- Persistência de pedidos (nenhum banco está conectado).
-- Compra da etiqueta no Melhor Envio após a aprovação do pagamento.
-- Provedor de e-mail para a carta mensal e para as propostas de manuscrito.
+- Aplicar migrações pendentes no banco exclusivo e configurar a conexão.
+- Contas comerciais, catálogo oficial, administradora, endereço de origem e políticas.
+- Testar a API de frete, pagamentos e envios em ambiente isolado com as credenciais reais de teste.
+- Programar conciliação de reservas pendentes, rotina de e-mails e compra de etiquetas no Melhor Envio (a expedição e o rastreio manual estão preparados).
+- Fazer compra piloto supervisionada antes de abrir o checkout ao público.
+- Provedor de e-mail para a carta mensal e para as propostas de manuscrito (fora da etapa de checkout).
+
+Consulte [o checklist comercial](docs/checkout-readiness.md) e [o guia de banco](supabase/README.md).

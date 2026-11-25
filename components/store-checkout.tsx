@@ -1,0 +1,46 @@
+"use client";
+import {useState,useRef} from "react";
+import Link from "next/link";
+import {useStoreCart} from "@/lib/store-cart";
+import {formatBRL,formatCEP,onlyDigits} from "@/lib/format";
+import type {StoreBook} from "@/lib/store-types";
+import type {ShippingOption} from "@/lib/shipping";
+const input="mt-1 w-full min-h-12 rounded-xl border border-ink/20 bg-white px-3 py-2";
+const panel="editorial-card p-5 sm:p-7";
+type Buyer={nome:string;email:string;telefone:string;cep:string;logradouro:string;numero:string;complemento:string;bairro:string;cidade:string;uf:string};
+const empty:Buyer={nome:"",email:"",telefone:"",cep:"",logradouro:"",numero:"",complemento:"",bairro:"",cidade:"",uf:""};
+const fields:{key:keyof Buyer;label:string;type?:string;auto?:string;optional?:boolean}[]=[{key:"nome",label:"Nome completo",auto:"name"},{key:"email",label:"E-mail",type:"email",auto:"email"},{key:"telefone",label:"Telefone",type:"tel",auto:"tel"},{key:"cep",label:"CEP",auto:"postal-code"},{key:"logradouro",label:"Endereço",auto:"address-line1"},{key:"numero",label:"Número"},{key:"complemento",label:"Complemento",optional:true},{key:"bairro",label:"Bairro"},{key:"cidade",label:"Cidade",auto:"address-level2"},{key:"uf",label:"UF",auto:"address-level1"}];
+export function StoreCheckout({books}:{books:StoreBook[]}){
+ const cart=useStoreCart(),[buyer,setBuyer]=useState<Buyer>(empty),[quote,setQuote]=useState<{key:string;options:ShippingOption[]}|null>(null),[selected,setSelected]=useState(""),[busy,setBusy]=useState<"quote"|"payment"|null>(null),[error,setError]=useState("");
+ const attempt=useRef<{fingerprint:string;id:string}|null>(null);
+ const items=cart.lines.map(l=>({line:l,book:books.find(b=>b.slug===l.slug)}));
+ const invalid=items.some(i=>!i.book||i.line.qty>i.book.stock);
+ const subtotal=items.reduce((sum,{line,book})=>sum+(book?.price_cents??0)*line.qty,0);
+ const quoteKey=JSON.stringify([onlyDigits(buyer.cep),cart.lines]);
+ const shipping=quote?.key===quoteKey?quote.options.find(o=>o.id===selected):undefined;
+ async function calculate(){
+  const cep=onlyDigits(buyer.cep);if(cep.length!==8||invalid||!items.length)return;setBusy("quote");setError("");setQuote(null);setSelected("");
+  try{const res=await fetch("/api/frete/cotacao",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({cep,itens:cart.lines})});const data=await res.json();if(!res.ok||data.simulated||!data.options?.length)throw Error(data.erro??"Não foi possível confirmar o frete.");setQuote({key:quoteKey,options:data.options});setSelected(data.options[0].id)}catch(e){setError(e instanceof Error?e.message:"Não foi possível cotar o frete.")}finally{setBusy(null)}
+ }
+ async function pay(event:React.FormEvent<HTMLFormElement>){
+  event.preventDefault();if(!shipping||invalid||busy)return;setBusy("payment");setError("");
+  const payload={itens:cart.lines,comprador:buyer,freteId:shipping.id,totalCents:subtotal+shipping.priceCents};
+  // Persist only a digest and random attempt ID, never delivery data. A refresh
+  // with the same form does not silently create another charge.
+  try{
+   const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(JSON.stringify(payload)));
+   const fingerprint=Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("");
+   try{const remembered=JSON.parse(sessionStorage.getItem("nobredna:checkout-key")??"null");if(remembered?.fingerprint===fingerprint&&typeof remembered.id==="string")attempt.current=remembered}catch{}
+   if(!attempt.current||attempt.current.fingerprint!==fingerprint)attempt.current={fingerprint,id:crypto.randomUUID()};
+   try{sessionStorage.setItem("nobredna:checkout-key",JSON.stringify(attempt.current))}catch{}
+   const res=await fetch("/api/checkout/preferencia",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...payload,checkoutKey:attempt.current.id})});const data=await res.json();if(!res.ok||!data.checkoutUrl)throw Error(data.erro??"Não foi possível abrir o pagamento.");try{sessionStorage.setItem("nobredna:checkout-attempt",JSON.stringify({reference:data.referencia,items:cart.lines}))}catch{}window.location.assign(data.checkoutUrl)
+  }catch(e){setError(e instanceof Error?e.message:"Não foi possível abrir o pagamento.")}finally{setBusy(null)}
+ }
+ if(!cart.ready)return <p className="py-12" role="status">Carregando sua sacola…</p>;
+ if(!items.length)return <div className={`${panel} text-center`}><h2 className="text-3xl text-vinho">Sua sacola está vazia.</h2><Link href="/livros#catalogo" className="mt-5 inline-flex min-h-12 items-center rounded-xl bg-vinho px-5 text-almond">Escolher livros</Link></div>;
+ return <form onSubmit={pay} className="grid gap-6 lg:grid-cols-[1.25fr_.75fr] lg:items-start">
+ <div className="space-y-6"><section className={panel}><h2 className="text-3xl text-vinho">Sua seleção</h2><ul className="mt-4 divide-y divide-ink/10">{items.map(({line,book})=><li key={line.slug} className="flex gap-4 py-4">{book&&<img src={book.cover_url} alt={`Capa de ${book.title}`} referrerPolicy="no-referrer" className="h-24 w-16 shrink-0 object-contain"/>}<div className="min-w-0 flex-1"><p className="font-medium text-vinho">{book?.title??"Título não disponível"}</p>{book&&<p className="mt-1 text-sm text-ink/70">{book.author}</p>}<div className="mt-3 flex flex-wrap items-center gap-3"><button type="button" aria-label="Diminuir quantidade" disabled={!!busy} onClick={()=>cart.setQty(line.slug,line.qty-1,book?.stock??0)} className="size-11 rounded-lg border border-vinho/20">−</button><span>{line.qty}</span><button type="button" aria-label="Aumentar quantidade" disabled={!!busy||!book||line.qty>=book.stock||cart.count>=30} onClick={()=>cart.setQty(line.slug,line.qty+1,book?.stock??0)} className="size-11 rounded-lg border border-vinho/20 disabled:opacity-40">+</button><button type="button" disabled={!!busy} onClick={()=>cart.setQty(line.slug,0,0)} className="min-h-11 text-sm underline text-vinho">Remover</button></div>{(!book||line.qty>book.stock)&&<p className="mt-2 text-sm text-vinho">Revise a quantidade ou remova o item indisponível.</p>}</div>{book&&<p className="font-medium text-vinho">{formatBRL(book.price_cents*line.qty)}</p>}</li>)}</ul></section>
+ <section className={panel}><h2 className="text-3xl text-vinho">Dados de entrega</h2><p className="mt-2 text-sm text-ink/70">Usamos estes dados para separar e enviar seu pedido. Os dados de pagamento serão informados no Mercado Pago.</p><fieldset disabled={!!busy} className="mt-5 grid gap-4 sm:grid-cols-2">{fields.map(f=><label key={f.key} className={`text-sm font-medium ${f.key==="logradouro"?"sm:col-span-2":""}`}>{f.label}{f.optional?" (opcional)":""}<input className={input} type={f.type??"text"} autoComplete={f.auto} required={!f.optional} maxLength={f.key==="uf"?2:f.key==="cep"?9:160} inputMode={f.key==="cep"?"numeric":undefined} value={f.key==="cep"?formatCEP(buyer.cep):buyer[f.key]} onChange={e=>setBuyer(b=>({...b,[f.key]:f.key==="cep"?onlyDigits(e.target.value).slice(0,8):f.key==="uf"?e.target.value.toUpperCase():e.target.value}))}/></label>)}</fieldset><button type="button" disabled={!!busy||invalid||onlyDigits(buyer.cep).length!==8} onClick={calculate} className="mt-5 min-h-12 rounded-xl border border-vinho/30 px-5 text-vinho disabled:opacity-50">{busy==="quote"?"Calculando…":"Calcular frete"}</button></section>
+ {quote?.key===quoteKey&&<section className={panel}><h2 className="text-3xl text-vinho">Forma de entrega</h2><fieldset disabled={!!busy} className="mt-4 space-y-3">{quote.options.map(o=><label key={o.id} className={`flex items-center gap-3 rounded-xl border p-4 ${selected===o.id?"border-vinho bg-almond":"border-ink/15"}`}><input type="radio" name="shipping" checked={selected===o.id} onChange={()=>setSelected(o.id)} className="accent-vinho"/><span className="flex-1"><span className="block font-medium">{o.carrier} · {o.service}</span><span className="block text-sm text-ink/70">Até {o.days} dias úteis</span></span><strong>{formatBRL(o.priceCents)}</strong></label>)}</fieldset></section>}</div>
+ <aside className={`${panel} lg:sticky lg:top-28`}><h2 className="text-3xl text-vinho">Resumo do pedido</h2><dl className="mt-5 space-y-3"><div className="flex justify-between"><dt>Livros</dt><dd>{formatBRL(subtotal)}</dd></div><div className="flex justify-between"><dt>Frete</dt><dd>{shipping?formatBRL(shipping.priceCents):"A calcular"}</dd></div><div className="flex justify-between border-t border-ink/15 pt-4 text-xl font-medium text-vinho"><dt>Total</dt><dd>{shipping?formatBRL(subtotal+shipping.priceCents):"—"}</dd></div></dl>{error&&<p role="alert" className="mt-4 rounded-xl bg-vinho/10 p-3 text-sm text-vinho">{error}</p>}<button type="submit" disabled={!!busy||invalid||!shipping} className="mt-6 min-h-12 w-full rounded-xl bg-vinho px-4 py-3 font-medium text-almond disabled:opacity-50">{busy==="payment"?"Preparando pagamento…":"Ir para pagamento seguro"}</button><p className="mt-3 text-sm leading-relaxed text-ink/70">Você será redirecionado ao ambiente do Mercado Pago. A Casa só confirma a compra após receber a confirmação do provedor.</p><Link href="/trocas" className="mt-4 block text-sm text-vinho underline">Política de trocas e devoluções</Link></aside></form>
+}

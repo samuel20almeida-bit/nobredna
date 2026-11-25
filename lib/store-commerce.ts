@@ -1,14 +1,22 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import type { NormalizedCart } from "@/lib/shipping";
+import { dedicatedProductionDatabase } from "./store-guard";
 
 // O cliente privilegiado fica exclusivamente no servidor. Nenhuma de suas
 // chamadas é exposta por rotas públicas enquanto as integrações não estiverem prontas.
-function commerceClient() {
+export function commerceClient() {
+  if (!dedicatedProductionDatabase(process.env)) throw new Error("Banco comercial indisponível neste ambiente.");
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) throw new Error("Loja ainda não configurada.");
   return createClient(url, key, { auth: { autoRefreshToken: false, persistSession: false } });
+}
+
+export async function releaseExpiredReservations(): Promise<{ released: number; awaiting_reconciliation: number }> {
+  const result = await commerceClient().rpc("store_sweep_expired_reservations", { p_limit: 50 });
+  if (result.error || !result.data) throw new Error("Não foi possível verificar as reservas.");
+  return result.data as { released: number; awaiting_reconciliation: number };
 }
 
 type CommercialProduct = {
@@ -17,7 +25,7 @@ type CommercialProduct = {
 };
 
 export type ValidatedCart = {
-  items: { product_id: string; quantity: number; unit_price_cents: number }[];
+  items: { product_id: string; quantity: number; unit_price_cents: number; title: string }[];
   shipping: NormalizedCart;
 };
 
@@ -37,7 +45,7 @@ export async function validateCommercialCart(raw: unknown): Promise<ValidatedCar
   if (units > 30) return null;
   const result = await commerceClient().from("store_products")
     .select("id,slug,title,author,price_cents,stock,weight_g,width_mm,height_mm,length_mm")
-    .eq("status", "active").in("slug", [...quantities.keys()]);
+    .eq("status", "active").eq("published", true).in("slug", [...quantities.keys()]);
   if (result.error) throw new Error("Não foi possível consultar o catálogo.");
   const products = (result.data ?? []) as CommercialProduct[];
   if (products.length !== quantities.size) return null;
@@ -46,7 +54,7 @@ export async function validateCommercialCart(raw: unknown): Promise<ValidatedCar
   for (const book of products) {
     const quantity = quantities.get(book.slug)!;
     if (book.stock < quantity || !book.price_cents || !book.weight_g || !book.width_mm || !book.height_mm || !book.length_mm) return null;
-    items.push({ product_id: book.id, quantity, unit_price_cents: book.price_cents });
+    items.push({ product_id: book.id, quantity, unit_price_cents: book.price_cents, title: book.title });
     shipping.products.push({ id: book.slug, quantity, width: book.width_mm / 10, height: book.height_mm / 10,
       length: book.length_mm / 10, weight: book.weight_g / 1000, insurance_value: book.price_cents / 100 });
     shipping.totalCents += book.price_cents * quantity;
@@ -80,11 +88,4 @@ export async function releaseUnsubmittedOrder(orderId: string): Promise<boolean>
   const result = await commerceClient().rpc("store_release_unsubmitted_order", { p_order_id: orderId });
   if (result.error) throw new Error("Não foi possível cancelar a reserva.");
   return result.data === true;
-}
-
-/** Consulta apenas a situação do pedido, sem dados pessoais. */
-export async function getOrderPaymentStatus(reference: string) {
-  if (!/^NDNA-[0-9A-F]{32}$/.test(reference) || !process.env.SUPABASE_SECRET_KEY) return null;
-  const { data, error } = await commerceClient().from("store_orders").select("payment_status,payment_review").eq("reference", reference).maybeSingle();
-  return error ? null : data;
 }
