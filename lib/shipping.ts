@@ -1,4 +1,5 @@
 import { getBook } from "@/lib/books";
+import { institucional } from "@/lib/institucional";
 
 export type QuoteRequestLine = { slug: string; qty: number };
 
@@ -173,7 +174,7 @@ export async function quoteShipping(
       Accept: "application/json",
       "User-Agent":
         process.env.MELHOR_ENVIO_USER_AGENT ??
-        "NobreDNA Editorial (contato@nobredna.com.br)",
+        `NobreDNA Editorial (${institucional.email})`,
     },
     body: JSON.stringify({
       from: { postal_code: origin },

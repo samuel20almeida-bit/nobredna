@@ -3,6 +3,12 @@ const base=process.env.BASE_URL??"http://127.0.0.1:3017";
 const pages=[
   ["/livros","consulte seus exemplares"],
   ["/checkout","solicitação de compra"],
+  ["/trocas","Política de Trocas e Devoluções"],
+  ["/trocas","nobrednaeditores@gmail.com"],
+  ["/trocas","90 dias"],
+  ["/","20.371.618/0001-75"],
+  ["/","Rua Raul Caron, 565"],
+  ["/","(41) 98833-5400"],
   ["/checkout/demonstracao","Simular finalização"],
   ["/checkout/retorno?status=aprovado&pedido=NDNA-"+"A".repeat(32),"Aguardando confirmação."],
   ["/admin","Configuração em andamento"]

@@ -30,12 +30,14 @@ nenhuma credencial de pagamento, endereço oficial ou dado comercial foi inventa
 - [ ] Aprovar a implantação das migrações `fulfillment.sql` e `maintenance.sql` no projeto dedicado. Não aplicar em projetos Aura ou outros clientes.
 - [ ] Conectar o banco à Vercel e confirmar login da administradora autorizada; proibir cadastro público. Validar acesso negado a não administradores.
 - [ ] Confirmar livros vendáveis, autoria, ISBN, capa, descrição, preço, estoque e dimensões com embalagem.
-- [ ] Configurar origem de envio, remetente e políticas comerciais oficiais.
+- [x] Receber CNPJ, endereço comercial, e-mail, telefone e política de trocas/devoluções (25/11/2026). Razão social completa ainda precisa ser confirmada.
+- [ ] Confirmar se o endereço comercial também é o de expedição e confirmar o prazo de postagem; configurar origem de envio e remetente.
 - [ ] Configurar contas comerciais e credenciais em segredos do ambiente correto; webhook Mercado Pago do tópico payment, preferências e Melhor Envio.
 - [ ] Usar conta de teste do Mercado Pago, sandbox de frete e banco de testes segregado; validar sucesso, recusa, Pix/boleto, notificações duplicadas, interrupção, estoque concorrente e reembolso.
 - [ ] Confirmar regra de expiração de pagamentos assíncronos, conciliar reservas iniciadas antes de liberar estoque e programar manutenção periódica.
 - [ ] Configurar domínio verificado e caixa de resposta do Resend. Testar aceitação/entrega e tratamento de falhas, sem enviar a clientes fictícios.
-- [ ] Revisar política de privacidade, retenção de pedidos, trocas, cancelamento e devolução. Validar emissão fiscal e processo de postagem conforme o negócio.
+- [ ] Revisar política de privacidade, retenção de pedidos e validar emissão fiscal e processo de postagem conforme o negócio.
+- [ ] Antes de habilitar pagamentos, implementar o canal de pós-venda no próprio site, com protocolo e acompanhamento de solicitações de cancelamento, trocas e devoluções, separado da fila editorial e de intenções de compra. Validar o recebimento imediato e o fluxo de resposta previsto na política oficial.
 - [ ] Definir compra de etiquetas e rastreamento com a equipe; a integração atual cota frete e registra código manualmente.
 - [ ] Validar logs de produção, alertas de pagamentos em revisão e filas pendentes. Acompanhar a primeira compra real.
 - [ ] Somente com aprovação, habilitar `ENABLE_LIVE_CHECKOUT=true` e os modos de produção, após os testes.

@@ -1,16 +1,4 @@
-/**
- * Troca, devolução e prazos.
- *
- * O prazo de sete dias não é cortesia da casa: é o direito de arrependimento
- * do artigo 49 do Código de Defesa do Consumidor, que vale para toda compra
- * feita fora do estabelecimento — o site inclusive. Está escrito aqui como
- * direito, e não como concessão, porque prometer menos que a lei é ilegal e
- * prometer mais sem cumprir é pior.
- *
- * O texto vive num módulo só para que a página do livro, a de políticas e o
- * checkout digam exatamente a mesma coisa. Política de troca que muda de
- * palavra conforme a tela é a que ninguém acredita.
- */
+import { institucional } from "./institucional.ts";
 
 export type Garantia = {
   id: string;
@@ -18,57 +6,55 @@ export type Garantia = {
   texto: string;
 };
 
-/** As três linhas curtas que aparecem junto ao botão de compra. */
+/** Resumo da política oficial, sem promessas comerciais não confirmadas. */
 export const garantias: Garantia[] = [
   {
     id: "arrependimento",
     titulo: "Sete dias para desistir",
-    texto:
-      "Recebeu e não era o que esperava? Devolve em até sete dias corridos, sem precisar justificar, e o valor volta integral — frete incluído.",
+    texto: "Você pode desistir em até sete dias corridos após receber o livro. A devolução é gratuita e a restituição inclui o frete.",
   },
   {
     id: "defeito",
-    titulo: "Exemplar com defeito, troca na hora",
-    texto:
-      "Página solta, corte torto, capa marcada no transporte: manda uma foto e a casa despacha outro exemplar, sem custo e sem devolver o primeiro.",
+    titulo: "Apoio em caso de defeito ou avaria",
+    texto: "Se houver um problema com o exemplar, fale com a Casa. Cobrimos os custos de envio necessários para resolver o problema, conforme a política.",
   },
   {
     id: "despacho",
-    titulo: "Despacho em dois dias úteis",
-    texto:
-      "O pedido sai daqui em até dois dias úteis, com código de rastreio por e-mail. O prazo dos Correios aparece no checkout, antes de pagar.",
+    titulo: "Entrega com condições informadas",
+    texto: "O valor do frete e a previsão de entrega serão informados antes da confirmação da compra.",
   },
 ];
 
-/** O texto longo, para a página de políticas. */
+/** Política fornecida pela Casa de Legados. */
 export const politicaTroca = {
-  titulo: "Troca e devolução",
-  chamada:
-    "Comprar um livro pela internet é comprar sem folhear. Por isso a lei dá sete dias para você mudar de ideia, e esta casa não cria nenhum obstáculo para você usá-los.",
+  titulo: "Política de Trocas e Devoluções",
+  chamada: "Esta política vale para os livros físicos comprados no site da Nobre DNA — Casa de Legados. Se você quiser cancelar uma compra ou se houver algum problema com seu pedido, entre em contato com a nossa equipe.",
   blocos: [
     {
-      titulo: "Arrependimento — sete dias",
+      titulo: "1. Devolução por arrependimento",
       itens: [
-        "O prazo é de sete dias corridos contados do recebimento, conforme o artigo 49 do Código de Defesa do Consumidor.",
-        "Não é preciso dar motivo. Basta escrever para contato@nobredna.com.br com o número do pedido.",
-        "A devolução do valor é integral e inclui o frete que você pagou. O frete do retorno é por conta da casa.",
-        "O reembolso sai pelo mesmo meio do pagamento em até dez dias úteis depois que o exemplar chegar de volta.",
+        "Você pode desistir da compra em até 7 dias corridos a partir do recebimento do livro, sem precisar informar o motivo. Se o pedido ainda estiver a caminho, você já pode solicitar o cancelamento.",
+        "A devolução é gratuita. Nossa equipe enviará as instruções de postagem e providenciará de imediato a restituição integral dos valores pagos pela compra cancelada, incluindo o frete de entrega. Se o pagamento foi feito por cartão, comunicaremos imediatamente o cancelamento à administradora. O lançamento do crédito na fatura segue o calendário da operadora.",
       ],
     },
     {
-      titulo: "Defeito ou avaria no transporte",
+      titulo: "2. Livro com defeito ou avaria",
       itens: [
-        "Se o exemplar chegar danificado, mande uma foto por e-mail em até trinta dias. A casa despacha outro sem custo.",
-        "Nesse caso você não precisa devolver o exemplar com defeito — fique com ele, dê de presente, use como rascunho.",
-        "Vale também para defeito de fabricação percebido depois: encadernação que solta, caderno faltando, impressão falha.",
+        "Se o livro chegar danificado ou apresentar problemas como páginas faltando, falhas de impressão ou encadernação solta, você pode registrar uma reclamação em até 90 dias a partir da entrega. Se o defeito só puder ser percebido mais tarde, o prazo começa quando o problema ficar evidente.",
+        "Cobrimos os custos de envio necessários para resolver o problema. Se o defeito não for resolvido em até 30 dias, você poderá escolher entre a substituição por um exemplar equivalente em perfeitas condições, a restituição do valor pago ou o abatimento proporcional do preço. Nas hipóteses previstas no Código de Defesa do Consumidor, essa escolha pode ser feita imediatamente.",
       ],
     },
     {
-      titulo: "Como devolver",
+      titulo: "3. Livro diferente do pedido ou entrega fora do prazo",
       itens: [
-        "Escreva para contato@nobredna.com.br com o número do pedido e o motivo, se quiser dizer.",
-        "A casa responde com uma etiqueta de postagem paga. É só levar à agência dos Correios.",
-        "O livro precisa voltar em condição de leitura — pode ter sido lido, não pode ter sido rasgado ou molhado.",
+        "Se você receber um título ou uma edição diferente do que comprou, ou se o pedido não for entregue no prazo informado, poderá escolher entre receber o que foi contratado, aceitar um produto equivalente ou cancelar a compra com restituição integral dos valores pagos, incluindo o frete. Caso seja necessário devolver um exemplar enviado por engano, o custo da devolução é nosso.",
+      ],
+    },
+    {
+      titulo: "4. Como solicitar atendimento",
+      itens: [
+        `Envie sua solicitação pelo canal oficial de atendimento da Nobre DNA: ${institucional.email} ou ${institucional.telefone}. Informe o número do pedido ou outro dado que ajude a localizar a compra, o título do livro e o que você deseja solicitar. Em caso de defeito, avaria ou item incorreto, fotos podem ajudar a identificar o problema, se você puder enviá-las.`,
+        "Você também pode exercer o direito de arrependimento pela mesma ferramenta usada para a compra. Confirmaremos imediatamente o recebimento da solicitação e enviaremos uma resposta em até 5 dias, observados os prazos legais aplicáveis à solução de cada caso.",
       ],
     },
   ],

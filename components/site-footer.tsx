@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { BrandSeal } from "@/components/brand-seal";
 import { DivisorPerola } from "@/components/perola";
-import { autora } from "@/lib/autora";
+import { institucional } from "@/lib/institucional";
 
 const leitura = [
   { href: "/livros", label: "Todos os livros" },
   { href: "/sobre", label: "Sobre a autora" },
   { href: "/checkout", label: "Minha sacola" },
+  { href: "/trocas", label: "Trocas e devoluções" },
   { href: "/#assine", label: "Acompanhe a Casa" },
 ];
 
@@ -36,11 +37,14 @@ export function SiteFooter() {
               </span>
             </Link>
             <p className="mt-6 max-w-[24rem] text-sm leading-[1.8] text-almond/80">
-              {/* o logradouro que estava aqui era inventado, e endereço de rua
-                  fictício é pior que cidade fictícia: pode ser o de alguém.
-                  Fica só a cidade até haver um endereço real para publicar. */}
-              NobreDNA · Casa de Legados. Histórias reais em livros memoráveis. {autora.cidade}.
+              NobreDNA · Casa de Legados. Histórias reais em livros memoráveis.
             </p>
+            <address className="mt-5 space-y-2 text-sm leading-relaxed not-italic text-almond/80">
+              <p>CNPJ: {institucional.cnpj}</p>
+              <p>{institucional.endereco}<br/>{institucional.cidade} · CEP {institucional.cep}</p>
+              <a href={`mailto:${institucional.email}`} className="block break-words text-khaki underline underline-offset-4">{institucional.email}</a>
+              <a href={`tel:${institucional.telefoneE164}`} className="block text-khaki underline underline-offset-4">{institucional.telefone}</a>
+            </address>
             <a href="https://www.instagram.com/nobre_dna/" target="_blank" rel="noreferrer" className="mt-5 inline-block text-khaki underline">@nobre_dna</a>
           </div>
 

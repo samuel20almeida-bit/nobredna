@@ -4,11 +4,13 @@ import { HelixRail } from "@/components/helix-rail";
 import { DivisorPerola } from "@/components/perola";
 import { ArrowLeft } from "@/components/icons";
 import { politicaTroca } from "@/lib/politicas";
+import { institucional } from "@/lib/institucional";
+import { liveStoreEnabled } from "@/lib/store-public";
 
 export const metadata: Metadata = {
   title: politicaTroca.titulo,
   description:
-    "Sete dias para desistir da compra, troca imediata em caso de defeito e frete de retorno por conta da casa.",
+    "Conheça os prazos, os direitos e os canais oficiais de atendimento para trocas, devoluções e cancelamentos de pedidos.",
 };
 
 export default function TrocasPage() {
@@ -31,7 +33,7 @@ export default function TrocasPage() {
           <h1 className="mt-12 max-w-[16ch] text-[clamp(2.4rem,5vw,3.6rem)] leading-[1.04] font-light text-balance text-ink">
             {politicaTroca.titulo}
           </h1>
-          <p className="mt-5 border border-ink/20 bg-almond-lift p-4 text-ink/75">Modelo de política para revisão pela Casa antes da ativação da loja. Nenhum pedido é realizado nesta versão demonstrativa.</p>
+          {!liveStoreEnabled()&&<p className="mt-5 rounded-xl border border-ink/10 bg-almond-lift p-4 text-sm leading-relaxed text-ink/75">A compra online está em preparação. Esta é a política da Casa para os pedidos realizados quando a livraria online estiver disponível.</p>}
 
           <p className="mt-8 max-w-[38rem] text-[1.05rem] leading-[1.85] text-ink/65">
             {politicaTroca.chamada}
@@ -59,16 +61,16 @@ export default function TrocasPage() {
             ))}
           </div>
 
-          <p className="hairline mt-16 border-t pt-8 font-serif text-[1.05rem] text-ink/45 italic">
-            Qualquer dúvida antes disso, escreva para{" "}
-            <a
-              href="mailto:contato@nobredna.com.br"
-              className="underline decoration-ink/20 underline-offset-4 transition-colors duration-500 hover:text-ink"
-            >
-              contato@nobredna.com.br
-            </a>
-            . A casa responde.
-          </p>
+          <section className="mt-14 rounded-2xl border border-khaki/40 bg-almond-lift p-6 sm:p-8" aria-label="Atendimento oficial">
+            <p className="label">atendimento da Casa</p>
+            <h2 className="mt-3 text-3xl text-vinho">Precisa de ajuda com seu pedido?</h2>
+            <p className="mt-3 text-sm leading-relaxed text-ink/75">Fale com nossa equipe para registrar sua solicitação.</p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a href={`mailto:${institucional.email}`} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-vinho px-5 py-3 text-sm font-medium text-almond hover:bg-vinho-soft">Enviar e-mail</a>
+              <a href={`tel:${institucional.telefoneE164}`} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-vinho/30 px-5 py-3 text-sm font-medium text-vinho">Ligar para a editora</a>
+            </div>
+            <p className="mt-4 break-words text-sm text-ink/70">{institucional.email} · {institucional.telefone}</p>
+          </section>
         </div>
       </div>
     </>
