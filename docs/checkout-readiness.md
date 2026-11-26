@@ -21,6 +21,7 @@ nenhuma credencial de pagamento, endereço oficial ou dado comercial foi inventa
 | Pagamento | Criação de preferência, URL de retorno confiável, assinatura de webhook, consulta à API oficial, reconciliação de eventos e revisão de divergências. |
 | Frete | Adapter Melhor Envio, recotação antes de cobrar, timeout, validação de respostas; estimativas não são aceitas para cobrança. |
 | Administração | Cadastro, publicação, edição com controle de concorrência, pedidos, rastreio e expedição após pagamento confirmado. |
+| Central comercial | Indicadores por data de pagamento confirmado, ranking de livros, estoque publicado e fila de pedidos com ficha de expedição, histórico e pós-venda. Intenções de compra ficam em área separada. |
 | Notificações | Confirmação de compra e despacho, fila transacional, tentativas e idempotência; não enviar para pedidos não pagos ou sob revisão. |
 | Manutenção | Limpeza manual de reservas expiradas que nunca chegaram ao provedor; preserva reservas com pagamento iniciado. |
 | Proteção | RLS, rotas restritas ao backend, limitação de requisições, segredos não expostos, bloqueio de cobrança em previews e recusa a conexão com outro projeto Supabase. |

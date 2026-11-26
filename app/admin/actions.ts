@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import {after} from "next/server";
 import { getStoreAccess, storeClient } from "@/lib/store-admin";
 import { sendOrderNotifications } from "@/lib/store-notifications";
 import { releaseExpiredReservations } from "@/lib/store-commerce";
@@ -167,19 +168,20 @@ export async function saveProduct(form: FormData) {
 export async function updateFulfillment(form:FormData){
  const access=await getStoreAccess();if(access.state!=="admin")back("denied");
  const reference=field(form,"reference",40),tracking=field(form,"tracking",80),status=field(form,"fulfillment",24);
- if(!/^NDNA-[0-9A-F]{32}$/.test(reference)||!["shipped","delivered"].includes(status)||status==="shipped"&&!/^[A-Za-z0-9_-]{4,80}$/.test(tracking))back("invalid-shipping");
+ const href="/admin?aba=pedidos&modo=online"+(/^NDNA-[0-9A-F]{32}$/.test(reference)?"&ficha="+reference:"");
+ if(!/^NDNA-[0-9A-F]{32}$/.test(reference)||!["shipped","delivered"].includes(status)||status==="shipped"&&!/^[A-Za-z0-9_-]{4,80}$/.test(tracking))redirect(href+"&mensagem=invalid-shipping");
  const update=status==="shipped"?{fulfillment_status:status,tracking_code:tracking,updated_at:new Date().toISOString()}:{fulfillment_status:status,updated_at:new Date().toISOString()};
  const result=await access.client.from("store_orders").update(update).eq("reference",reference).eq("payment_status","paid").eq("payment_review",false).eq("fulfillment_status",status==="shipped"?"preparing":"shipped").select("reference").maybeSingle();
- if(result.error||!result.data)back("shipping-error");
- if(status==="shipped")await sendOrderNotifications(reference).catch(()=>{});
- revalidatePath("/admin");back("shipping-saved");
+ if(result.error||!result.data)redirect(href+"&mensagem=shipping-error");
+ if(status==="shipped")after(()=>sendOrderNotifications(reference).catch(()=>{}));
+ revalidatePath("/admin");redirect(href+"&mensagem=shipping-saved");
 }
 
 export async function retryNotifications(form:FormData){
  const access=await getStoreAccess();if(access.state!=="admin")back("denied");
  const ref=field(form,"reference",40);if(!/^NDNA-[0-9A-F]{32}$/.test(ref))back("shipping-error");
  const order=await access.client.from("store_orders").select("reference").eq("reference",ref).maybeSingle();if(!order.data)back("shipping-error");
- await sendOrderNotifications(ref).catch(()=>{});revalidatePath("/admin");back("notification-attempt");
+ await sendOrderNotifications(ref).catch(()=>{});revalidatePath("/admin");redirect("/admin?aba=pedidos&modo=online&ficha="+ref+"&mensagem=notification-attempt");
 }
 
 export async function reviewExpiredReservations() {

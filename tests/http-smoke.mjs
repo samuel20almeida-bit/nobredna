@@ -13,7 +13,9 @@ const pages=[
   ["/","(41) 98833-5400"],
   ["/checkout/demonstracao","Simular finalização"],
   ["/checkout/retorno?status=aprovado&pedido=NDNA-"+"A".repeat(32),"Aguardando confirmação."],
-  ["/admin","Configuração em andamento"]
+  ["/admin","Configuração em andamento"],
+  ["/admin?aba=pedidos","Configuração em andamento"],
+  ["/admin?aba=pedidos&modo=online&ficha=NDNA-"+"A".repeat(32),"Configuração em andamento"]
 ];
 for (const [path,expected] of pages) {
   const response=await fetch(base+path);
