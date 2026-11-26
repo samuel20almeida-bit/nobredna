@@ -15,12 +15,18 @@ const pages=[
   ["/checkout/retorno?status=aprovado&pedido=NDNA-"+"A".repeat(32),"Aguardando confirmação."],
   ["/admin","Configuração em andamento"],
   ["/admin?aba=pedidos","Configuração em andamento"],
-  ["/admin?aba=pedidos&modo=online&ficha=NDNA-"+"A".repeat(32),"Configuração em andamento"]
+  ["/admin?aba=pedidos&modo=online&ficha=NDNA-"+"A".repeat(32),"Configuração em andamento"],
+  ["/admin?aba=livros&ficha=novo","Configuração em andamento"]
 ];
 for (const [path,expected] of pages) {
   const response=await fetch(base+path);
   assert.equal(response.status,200,path);
-  assert.ok((await response.text()).includes(expected),path+" should render expected status");
+  const html=await response.text();
+  assert.ok(html.includes(expected),path+" should render expected status");
+  if(path.startsWith("/admin")){
+    assert.ok(!html.includes("Precisa de ajuda?"),"admin must not mount the public WhatsApp popup");
+    assert.ok(!html.includes("Minha sacola"),"admin must not mount the public storefront");
+  }
   console.log("PASS",path);
 }
 for (const path of ["/api/checkout/preferencia","/api/frete/cotacao","/api/checkout/webhook","/api/contato","/api/pos-venda"]) {

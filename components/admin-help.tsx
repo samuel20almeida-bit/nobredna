@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type {SupabaseClient} from "@supabase/supabase-js";
 import {whatsappUrl} from "@/lib/editorial-workspace";
 import {updateSupportNumber} from "@/app/admin/actions";
@@ -6,11 +5,6 @@ import {AdminSubmit} from "./admin-feedback";
 
 async function supportSettings(client:SupabaseClient){
  return client.from("editorial_support_settings").select("editorial_whatsapp,technical_whatsapp").eq("singleton",true).maybeSingle();
-}
-export async function AdminTechnicalHelp({client}:{client:SupabaseClient}){
- const {data}=await supportSettings(client);
- const href=whatsappUrl(data?.technical_whatsapp??null,"Olá, AURA! Preciso de suporte técnico com o painel da NobreDNA.");
- return href?<a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-vinho/20 px-3 text-xs font-semibold text-vinho hover:bg-almond" aria-label="Suporte técnico AURA via WhatsApp"><span aria-hidden="true">?</span> Suporte</a>:<Link href="/admin?aba=configuracoes#suporte" className="inline-flex min-h-11 items-center rounded-lg border border-vinho/20 px-3 text-xs font-semibold text-vinho">Ajuda</Link>;
 }
 export async function AdminSupportSettings({client}:{client:SupabaseClient}){
  const {data,error}=await supportSettings(client);

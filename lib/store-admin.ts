@@ -28,16 +28,30 @@ export async function storeClient() {
 }
 
 export async function getStoreAccess() {
+  const started=performance.now();
   const client = await storeClient();
   if (!client) return { state: "unconfigured" } as const;
-  const { data: { user }, error } = await client.auth.getUser();
+  // The raw session is read only to pass the token to the authoritative Auth
+  // lookup. Never authorize using session.user or unverified claims. Explicit
+  // getUser(token) avoids holding the session lock during the network request.
+  const session=await client.auth.getSession();
+  const token=session.data.session?.access_token;
+  if(session.error||!token)return {state:"signed-out"} as const;
+  const [identity,membership]=await Promise.all([
+    client.auth.getUser(token),
+    // RLS returns only the caller's own membership. Compare it to the freshly
+    // verified server-side user before granting access.
+    client.from("store_admins").select("user_id").maybeSingle(),
+  ]);
+  const {data:{user},error}=identity;
   if (!user || error) return { state: "signed-out" } as const;
-  const membership = await client.from("store_admins").select("user_id").eq("user_id", user.id).maybeSingle();
   if (membership.error) return { state: "unavailable" } as const;
+  if(membership.data&&membership.data.user_id!==user.id)return {state:"denied"} as const;
   if (!membership.data) {
     // Database policy verifies the preauthorized email and email-OTP session.
     const claimed = await client.from("store_admins").insert({user_id:user.id}).select("user_id").maybeSingle();
     if(claimed.error||!claimed.data)return {state:"denied"} as const;
   }
+  console.info("[admin-perf] access_ms="+Math.round(performance.now()-started));
   return { state: "admin", client, user } as const;
 }

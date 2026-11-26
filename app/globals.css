@@ -268,6 +268,12 @@
 .admin-shell button:active:not(:disabled), .admin-shell .admin-nav-link:active { opacity: .75; }
 .admin-nav-link { transition: background-color .12s, color .12s; }
 .admin-nav-link:has([role="status"]) { background: #631a25; color: #fff; }
+.admin-shell a[data-admin-pending="true"]:not(.admin-nav-link) { opacity: .7; outline: 2px solid rgb(99 26 37 / .22); outline-offset: 2px; }
+.admin-navigation-progress { position: fixed; top: 0; left: 0; right: 0; z-index: 90; pointer-events: none; }
+.admin-navigation-progress-bar { display: block; height: 3px; width: 36%; background: #631a25; animation: admin-progress 1.15s ease-in-out infinite; }
+.admin-navigation-progress-label { position: absolute; right: 16px; top: 12px; padding: 7px 12px; border-radius: 8px; background: #631a25; color: white; font: 600 12px var(--font-inter), sans-serif; box-shadow: 0 3px 15px rgb(36 16 21 / .15); }
+@keyframes admin-progress { from { transform: translateX(-100%); } to { transform: translateX(280%); } }
+@media (prefers-reduced-motion: reduce) { .admin-navigation-progress-bar { animation: none; width: 100%; } }
 .editorial-support { bottom: 24px; right: 24px; }
 .editorial-support button { touch-action: manipulation; }
 .admin-dock { padding-bottom: max(5px, env(safe-area-inset-bottom, 0px)); }

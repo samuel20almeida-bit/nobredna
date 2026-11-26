@@ -1,5 +1,5 @@
 import type {SupabaseClient} from "@supabase/supabase-js";
-import Link from "next/link";
+import {AdminLink as Link} from "@/components/admin-navigation";
 import {leadSources,leadSourceLabels,leadStatuses,leadStatusLabels,type LeadSource,type LeadStatus} from "@/lib/editorial-leads";
 import {followUpLabel,openLeadStatuses,saoPauloToday,leadAdminHref,purchaseInbox,editorialInbox} from "@/lib/editorial-workspace";
 import {AdminHeading,AdminIcon} from "./admin-shell";
@@ -16,7 +16,7 @@ function InboxRows({rows,error,empty,reminders=false}:{rows:InboxRow[];error:boo
 }
 
 export async function AdminOverview({client,notifications=false}:{client:SupabaseClient;notifications?:boolean}){
- const today=saoPauloToday(),live=liveStoreEnabled();
+ const started=performance.now(),today=saoPauloToday(),live=liveStoreEnabled();
  const [stats,postSale,commercial,recent,due,purchases,purchaseDue]=await Promise.all([
    client.rpc("editorial_admin_overview"),
    client.rpc("store_support_admin_counts"),
@@ -26,6 +26,7 @@ export async function AdminOverview({client,notifications=false}:{client:Supabas
    live?Promise.resolve({data:null,error:null}):client.from("editorial_leads").select(leadSelect).eq("source","livros").eq("status","new").order("created_at",{ascending:false}).limit(5),
    live?Promise.resolve({data:null,error:null}):client.from("editorial_leads").select(leadSelect).eq("source","livros").in("status",[...openLeadStatuses]).lte("follow_up_on",today).order("follow_up_on",{ascending:true}).limit(5),
  ]);
+ console.info("[admin-perf] overview_ms="+Math.round(performance.now()-started));
  const data=stats.data??{},error=Boolean(stats.error||!stats.data);
  const value=(n:number|undefined)=>error?"—":n??0;
  const cards=[

@@ -1,5 +1,5 @@
 import type {SupabaseClient} from "@supabase/supabase-js";
-import Link from "next/link";
+import {AdminLink as Link} from "@/components/admin-navigation";
 import {AdminHeading,AdminIcon} from "./admin-shell";
 import {AdminCopy,AdminFilter,AdminRefresh,AdminSubmit} from "./admin-feedback";
 import {updatePostSale} from "@/app/admin/actions";
@@ -25,16 +25,17 @@ function Detail({row}:{row:SupportRow}){
 }
 
 export async function AdminPostSale({client,status,source,search,page,focus,record}:{client:SupabaseClient;status?:string;source?:string;search?:string;page?:string;focus?:string;record?:string}){
- const selected=record&&leadIdPattern.test(record)?record:null;
+ const started=performance.now(),selected=record&&leadIdPattern.test(record)?record:null;
  const state=supportStatuses.includes(status as SupportStatus)?status:"",category=supportCategories.includes(source as SupportCategory)?source:"";
  const term=(search??"").trim().slice(0,80).replace(/[%_\\*]/g,""),due=focus==="pendentes"||focus==="atrasados",open=focus==="andamento",now=new Date().toISOString();
  const current=Math.min(10000,Math.max(1,Number.isInteger(Number(page))?Number(page):1));
  const fields="id,protocol,category,customer_name,email,phone,order_reference,book_title,description,status,internal_notes,next_action,first_response_at,response_due_at,created_at,updated_at";
- if(selected){const detail=await client.from("store_support_requests").select(fields+",store_support_events(created_at,from_status,to_status,response_recorded,notes_changed)").eq("id",selected).order("created_at",{ascending:false,referencedTable:"store_support_events"}).limit(12,{referencedTable:"store_support_events"}).maybeSingle();return <><AdminHeading eyebrow="Pós-venda · atendimento de pedidos" title="Ficha de pós-venda" description="Confirme os dados, converse com o cliente e registre o atendimento."/>{detail.error||!detail.data?<div className="admin-card p-6"><p role="alert">Solicitação não encontrada ou indisponível.</p><Link className="admin-secondary mt-4" href={base}>Voltar à central</Link></div>:<Detail row={detail.data as unknown as SupportRow}/>}</>}
+ if(selected){const detail=await client.from("store_support_requests").select(fields+",store_support_events(created_at,from_status,to_status,response_recorded,notes_changed)").eq("id",selected).order("created_at",{ascending:false,referencedTable:"store_support_events"}).limit(12,{referencedTable:"store_support_events"}).maybeSingle();console.info("[admin-perf] support_detail_ms="+Math.round(performance.now()-started));return <><AdminHeading eyebrow="Pós-venda · atendimento de pedidos" title="Ficha de pós-venda" description="Confirme os dados, converse com o cliente e registre o atendimento."/>{detail.error||!detail.data?<div className="admin-card p-6"><p role="alert">Solicitação não encontrada ou indisponível.</p><Link className="admin-secondary mt-4" href={base}>Voltar à central</Link></div>:<Detail row={detail.data as unknown as SupportRow}/>}</>}
  let query=client.from("store_support_requests").select("id,protocol,category,customer_name,status,first_response_at,response_due_at,created_at",{count:"exact"});
  if(open)query=query.in("status",["reviewing","waiting_customer"]);if(state)query=query.eq("status",state);if(category)query=query.eq("category",category);if(due)query=query.is("first_response_at",null);if(focus==="atrasados")query=query.lte("response_due_at",now);
  if(term)query=/^ND-S-/i.test(term)?query.ilike("protocol",term+"%"): /^NDNA-/i.test(term)?query.ilike("order_reference",term+"%"):query.ilike("customer_name","%"+term+"%");
  const [stats,result]=await Promise.all([client.rpc("store_support_admin_counts"),query.order("first_response_at",{ascending:true,nullsFirst:true}).order("response_due_at",{ascending:true}).order("id").range((current-1)*size,current*size-1)]);
+ console.info("[admin-perf] support_ms="+Math.round(performance.now()-started));
  const rows=(result.data??[]) as unknown as SupportRow[],pages=Math.max(1,Math.ceil((result.count??0)/size)),counts=stats.data??{};
  const cards=[{label:"Novos",count:counts.new,href:base+"&status=new",text:"Solicitações recebidas",tone:"bg-amber-100 text-amber-900"},{label:"Sem resposta",count:counts.pending,href:base+"&foco=pendentes",text:"Aguardam primeira resposta",tone:"bg-blue-100 text-blue-900"},{label:"Atrasados",count:counts.overdue,href:base+"&foco=atrasados",text:"Prazo de 5 dias excedido",tone:"bg-red-100 text-red-900"},{label:"Em andamento",count:counts.open,href:base+"&foco=andamento",text:"Em análise ou aguardando cliente",tone:"bg-orange-100 text-orange-900"},{label:"Resolvidos",count:counts.resolved,href:base+"&status=resolved",text:"Atendimentos finalizados",tone:"bg-emerald-100 text-emerald-900"}];
  function href(p:number){const params=new URLSearchParams({aba:"pos-venda",pagina:String(p)});if(state)params.set("status",state);if(category)params.set("origem",category);if(term)params.set("busca",term);if(due||open)params.set("foco",focus!);return "/admin?"+params.toString()}

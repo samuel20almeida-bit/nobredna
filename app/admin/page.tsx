@@ -3,14 +3,15 @@ import {Suspense} from "react";
 import type {SupabaseClient} from "@supabase/supabase-js";
 import {AdminSubmit} from "@/components/admin-feedback";
 import {editorialEmailConfigured,editorialAdminAlertConfigured} from "@/lib/editorial-notifications";
-import Link from "next/link";
+import {AdminLink as Link} from "@/components/admin-navigation";
 import { getStoreAccess } from "@/lib/store-admin";
 import { saveProduct, signIn, signOut, reviewExpiredReservations, requestEmailAccess, verifyEmailAccess, updateAdminPassword } from "./actions";
 import { AdminCrm } from "@/components/admin-crm";
 import { AdminPostSale } from "@/components/admin-post-sale";
 import { AdminOrders } from "@/components/admin-orders";
 import { liveStoreEnabled } from "@/lib/store-public";
-import { AdminTechnicalHelp,AdminSupportSettings } from "@/components/admin-help";
+import { AdminSupportSettings } from "@/components/admin-help";
+import {leadIdPattern} from "@/lib/editorial-workspace";
 import { AdminOverview } from "@/components/admin-overview";
 import { AdminShell, AdminHeading, adminTabs, type AdminTab } from "@/components/admin-shell";
 import { BrandSeal } from "@/components/brand-seal";
@@ -117,7 +118,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   </section>;
 
   const banner=notice&&<div role="status" className="mb-5 rounded-xl border border-vinho/15 bg-white p-4 text-sm text-vinho">{notice}{mensagem==="maintenance-saved" && /^\d{1,6}$/.test(liberadas??"") && /^\d{1,6}$/.test(revisao??"") && <p className="mt-1">Reservas liberadas: {liberadas} · Aguardam conciliação: {revisao}.</p>}</div>;
-  const wrap=(content:React.ReactNode)=><AdminShell tab={tab} email={access.user.email??""} help={<Suspense fallback={<span className="text-xs text-ink/55">Ajuda…</span>}><AdminTechnicalHelp client={access.client}/></Suspense>}>{banner}<Suspense key={tab+":"+(origem??"")+":"+(status??"")+":"+(busca??"")+":"+(pagina??"")+":"+(foco??"")+":"+(ficha??"")+":"+(modo??"")+":"+(periodo??"")} fallback={<div role="status" className="admin-card p-6"><p className="text-sm font-medium text-vinho">Carregando informações…</p><div className="mt-4 h-24 animate-pulse rounded-xl bg-almond-deep motion-reduce:animate-none"/></div>}>{content}</Suspense></AdminShell>;
+  const wrap=(content:React.ReactNode)=><AdminShell tab={tab} email={access.user.email??""} help={<Link href="/admin?aba=configuracoes#suporte" className="inline-flex min-h-11 items-center rounded-lg border border-vinho/20 px-3 text-xs font-semibold text-vinho">Ajuda</Link>}>{banner}<Suspense key={tab+":"+(origem??"")+":"+(status??"")+":"+(busca??"")+":"+(pagina??"")+":"+(foco??"")+":"+(ficha??"")+":"+(modo??"")+":"+(periodo??"")} fallback={<div role="status" className="admin-card p-6"><p className="text-sm font-medium text-vinho">Carregando informações…</p><div className="mt-4 h-24 animate-pulse rounded-xl bg-almond-deep motion-reduce:animate-none"/></div>}>{content}</Suspense></AdminShell>;
   if(tab==="visao"||tab==="notificacoes")return wrap(<AdminOverview client={access.client} notifications={tab==="notificacoes"}/>);
   if(tab==="interessados")return wrap(<AdminCrm client={access.client} source={aba==="coautorias"?"coautoria":origem} status={status} search={busca} page={pagina} focus={foco} record={ficha}/>);
   if(tab==="pos-venda")return wrap(<AdminPostSale client={access.client} status={status} source={origem} search={busca} page={pagina} focus={foco} record={ficha}/>);
@@ -131,21 +132,25 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     <div className="mt-5"><AdminSupportSettings client={access.client}/></div>
   </>);
 
-  return wrap(<CatalogTab client={access.client} focus={foco}/>);
+  return wrap(<CatalogTab client={access.client} focus={foco} record={ficha}/>);
 }
 
-async function CatalogTab({client,focus}:{client:SupabaseClient;focus?:string}){
-  let catalogQuery=client.from("store_products").select("id,title,author,slug,description,isbn,cover_url,price_cents,stock,weight_g,width_mm,height_mm,length_mm,status,published,updated_at").order("created_at", { ascending: false });
-  if(focus==="estoque")catalogQuery=catalogQuery.eq("status","active").eq("published",true).lte("stock",3);
-  const catalog=await catalogQuery.limit(100);
-  const products = (catalog.data ?? []) as Product[];
-  return <>
-    <section id="catalogo"><AdminHeading eyebrow="Livraria" title="Livros e estoque" description="Cadastre, revise e organize os títulos oficiais da editora."/>
-      {focus==="estoque"&&<div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-amber-50 p-4 text-sm"><p>Filtro: livros publicados com estoque baixo (até 3 exemplares).</p><Link href="/admin?aba=livros" className="font-medium text-vinho underline">Ver todos</Link></div>}<p className="mb-5 rounded-xl border border-khaki/40 bg-almond-lift p-4 text-sm leading-relaxed"><strong>Preparação da loja:</strong> cadastre apenas títulos cuja venda foi autorizada pela Casa. {liveStoreEnabled()?"A loja está habilitada.":"O pagamento real segue desligado."}</p>
-      {focus!=="estoque"&&<div className="grid grid-cols-2 gap-3 sm:grid-cols-3">{[{label:"Livros cadastrados",value:catalog.error?"—":products.length},{label:"Rascunhos",value:catalog.error?"—":products.filter(p=>p.status==="draft").length},{label:"Publicados",value:catalog.error?"—":products.filter(p=>p.published).length}].map(item=><div className="admin-card p-5" key={item.label}><p className="text-sm text-ink/65">{item.label}</p><p className="mt-2 text-3xl font-semibold text-vinho">{item.value}</p></div>)}</div>}
-      {catalog.error ? <p role="alert" className="mt-4">Não foi possível carregar o catálogo.</p> : <><details className={`${card} mt-5`}><summary className="cursor-pointer font-medium text-vinho">Cadastrar novo livro</summary><ProductForm /></details>
-      {products.length === 0 && <p className="mt-5 text-sm text-ink/70">{focus==="estoque"?"Nenhum livro publicado com estoque baixo.":"Nenhum livro comercial cadastrado. Comece pelo primeiro título com dados oficiais."}</p>}
-      <div className="mt-5 grid gap-3">{products.map(product => <details key={product.id} className={card}><summary className="cursor-pointer"><span className="font-medium text-vinho">{product.title}</span><span className="mt-2 block text-sm text-ink/70">{product.author} · {product.price_cents ? prices.format(product.price_cents / 100) : "Preço pendente"} · {product.stock} em estoque · {states[product.status]}{product.published ? " · Publicado" : " · Interno"}</span></summary><ProductForm product={product}/></details>)}</div></>}
-    </section>
-  </>;
+async function CatalogTab({client,focus,record}:{client:SupabaseClient;focus?:string;record?:string}){
+ const started=performance.now(),base="/admin?aba=livros";
+ const title=<AdminHeading eyebrow="Livraria" title="Livros e estoque" description="Cadastre, revise e organize os títulos oficiais da editora."/>;
+ if(record==="novo")return <section id="catalogo">{title}<Link href={base} className="admin-secondary mb-4">← Voltar ao catálogo</Link><div className={card}><h2 className="font-sans text-base font-semibold text-vinho">Cadastrar livro</h2><ProductForm/></div></section>;
+ if(record&&leadIdPattern.test(record)){
+   const result=await client.from("store_products").select("id,title,author,slug,description,isbn,cover_url,price_cents,stock,weight_g,width_mm,height_mm,length_mm,status,published,updated_at").eq("id",record).maybeSingle();
+   console.info("[admin-perf] catalog_detail_ms="+Math.round(performance.now()-started));
+   return <section id="catalogo">{title}<Link href={base} className="admin-secondary mb-4">← Voltar ao catálogo</Link>{result.error||!result.data?<div className="admin-card p-6"><p role="alert">Livro não encontrado ou indisponível.</p></div>:<div className={card}><h2 className="font-sans text-lg font-semibold text-vinho">{result.data.title}</h2><ProductForm product={result.data as Product}/></div>}</section>;
+ }
+ let query=client.from("store_products").select("id,title,author,price_cents,stock,status,published",{count:"exact"}).order("created_at",{ascending:false});
+ if(focus==="estoque")query=query.eq("status","active").eq("published",true).lte("stock",3);
+ const catalog=await query.limit(100);
+ console.info("[admin-perf] catalog_ms="+Math.round(performance.now()-started));
+ const products=catalog.data??[];
+ return <section id="catalogo">{title}{focus==="estoque"&&<div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-amber-50 p-4 text-sm"><p>Filtro: livros publicados com estoque baixo (até 3 exemplares).</p><Link href={base} className="font-medium text-vinho underline">Ver todos</Link></div>}<p className="mb-5 rounded-xl border border-khaki/40 bg-almond-lift p-4 text-sm leading-relaxed"><strong>Preparação da loja:</strong> cadastre apenas títulos cuja venda foi autorizada pela Casa. {liveStoreEnabled()?"A loja está habilitada.":"O pagamento real segue desligado."}</p>
+ <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><p className="text-sm font-semibold text-ink/65">{catalog.error?"Livros indisponíveis":`${catalog.count??0} título(s)`}{products.length===100?" · exibindo os 100 mais recentes":""}</p><Link href={base+"&ficha=novo"} className="admin-primary">+ Cadastrar novo livro</Link></div>
+ {catalog.error?<p role="alert" className="admin-card p-6 text-sm text-vinho">Não foi possível carregar o catálogo.</p>:products.length===0?<div className="admin-card p-6 text-sm text-ink/70">{focus==="estoque"?"Nenhum livro publicado com estoque baixo.":"Nenhum livro comercial cadastrado. Comece pelo primeiro título com dados oficiais."}</div>:<div className="admin-card overflow-hidden divide-y divide-ink/10">{products.map(product=><Link key={product.id} href={base+"&ficha="+product.id} className="grid gap-3 px-4 py-5 hover:bg-almond/70 sm:px-5 md:grid-cols-[1.25fr_1fr_auto] md:items-center"><div className="min-w-0"><p className="break-words font-semibold text-vinho">{product.title}</p><p className="mt-1 text-xs text-ink/60">{product.author}</p></div><div><p className="text-sm font-medium">{product.price_cents?prices.format(product.price_cents/100):"Preço pendente"} · {product.stock} em estoque</p><p className="mt-1 text-xs text-ink/65">{states[product.status]}{product.published?" · Publicado":" · Interno"}</p></div><span className="text-xs font-semibold text-vinho">Editar livro →</span></Link>)}</div>}
+ </section>;
 }

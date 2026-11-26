@@ -1,5 +1,5 @@
 import type {SupabaseClient} from "@supabase/supabase-js";
-import Link from "next/link";
+import {AdminLink as Link} from "@/components/admin-navigation";
 import {AdminHeading,AdminIcon} from "./admin-shell";
 import {AdminCopy,AdminFilter,AdminRefresh,AdminSubmit} from "./admin-feedback";
 import {updateFulfillment,retryNotifications} from "@/app/admin/actions";
@@ -34,8 +34,9 @@ function OrderFicha({order,support,supportError}:{order:OrderDetail;support:Supp
 }
 
 export async function AdminOrders({client,period,status,focus,search,page,record}:{client:SupabaseClient;period?:string;status?:string;focus?:string;search?:string;page?:string;record?:string}){
- const selected=record&&orderReferencePattern.test(record)?record:null;
+ const started=performance.now(),selected=record&&orderReferencePattern.test(record)?record:null;
  if(selected){const [detail,support]=await Promise.all([client.from("store_orders").select("reference,customer_name,customer_email,shipping_address,shipping_service,subtotal_cents,shipping_cents,total_cents,payment_status,fulfillment_status,payment_review,tracking_code,created_at,paid_at,shipped_at,delivered_at,refunded_at,cancelled_at,store_order_items(title_snapshot,quantity,unit_price_cents,line_total_cents),store_notifications(kind,status)").eq("reference",selected).maybeSingle(),client.from("store_support_requests").select("id,protocol,category,status,created_at").eq("order_reference",selected).order("created_at",{ascending:false}).limit(20)]);
+ console.info("[admin-perf] order_detail_ms="+Math.round(performance.now()-started));
  return <><AdminHeading eyebrow="Operação comercial · pedidos online" title="Ficha do pedido" description="Acompanhe pagamento, livros, expedição e atendimento pós-venda."/>{detail.error||!detail.data?<div className="admin-card p-6"><p role="alert">Pedido não encontrado ou indisponível.</p><Link href={base} className="admin-secondary mt-4">Voltar aos pedidos</Link></div>:<OrderFicha order={detail.data as unknown as OrderDetail} support={(support.data??[]) as SupportRow[]} supportError={Boolean(support.error)}/>}</>}
  const timeframe=commercialPeriods.includes(period as CommercialPeriod)?period as CommercialPeriod:"month",stage=focus==="envio"?"preparing":orderStages.includes(status as OrderStage)?status as OrderStage:"";
  const term=(search??"").trim().slice(0,100).replace(/[%_\\*]/g,""),current=Math.min(10000,Math.max(1,Number.isInteger(Number(page))?Number(page):1));
@@ -46,6 +47,7 @@ export async function AdminOrders({client,period,status,focus,search,page,record
  else if(stage)query=query.eq("payment_status","paid").eq("payment_review",false).eq("fulfillment_status",stage);
  if(term)query=/^NDNA-/i.test(term)?query.ilike("reference",term+"%"):term.includes("@")?query.ilike("customer_email","%"+term+"%"):query.ilike("customer_name","%"+term+"%");
  const [stats,result]=await Promise.all([client.rpc("store_commercial_admin_summary",{p_period:timeframe}),query.order("created_at",{ascending:false}).order("reference").range((current-1)*size,current*size-1)]);
+ console.info("[admin-perf] orders_ms="+Math.round(performance.now()-started));
  const data=stats.data as Stats|null,statsError=Boolean(stats.error||!data),rows=(result.data??[]) as OrderRow[],pages=Math.max(1,Math.ceil((result.count??0)/size));
  const cash=(value:number|undefined)=>statsError?"—":formatBRL(value??0),count=(value:number|undefined)=>statsError?"—":(value??0).toLocaleString("pt-BR");
  function href(nextStage=stage,nextPage=1,nextPeriod=timeframe){const params=new URLSearchParams({aba:"pedidos",modo:"online",periodo:nextPeriod});if(nextStage)params.set("status",nextStage);if(term)params.set("busca",term);if(nextPage>1)params.set("pagina",String(nextPage));return "/admin?"+params.toString()}

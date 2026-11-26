@@ -1,4 +1,4 @@
-import Link from "next/link";
+import {AdminLink as Link} from "@/components/admin-navigation";
 import type { ReactNode } from "react";
 import { BrandSeal } from "./brand-seal";
 import { signOut } from "@/app/admin/actions";
