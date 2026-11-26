@@ -8,6 +8,7 @@ const leitura = [
   { href: "/sobre", label: "Sobre a autora" },
   { href: "/checkout", label: "Minha sacola" },
   { href: "/trocas", label: "Trocas e devoluções" },
+  { href: "/pos-venda", label: "Atendimento de pedidos" },
   { href: "/#assine", label: "Acompanhe a Casa" },
 ];
 

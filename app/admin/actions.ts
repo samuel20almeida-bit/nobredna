@@ -9,6 +9,7 @@ import { leadStatuses, type LeadStatus } from "@/lib/editorial-leads";
 import { isAllowedAdminEmail } from "@/lib/admin-email";
 import { editorialEmailConfigured,sendEditorialNotifications } from "@/lib/editorial-notifications";
 import {normalizeWhatsApp,validFollowUp,leadIdPattern,leadAdminHref} from "@/lib/editorial-workspace";
+import {supportStatuses,type SupportStatus} from "@/lib/post-sale";
 
 function back(message: string, tab?:string): never {
   const page=tab??(["invalid-product","incomplete-product","duplicate-product","save-error","stale-product","saved"].includes(message)?"livros":["shipping-error","invalid-shipping","shipping-saved","notification-attempt"].includes(message)?"pedidos&modo=online":message.startsWith("maintenance-")?"configuracoes":"");
@@ -69,6 +70,19 @@ export async function updateSupportNumber(form:FormData){
  const result=await access.client.from("editorial_support_settings").update({editorial_whatsapp:number}).eq("singleton",true).select("singleton").maybeSingle();
  if(result.error||!result.data)back("support-error","configuracoes");
  revalidatePath("/api/suporte");revalidatePath("/admin");back("support-saved","configuracoes");
+}
+
+export async function updatePostSale(form:FormData){
+  const access=await getStoreAccess();
+  if(access.state!=="admin")back("denied");
+  const id=field(form,"id",36),version=field(form,"version",80),status=field(form,"status",20);
+  const notes=form.get("notes"),next=form.get("next_action"),response=form.get("response_sent")==="on";
+  const href="/admin?aba=pos-venda"+(leadIdPattern.test(id)?"&ficha="+id:"");
+  if(!leadIdPattern.test(id)||!Number.isFinite(Date.parse(version))||!supportStatuses.includes(status as SupportStatus)||typeof notes!=="string"||notes.length>4000||typeof next!=="string"||next.length>240)redirect(href+"&mensagem=post-sale-error");
+  const result=await access.client.from("store_support_requests").update({status,internal_notes:notes.trim(),next_action:status==="resolved"?"":next.trim(),...(response?{first_response_at:new Date().toISOString()}:{})}).eq("id",id).eq("updated_at",version).select("id").maybeSingle();
+  if(result.error||!result.data)redirect(href+"&mensagem="+(result.error?.code==="23514"?"post-sale-response-required":result.error?"post-sale-error":"post-sale-stale"));
+  revalidatePath("/admin");
+  redirect(href+"&mensagem=post-sale-saved");
 }
 
 export async function retryEditorialEmails(form:FormData){

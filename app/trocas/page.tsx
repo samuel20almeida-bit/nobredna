@@ -66,7 +66,8 @@ export default function TrocasPage() {
             <h2 className="mt-3 text-3xl text-vinho">Precisa de ajuda com seu pedido?</h2>
             <p className="mt-3 text-sm leading-relaxed text-ink/75">Fale com nossa equipe para registrar sua solicitação.</p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a href={`mailto:${institucional.email}`} className="inline-flex min-h-12 items-center justify-center rounded-xl bg-vinho px-5 py-3 text-sm font-medium text-almond hover:bg-vinho-soft">Enviar e-mail</a>
+              <Link href="/pos-venda" className="inline-flex min-h-12 items-center justify-center rounded-xl bg-vinho px-5 py-3 text-sm font-medium text-almond hover:bg-vinho-soft">Registrar solicitação pelo site</Link>
+              <a href={`mailto:${institucional.email}`} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-vinho/30 px-5 py-3 text-sm font-medium text-vinho">Enviar e-mail</a>
               <a href={`tel:${institucional.telefoneE164}`} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-vinho/30 px-5 py-3 text-sm font-medium text-vinho">Ligar para a editora</a>
             </div>
             <p className="mt-4 break-words text-sm text-ink/70">{institucional.email} · {institucional.telefone}</p>

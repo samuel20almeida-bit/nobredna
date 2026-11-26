@@ -37,7 +37,8 @@ nenhuma credencial de pagamento, endereço oficial ou dado comercial foi inventa
 - [ ] Confirmar regra de expiração de pagamentos assíncronos, conciliar reservas iniciadas antes de liberar estoque e programar manutenção periódica.
 - [ ] Configurar domínio verificado e caixa de resposta do Resend. Testar aceitação/entrega e tratamento de falhas, sem enviar a clientes fictícios.
 - [ ] Revisar política de privacidade, retenção de pedidos e validar emissão fiscal e processo de postagem conforme o negócio.
-- [ ] Antes de habilitar pagamentos, implementar o canal de pós-venda no próprio site, com protocolo e acompanhamento de solicitações de cancelamento, trocas e devoluções, separado da fila editorial e de intenções de compra. Validar o recebimento imediato e o fluxo de resposta previsto na política oficial.
+- [x] Implementar a central inicial de pós-venda no próprio site, com protocolo imediato e painel privado de acompanhamento, separado da fila editorial e de intenções de compra.
+- [ ] Antes de habilitar pagamentos, validar o fluxo real de resposta da equipe em até cinco dias, a entrega de e-mails após verificar o domínio e a execução de cancelamento/estorno e logística reversa no provedor; o painel não executa estornos.
 - [ ] Definir compra de etiquetas e rastreamento com a equipe; a integração atual cota frete e registra código manualmente.
 - [ ] Validar logs de produção, alertas de pagamentos em revisão e filas pendentes. Acompanhar a primeira compra real.
 - [ ] Somente com aprovação, habilitar `ENABLE_LIVE_CHECKOUT=true` e os modos de produção, após os testes.

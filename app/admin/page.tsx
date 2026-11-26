@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getStoreAccess } from "@/lib/store-admin";
 import { saveProduct, signIn, signOut, updateFulfillment, retryNotifications, reviewExpiredReservations, requestEmailAccess, verifyEmailAccess, updateAdminPassword } from "./actions";
 import { AdminCrm } from "@/components/admin-crm";
+import { AdminPostSale } from "@/components/admin-post-sale";
 import { AdminTechnicalHelp,AdminSupportSettings } from "@/components/admin-help";
 import { AdminOverview } from "@/components/admin-overview";
 import { AdminShell, AdminHeading, adminTabs, type AdminTab } from "@/components/admin-shell";
@@ -30,6 +31,10 @@ const messages: Record<string, string> = {
   "email-sent":"Link de acesso solicitado. Confira sua caixa de entrada e abra o link no mesmo navegador.",
   "email-access-error":"Não foi possível solicitar ou confirmar o acesso. Confira o e-mail autorizado e tente novamente.",
   "email-rate-limit":"Aguarde antes de solicitar um novo link. Confira seu e-mail e a caixa de spam: uma solicitação anterior pode já ter sido enviada.",
+  "post-sale-saved":"Atendimento de pós-venda atualizado.",
+  "post-sale-error":"Não foi possível salvar o atendimento. Confira os campos e tente novamente.",
+  "post-sale-response-required":"Registre a primeira resposta ao cliente antes de concluir o atendimento.",
+  "post-sale-stale":"Este atendimento foi alterado. Confira os dados atualizados antes de salvar.",
   "lead-saved":"Situação da solicitação atualizada.",
   "lead-error":"Não foi possível atualizar a solicitação.",
   "support-invalid":"Informe um número brasileiro válido com DDD.",
@@ -113,6 +118,7 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   const wrap=(content:React.ReactNode)=><AdminShell tab={tab} email={access.user.email??""} help={<Suspense fallback={<span className="text-xs text-ink/55">Ajuda…</span>}><AdminTechnicalHelp client={access.client}/></Suspense>}>{banner}<Suspense key={tab+":"+(origem??"")+":"+(status??"")+":"+(busca??"")+":"+(pagina??"")+":"+(foco??"")+":"+(ficha??"")+":"+(modo??"")} fallback={<div role="status" className="admin-card p-6"><p className="text-sm font-medium text-vinho">Carregando informações…</p><div className="mt-4 h-24 animate-pulse rounded-xl bg-almond-deep motion-reduce:animate-none"/></div>}>{content}</Suspense></AdminShell>;
   if(tab==="visao"||tab==="notificacoes")return wrap(<AdminOverview client={access.client} notifications={tab==="notificacoes"}/>);
   if(tab==="interessados")return wrap(<AdminCrm client={access.client} source={aba==="coautorias"?"coautoria":origem} status={status} search={busca} page={pagina} focus={foco} record={ficha}/>);
+  if(tab==="pos-venda")return wrap(<AdminPostSale client={access.client} status={status} source={origem} search={busca} page={pagina} focus={foco} record={ficha}/>);
   if(tab==="pedidos"){
     const online=modo==="online"||foco==="envio";
     return wrap(<><nav aria-label="Tipos de pedidos" className="mb-5 flex flex-wrap gap-2">{[{label:"Solicitações de compra",href:"/admin?aba=pedidos&modo=solicitacoes",active:!online},{label:"Pedidos online",href:"/admin?aba=pedidos&modo=online",active:online}].map(item=><Link key={item.href} href={item.href} aria-current={item.active?"page":undefined} className={"inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-semibold "+(item.active?"border-vinho bg-vinho text-white":"border-vinho/20 bg-white text-vinho")}>{item.label}</Link>)}</nav>{online?<CommerceTab client={access.client} tab={tab} focus={foco}/>:<AdminCrm client={access.client} purchase status={status} search={busca} page={pagina} focus={foco} record={ficha}/>}</>);

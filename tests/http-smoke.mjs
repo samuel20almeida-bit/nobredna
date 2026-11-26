@@ -6,6 +6,8 @@ const pages=[
   ["/trocas","Política de Trocas e Devoluções"],
   ["/trocas","nobrednaeditores@gmail.com"],
   ["/trocas","90 dias"],
+  ["/trocas","Registrar solicitação pelo site"],
+  ["/pos-venda","Cancelamento por arrependimento"],
   ["/","20.371.618/0001-75"],
   ["/","Rua Raul Caron, 565"],
   ["/","(41) 98833-5400"],
@@ -19,7 +21,7 @@ for (const [path,expected] of pages) {
   assert.ok((await response.text()).includes(expected),path+" should render expected status");
   console.log("PASS",path);
 }
-for (const path of ["/api/checkout/preferencia","/api/frete/cotacao","/api/checkout/webhook","/api/contato"]) {
+for (const path of ["/api/checkout/preferencia","/api/frete/cotacao","/api/checkout/webhook","/api/contato","/api/pos-venda"]) {
   const response=await fetch(base+path,{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});
   assert.equal(response.status,503,path+" must stay closed in a preview");
   console.log("PASS",path,"blocked (503)");
