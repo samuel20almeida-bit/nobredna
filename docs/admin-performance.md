@@ -16,3 +16,9 @@ Database execution averages observed through `pg_stat_statements` were 1.11 ms f
 ## Verify
 
 `npm test`, `npm run build`, `node tests/admin-isolation-smoke.mjs`, local HTTP smoke tests, and transactional `supabase/tests/admin-access.sql`. Actual device/network timing still needs a signed-in test from the operator's browser.
+
+## Follow-up: completed save, stuck browser indicator
+
+On 26/11/2026 an operator's post-sale update persisted and generated the audit event at 14:10:16 São Paulo time, while the browser still showed “Salvando…”. The corresponding POST and GET completed on the server within roughly half a second. This isolated the problem to the form/navigation completion path rather than a failed database write.
+
+Administrative forms now use a same-origin, authenticated, allowlisted HTTP POST handler with an explicit response and native 303 fallback. A normal document GET obtains the authoritative result after the mutation. The browser stops waiting after 15 seconds and asks the operator to refresh before attempting any unconfirmed operation again; existing version checks, RLS, business rules and audit history remain in place. Navigation between modules still uses the optimized App Router links. `tests/admin-mutation-http.mjs` checks the JSON and native POST outcomes locally without a live database.

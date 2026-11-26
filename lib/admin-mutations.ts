@@ -1,6 +1,5 @@
-"use server";
+import "server-only";
 
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import {after} from "next/server";
 import { getStoreAccess, storeClient } from "@/lib/store-admin";
@@ -11,6 +10,13 @@ import { isAllowedAdminEmail } from "@/lib/admin-email";
 import { editorialEmailConfigured,sendEditorialNotifications } from "@/lib/editorial-notifications";
 import {normalizeWhatsApp,validFollowUp,leadIdPattern,leadAdminHref} from "@/lib/editorial-workspace";
 import {supportStatuses,type SupportStatus} from "@/lib/post-sale";
+
+// Business outcomes are explicit; the HTTP handler chooses JSON or a real
+// 303 navigation. Do not depend on a React Server Action redirect completing.
+export class AdminMutationOutcome extends Error {
+  constructor(readonly location:string){super("admin_mutation_outcome")}
+}
+function redirect(location:string):never {throw new AdminMutationOutcome(location)}
 
 function back(message: string, tab?:string): never {
   const page=tab??(["invalid-product","incomplete-product","duplicate-product","save-error","stale-product","saved"].includes(message)?"livros":["shipping-error","invalid-shipping","shipping-saved","notification-attempt"].includes(message)?"pedidos&modo=online":message.startsWith("maintenance-")?"configuracoes":"");
@@ -74,6 +80,7 @@ export async function updateSupportNumber(form:FormData){
 }
 
 export async function updatePostSale(form:FormData){
+  const started=performance.now();
   const access=await getStoreAccess();
   if(access.state!=="admin")back("denied");
   const id=field(form,"id",36),version=field(form,"version",80),status=field(form,"status",20);
@@ -81,6 +88,7 @@ export async function updatePostSale(form:FormData){
   const href="/admin?aba=pos-venda"+(leadIdPattern.test(id)?"&ficha="+id:"");
   if(!leadIdPattern.test(id)||!Number.isFinite(Date.parse(version))||!supportStatuses.includes(status as SupportStatus)||typeof notes!=="string"||notes.length>4000||typeof next!=="string"||next.length>240)redirect(href+"&mensagem=post-sale-error");
   const result=await access.client.from("store_support_requests").update({status,internal_notes:notes.trim(),next_action:status==="resolved"?"":next.trim(),...(response?{first_response_at:new Date().toISOString()}:{})}).eq("id",id).eq("updated_at",version).select("id").maybeSingle();
+  console.info("[admin-mutation] post_sale_ms="+Math.round(performance.now()-started)+" outcome="+(result.error?"error":result.data?"saved":"stale"));
   if(result.error||!result.data)redirect(href+"&mensagem="+(result.error?.code==="23514"?"post-sale-response-required":result.error?"post-sale-error":"post-sale-stale"));
   revalidatePath("/admin");
   redirect(href+"&mensagem=post-sale-saved");
